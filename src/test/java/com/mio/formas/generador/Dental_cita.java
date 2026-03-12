@@ -156,6 +156,7 @@ public class Dental_cita extends GenerateCode{
 		List<Button> metodos = dameMetodosComunes(idioma, modulo, formulario, version, 1);
 
 		//Definir todos los campos *
+		Field codigoCampo       = new Field();
 		Field fechayhoraCampo       = new Field();
 		Field especialistaCampo    = new Field();
 		Field sucursalCampo        = new Field();
@@ -192,6 +193,33 @@ public class Dental_cita extends GenerateCode{
 		forma.setValidate(true);
 		forma.setLastModificationDate(new java.util.Date().getTime());
 
+		codigoCampo.setName("codigo");
+		codigoCampo.setFieldName("codigo");
+		codigoCampo.setCss("form-control");
+		codigoCampo.setOrder(orden);
+		codigoCampo.setComponentType("texto");
+		codigoCampo.setReadOnly(true);
+		codigoCampo.setHidden(false);
+		codigoCampo.setRequired(false);
+		codigoCampo.setShowInBasket(true);
+		codigoCampo.setId(false);
+		codigoCampo.setSearcheable(true);
+		codigoCampo.setValidation(null);
+		codigoCampo.setFormat(null);
+		codigoCampo.setGroup("header");
+		codigoCampo.setLength(60);
+		codigoCampo.setDbFieldType("varchar");
+		codigoCampo.setDecimals(0);
+		codigoCampo.setPersistible(true);
+		codigoCampo.setLabel("Codigo Cita (Auto)");
+		codigoCampo.setUuid(generarToken());
+		codigoCampo.setComment("codigoconsulta");
+		codigoCampo.setAffects(null);
+		codigoCampo.setFilter(null);
+		codigoCampo.setEvents("*");
+		codigoCampo.setOrigin(null);
+		codigoCampo.setValue("");
+		
 		orden++;
 		fechayhoraCampo.setName("fechayhora");
 		fechayhoraCampo.setFieldName("fechayhora");
@@ -204,28 +232,28 @@ public class Dental_cita extends GenerateCode{
 		fechayhoraCampo.setShowInBasket(true);
 		fechayhoraCampo.setId(true);
 		fechayhoraCampo.setSearcheable(true);
-		fechayhoraCampo.setValidation(null);
+		fechayhoraCampo.setValidation("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$");
 		fechayhoraCampo.setFormat(null);
 		fechayhoraCampo.setGroup("header");
-		fechayhoraCampo.setLength(200);
+		fechayhoraCampo.setLength(0);
 		fechayhoraCampo.setDbFieldType("datetime");
 		fechayhoraCampo.setDecimals(0);
 		fechayhoraCampo.setPersistible(true);
-		fechayhoraCampo.setLabel("Fecha/Hora de la cita");
+		fechayhoraCampo.setLabel("Fecha/Hora de la cita (aaaa-mm-dd 24:00:00)");
 		fechayhoraCampo.setUuid(generarToken());
 		fechayhoraCampo.setComment("fechayhora");
 		fechayhoraCampo.setAffects(null);
 		fechayhoraCampo.setFilter(null);
 		fechayhoraCampo.setEvents("*");
 		fechayhoraCampo.setOrigin(null);
-		fechayhoraCampo.setValue("");
+		fechayhoraCampo.setValue("${default::fechayHoraCorto}");
 
 		orden++;
 		especialistaCampo.setName("especialista");
 		especialistaCampo.setFieldName("especialista");
 		especialistaCampo.setCss("form-control");
 		especialistaCampo.setOrder(orden);
-		especialistaCampo.setComponentType("texto");
+		especialistaCampo.setComponentType("sucursal");
 		especialistaCampo.setReadOnly(false);
 		especialistaCampo.setHidden(false);
 		especialistaCampo.setRequired(true);
@@ -235,7 +263,7 @@ public class Dental_cita extends GenerateCode{
 		especialistaCampo.setValidation(null);
 		especialistaCampo.setFormat(null);
 		especialistaCampo.setGroup("header");
-		especialistaCampo.setLength(200);
+		especialistaCampo.setLength(60);
 		especialistaCampo.setDbFieldType("varchar");
 		especialistaCampo.setDecimals(0);
 		especialistaCampo.setPersistible(true);
@@ -245,7 +273,7 @@ public class Dental_cita extends GenerateCode{
 		especialistaCampo.setAffects(null);
 		especialistaCampo.setFilter(null);
 		especialistaCampo.setEvents("*");
-		especialistaCampo.setOrigin(null);
+		especialistaCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"especialista\"}]}");		
 		especialistaCampo.setValue("");
 
 		orden++;
@@ -253,7 +281,7 @@ public class Dental_cita extends GenerateCode{
 		sucursalCampo.setFieldName("sucursal");
 		sucursalCampo.setCss("form-control");
 		sucursalCampo.setOrder(orden);
-		sucursalCampo.setComponentType("texto");
+		sucursalCampo.setComponentType("sucursal");
 		sucursalCampo.setReadOnly(false);
 		sucursalCampo.setHidden(false);
 		sucursalCampo.setRequired(true);
@@ -263,7 +291,7 @@ public class Dental_cita extends GenerateCode{
 		sucursalCampo.setValidation(null);
 		sucursalCampo.setFormat(null);
 		sucursalCampo.setGroup("header");
-		sucursalCampo.setLength(200);
+		sucursalCampo.setLength(60);
 		sucursalCampo.setDbFieldType("varchar");
 		sucursalCampo.setDecimals(0);
 		sucursalCampo.setPersistible(true);
@@ -273,7 +301,7 @@ public class Dental_cita extends GenerateCode{
 		sucursalCampo.setAffects(null);
 		sucursalCampo.setFilter(null);
 		sucursalCampo.setEvents("*");
-		sucursalCampo.setOrigin(null);
+		sucursalCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"sucursal\"}]}");		
 		sucursalCampo.setValue("");
 
 		orden++;
@@ -281,13 +309,13 @@ public class Dental_cita extends GenerateCode{
 		nuevoPacienteCampo.setFieldName("nuevopaciente");
 		nuevoPacienteCampo.setCss("form-control");
 		nuevoPacienteCampo.setOrder(orden);
-		nuevoPacienteCampo.setComponentType("texto");
+		nuevoPacienteCampo.setComponentType("checkbox");
 		nuevoPacienteCampo.setReadOnly(false);
 		nuevoPacienteCampo.setHidden(false);
-		nuevoPacienteCampo.setRequired(true);
+		nuevoPacienteCampo.setRequired(false);
 		nuevoPacienteCampo.setShowInBasket(true);
-		nuevoPacienteCampo.setId(true);
-		nuevoPacienteCampo.setSearcheable(true);
+		nuevoPacienteCampo.setId(false);
+		nuevoPacienteCampo.setSearcheable(false);
 		nuevoPacienteCampo.setValidation(null);
 		nuevoPacienteCampo.setFormat(null);
 		nuevoPacienteCampo.setGroup("header");
@@ -309,7 +337,7 @@ public class Dental_cita extends GenerateCode{
 		pacienteCampo.setFieldName("paciente");
 		pacienteCampo.setCss("form-control");
 		pacienteCampo.setOrder(orden);
-		pacienteCampo.setComponentType("texto");
+		pacienteCampo.setComponentType("sucursal");
 		pacienteCampo.setReadOnly(false);
 		pacienteCampo.setHidden(false);
 		pacienteCampo.setRequired(true);
@@ -319,7 +347,7 @@ public class Dental_cita extends GenerateCode{
 		pacienteCampo.setValidation(null);
 		pacienteCampo.setFormat(null);
 		pacienteCampo.setGroup("header");
-		pacienteCampo.setLength(100);
+		pacienteCampo.setLength(60);
 		pacienteCampo.setDbFieldType("varchar");
 		pacienteCampo.setDecimals(0);
 		pacienteCampo.setPersistible(true);
@@ -329,7 +357,7 @@ public class Dental_cita extends GenerateCode{
 		pacienteCampo.setAffects(null);
 		pacienteCampo.setFilter(null);
 		pacienteCampo.setEvents("*");
-		pacienteCampo.setOrigin(null);
+		pacienteCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"paciente\"}]}");		
 		pacienteCampo.setValue("");
 
 		orden++;
@@ -338,11 +366,11 @@ public class Dental_cita extends GenerateCode{
 		uuidCampo.setCss("form-control");
 		uuidCampo.setOrder(orden);
 		uuidCampo.setComponentType("texto");
-		uuidCampo.setReadOnly(false);
-		uuidCampo.setHidden(false);
+		uuidCampo.setReadOnly(true);
+		uuidCampo.setHidden(true);
 		uuidCampo.setRequired(true);
 		uuidCampo.setShowInBasket(true);
-		uuidCampo.setId(false);
+		uuidCampo.setId(true);
 		uuidCampo.setSearcheable(false);
 		uuidCampo.setValidation(null);
 		uuidCampo.setFormat(null);
@@ -357,8 +385,8 @@ public class Dental_cita extends GenerateCode{
 		uuidCampo.setAffects(null);
 		uuidCampo.setFilter(null);
 		uuidCampo.setEvents("*");
-		uuidCampo.setOrigin("${default::uuid}");
-		uuidCampo.setValue("");
+		uuidCampo.setOrigin(null);
+		uuidCampo.setValue("${default::uuid}");
 
 		orden++;
 		uuideCampo.setName("uuide");
@@ -417,6 +445,7 @@ public class Dental_cita extends GenerateCode{
 		uuidpCampo.setValue("");
 
 		//Agregar todos los campos *
+		campos.add(codigoCampo);
 		campos.add(fechayhoraCampo);
 		campos.add(especialistaCampo);
 		campos.add(sucursalCampo);
