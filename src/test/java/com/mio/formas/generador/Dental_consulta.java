@@ -356,7 +356,7 @@ public class Dental_consulta extends GenerateCode{
 		sucursalCampo.setAffects(null);
 		sucursalCampo.setFilter(null);
 		sucursalCampo.setEvents("*");
-		sucursalCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"sucursal\"}]}");		
+		sucursalCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"codigo\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"sucursal\"}]}");		
 		sucursalCampo.setValue("");
 
 		orden++;		

@@ -179,7 +179,7 @@ public class Dental_cita extends GenerateCode{
 		forma.setVersion("1.0");
 		forma.setStatus("produccion");
 		forma.setModule(modulo);
-		forma.setBasket("basket");
+		forma.setBasket("cita");
 		forma.setCreateable(true);
 		forma.setTable("cita");
 		forma.setValidate(true);
@@ -230,12 +230,12 @@ public class Dental_cita extends GenerateCode{
 		fechayhoraCampo.setHidden(false);
 		fechayhoraCampo.setRequired(true);
 		fechayhoraCampo.setShowInBasket(true);
-		fechayhoraCampo.setId(true);
-		fechayhoraCampo.setSearcheable(true);
+		fechayhoraCampo.setId(false);
+		fechayhoraCampo.setSearcheable(false);
 		fechayhoraCampo.setValidation("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$");
 		fechayhoraCampo.setFormat(null);
 		fechayhoraCampo.setGroup("header");
-		fechayhoraCampo.setLength(0);
+		fechayhoraCampo.setLength(19);
 		fechayhoraCampo.setDbFieldType("datetime");
 		fechayhoraCampo.setDecimals(0);
 		fechayhoraCampo.setPersistible(true);
@@ -258,7 +258,7 @@ public class Dental_cita extends GenerateCode{
 		especialistaCampo.setHidden(false);
 		especialistaCampo.setRequired(true);
 		especialistaCampo.setShowInBasket(true);
-		especialistaCampo.setId(true);
+		especialistaCampo.setId(false);
 		especialistaCampo.setSearcheable(true);
 		especialistaCampo.setValidation(null);
 		especialistaCampo.setFormat(null);
@@ -273,7 +273,7 @@ public class Dental_cita extends GenerateCode{
 		especialistaCampo.setAffects(null);
 		especialistaCampo.setFilter(null);
 		especialistaCampo.setEvents("*");
-		especialistaCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"especialista\"}]}");		
+		especialistaCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"codigo\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"especialista\"}]}");		
 		especialistaCampo.setValue("");
 
 		orden++;
@@ -286,7 +286,7 @@ public class Dental_cita extends GenerateCode{
 		sucursalCampo.setHidden(false);
 		sucursalCampo.setRequired(true);
 		sucursalCampo.setShowInBasket(true);
-		sucursalCampo.setId(true);
+		sucursalCampo.setId(false);
 		sucursalCampo.setSearcheable(true);
 		sucursalCampo.setValidation(null);
 		sucursalCampo.setFormat(null);
@@ -301,7 +301,7 @@ public class Dental_cita extends GenerateCode{
 		sucursalCampo.setAffects(null);
 		sucursalCampo.setFilter(null);
 		sucursalCampo.setEvents("*");
-		sucursalCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"sucursal\"}]}");		
+		sucursalCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"codigo\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"sucursal\"}]}");		
 		sucursalCampo.setValue("");
 
 		orden++;
@@ -309,7 +309,7 @@ public class Dental_cita extends GenerateCode{
 		nuevoPacienteCampo.setFieldName("nuevopaciente");
 		nuevoPacienteCampo.setCss("form-control");
 		nuevoPacienteCampo.setOrder(orden);
-		nuevoPacienteCampo.setComponentType("checkbox");
+		nuevoPacienteCampo.setComponentType("texto");
 		nuevoPacienteCampo.setReadOnly(false);
 		nuevoPacienteCampo.setHidden(false);
 		nuevoPacienteCampo.setRequired(false);
@@ -319,7 +319,7 @@ public class Dental_cita extends GenerateCode{
 		nuevoPacienteCampo.setValidation(null);
 		nuevoPacienteCampo.setFormat(null);
 		nuevoPacienteCampo.setGroup("header");
-		nuevoPacienteCampo.setLength(100);
+		nuevoPacienteCampo.setLength(200);
 		nuevoPacienteCampo.setDbFieldType("varchar");
 		nuevoPacienteCampo.setDecimals(0);
 		nuevoPacienteCampo.setPersistible(true);
@@ -342,7 +342,7 @@ public class Dental_cita extends GenerateCode{
 		pacienteCampo.setHidden(false);
 		pacienteCampo.setRequired(true);
 		pacienteCampo.setShowInBasket(true);
-		pacienteCampo.setId(true);
+		pacienteCampo.setId(false);
 		pacienteCampo.setSearcheable(true);
 		pacienteCampo.setValidation(null);
 		pacienteCampo.setFormat(null);
@@ -357,7 +357,7 @@ public class Dental_cita extends GenerateCode{
 		pacienteCampo.setAffects(null);
 		pacienteCampo.setFilter(null);
 		pacienteCampo.setEvents("*");
-		pacienteCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"paciente\"}]}");		
+		pacienteCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"codigo\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"paciente\"}]}");		
 		pacienteCampo.setValue("");
 
 		orden++;
