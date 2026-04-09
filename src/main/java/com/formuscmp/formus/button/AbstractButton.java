@@ -36,7 +36,11 @@ public abstract class AbstractButton implements Comparable<AbstractButton>, Seri
 	private String icon;
 	private String alias;
 	private String ui;
-	
+	private String target;
+	private String swap;
+	private Long execution = 0L;
+	private String resourcePath;
+	private String level;
 	/**
 	 * 
 	 * @return instruction
@@ -350,12 +354,54 @@ public abstract class AbstractButton implements Comparable<AbstractButton>, Seri
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
+	/**
+	 * @return the ui
+	 */
 	public String getUi() {
 		return ui;
 	}
-	
+	/**
+	 * @param ui the ui to set
+	 */
 	public void setUi(String ui) {
 		this.ui = ui;
+	}
+	/**
+	 * @return the target
+	 */
+	public String getTarget() {
+		return target;
+	}
+	/**
+	 * @param target the target to set in the ui, basically an id
+	 */
+	public void setTarget(String target) {
+		this.target = target;
+	}
+	/**
+	 * @return the swap
+	 */
+	public String getSwap() {
+		return swap;
+	}
+	/**
+	 * @param swap the swap to set
+	 */
+	public void setSwap(String swap) {
+		this.swap = swap;
+	}
+	
+	/**
+	 * @return the execution
+	 */
+	public Long getExecution() {
+		return execution;
+	}
+	/**
+	 * @param execution the execution to set
+	 */
+	public void setExecution(Long execution) {
+		this.execution = execution;
 	}
 	
 	@Override
@@ -365,8 +411,32 @@ public abstract class AbstractButton implements Comparable<AbstractButton>, Seri
 				+ resourceName + ", module=" + module + ", hidden=" + hidden + ", resourceType=" + resourceType
 				+ ", version=" + version + ", events=" + events + ", status=" + status + ", view=" + view
 				+ ", instruction=" + instruction + ", uuid=" + uuid + ", comment=" + comment + ", template=" + template
-				+ ", icon=" + icon + ", alias=" + alias + ", ui=" + ui + "]";
+				+ ", icon=" + icon + ", alias=" + alias + ", ui=" + ui + ", target=" + target + ", swap=" + swap
+				+ ", execution=" + execution + "]";
 	}
-	
-	
+	/**
+	 * @return the resourcePath
+	 */
+	public String getResourcePath() {
+		return resourcePath;
+	}
+	/**
+	 * @param resourcePath the resourcePath to set
+	 */
+	public void setResourcePath(String resourcePath) {
+		this.resourcePath = resourcePath;
+	}
+	/**
+	 * @return the level
+	 */
+	public String getLevel() {
+		return level;
+	}
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
 }

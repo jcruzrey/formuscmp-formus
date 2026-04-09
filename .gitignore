@@ -1,12 +1,15 @@
 # Compiled class file
-.DS_Store
 *.class
+
 # Log file
 *.log
+
 # BlueJ files
 *.ctxt
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+
 # Package Files #
 *.jar
 *.war
@@ -16,8 +19,14 @@
 *.tar.gz
 *.rar
 target/
-bin/
-config/
+src/main/resources/*.properties
+**/.DS_Store
 .classpath
+.gitattributes
 .project
 .settings/
+archivo/
+id_web_client
+id_web_client.pub
+uploads/
+config/

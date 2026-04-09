@@ -82,6 +82,10 @@ public abstract class AbstractResource implements Serializable {
 	private String param8;
 	private String param9;
 	private String param10;
+	private boolean clean=true;
+	private Long execution = 0L;
+	private String action;
+	private String method;
 	
 	/**
 	 * @return the resourcePath
@@ -658,34 +662,64 @@ public abstract class AbstractResource implements Serializable {
 	public void setLastAccessDate(Long lastAccessDate) {
 		this.lastAccessDate = lastAccessDate;
 	}
-	@Override
-	public String toString() {
-		return "AbstractResource [name=" + name + ", commandName=" + commandName
-				+ ", title=" + title + ", view=" + view + ", version=" + version + ", status=" + status + ", module="
-				+ module + ", basket=" + basket + ", createable=" + createable + ", table=" + table + ", createdBy="
-				+ createdBy + ", modifiedBy=" + modifiedBy + ", validate=" + validate + ", persistible=" + persistible
-				+ ", lastModificationDate=" + lastModificationDate + ", lastAccessDate=" + lastAccessDate + ", methods="
-				+ methods + ", model=" + model + ", decorators=" + decorators + ", resourcePath=" + resourcePath
-				+ ", instruction=" + instruction + ", destination=" + destination + ", origin=" + origin
-				+ ", versionable=" + versionable + ", searcheable=" + searcheable + ", uuid=" + uuid + ", comment="
-				+ comment + ", quoteRangeTimeLimit=" + quoteRangeTimeLimit + ", quoteTimeSecondsLimit="
-				+ quoteTimeSecondsLimit + ", activationDateRangeStart=" + activationDateRangeStart
-				+ ", activationDateRangeEnd=" + activationDateRangeEnd + ", dirty=" + dirty + ", alias=" + alias
-				+ ", prefix=" + prefix + ", param1=" + param1 + ", param2=" + param2 + ", param3=" + param3
-				+ ", param4=" + param4 + ", param5=" + param5 + ", param6=" + param6 + ", param7=" + param7
-				+ ", param8=" + param8 + ", param9=" + param9 + ", param10=" + param10 + "]";
-	}
 	
+	/**
+	 * @return the clean
+	 */
+	public boolean isClean() {
+		return clean;
+	}
+	/**
+	 * @param clean the clean to set
+	 */
+	public void setClean(boolean clean) {
+		this.clean = clean;
+	}
+	/**
+	 * @return the execution
+	 */
+	public Long getExecution() {
+		return execution;
+	}
+	/**
+	 * @param execution the execution to set
+	 */
+	public void setExecution(Long execution) {
+		this.execution = execution;
+	}
+	/**
+	 * @return the action
+	 */
+	public String getAction() {
+		return action;
+	}
+	/**
+	 * @param action the action to set
+	 */
+	public void setAction(String action) {
+		this.action = action;
+	}
+	/**
+	 * @return the method
+	 */
+	public String getMethod() {
+		return method;
+	}
+	/**
+	 * @param method the method to set
+	 */
+	public void setMethod(String method) {
+		this.method = method;
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(activationDateRangeEnd, activationDateRangeStart, alias, basket, commandName,
-				comment, createable, createdBy, decorators, destination, dirty, instruction, lastAccessDate,
-				lastModificationDate, methods, model, modifiedBy, module, name, origin, param1, param10, param2, param3,
-				param4, param5, param6, param7, param8, param9, persistible, prefix, quoteRangeTimeLimit,
+		return Objects.hash(action, activationDateRangeEnd, activationDateRangeStart, alias, basket, clean, commandName,
+				comment, createable, createdBy, decorators, destination, dirty, execution, instruction, lastAccessDate,
+				lastModificationDate, method, methods, model, modifiedBy, module, name, origin, param1, param10, param2,
+				param3, param4, param5, param6, param7, param8, param9, persistible, prefix, quoteRangeTimeLimit,
 				quoteTimeSecondsLimit, resourcePath, searcheable, status, table, title, uuid, validate, version,
 				versionable, view);
 	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -695,25 +729,27 @@ public abstract class AbstractResource implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		AbstractResource other = (AbstractResource) obj;
-		return Objects.equals(activationDateRangeEnd, other.activationDateRangeEnd)
+		return Objects.equals(action, other.action)
+				&& Objects.equals(activationDateRangeEnd, other.activationDateRangeEnd)
 				&& Objects.equals(activationDateRangeStart, other.activationDateRangeStart)
-				&& Objects.equals(alias, other.alias) && Objects.equals(basket, other.basket)
-				&& Objects.equals(commandName, other.commandName)
-				&& Objects.equals(comment, other.comment) && createable == other.createable
-				&& Objects.equals(createdBy, other.createdBy) && Objects.equals(decorators, other.decorators)
-				&& Objects.equals(destination, other.destination) && dirty == other.dirty
+				&& Objects.equals(alias, other.alias) && Objects.equals(basket, other.basket) && clean == other.clean
+				&& Objects.equals(commandName, other.commandName) && Objects.equals(comment, other.comment)
+				&& createable == other.createable && Objects.equals(createdBy, other.createdBy)
+				&& Objects.equals(decorators, other.decorators) && Objects.equals(destination, other.destination)
+				&& dirty == other.dirty && Objects.equals(execution, other.execution)
 				&& Objects.equals(instruction, other.instruction)
 				&& Objects.equals(lastAccessDate, other.lastAccessDate)
 				&& Objects.equals(lastModificationDate, other.lastModificationDate)
-				&& Objects.equals(methods, other.methods) && Objects.equals(model, other.model)
-				&& Objects.equals(modifiedBy, other.modifiedBy) && Objects.equals(module, other.module)
-				&& Objects.equals(name, other.name) && Objects.equals(origin, other.origin)
-				&& Objects.equals(param1, other.param1) && Objects.equals(param10, other.param10)
-				&& Objects.equals(param2, other.param2) && Objects.equals(param3, other.param3)
-				&& Objects.equals(param4, other.param4) && Objects.equals(param5, other.param5)
-				&& Objects.equals(param6, other.param6) && Objects.equals(param7, other.param7)
-				&& Objects.equals(param8, other.param8) && Objects.equals(param9, other.param9)
-				&& persistible == other.persistible && Objects.equals(prefix, other.prefix)
+				&& Objects.equals(method, other.method) && Objects.equals(methods, other.methods)
+				&& Objects.equals(model, other.model) && Objects.equals(modifiedBy, other.modifiedBy)
+				&& Objects.equals(module, other.module) && Objects.equals(name, other.name)
+				&& Objects.equals(origin, other.origin) && Objects.equals(param1, other.param1)
+				&& Objects.equals(param10, other.param10) && Objects.equals(param2, other.param2)
+				&& Objects.equals(param3, other.param3) && Objects.equals(param4, other.param4)
+				&& Objects.equals(param5, other.param5) && Objects.equals(param6, other.param6)
+				&& Objects.equals(param7, other.param7) && Objects.equals(param8, other.param8)
+				&& Objects.equals(param9, other.param9) && persistible == other.persistible
+				&& Objects.equals(prefix, other.prefix)
 				&& Objects.equals(quoteRangeTimeLimit, other.quoteRangeTimeLimit)
 				&& Objects.equals(quoteTimeSecondsLimit, other.quoteTimeSecondsLimit)
 				&& Objects.equals(resourcePath, other.resourcePath) && searcheable == other.searcheable
@@ -723,5 +759,23 @@ public abstract class AbstractResource implements Serializable {
 				&& Objects.equals(view, other.view);
 	}
 	
+	@Override
+	public String toString() {
+		return "AbstractResource [name=" + name + ", commandName=" + commandName + ", title=" + title + ", view=" + view
+				+ ", version=" + version + ", status=" + status + ", module=" + module + ", basket=" + basket
+				+ ", createable=" + createable + ", table=" + table + ", createdBy=" + createdBy + ", modifiedBy="
+				+ modifiedBy + ", validate=" + validate + ", persistible=" + persistible + ", lastModificationDate="
+				+ lastModificationDate + ", lastAccessDate=" + lastAccessDate + ", methods=" + methods + ", model="
+				+ model + ", decorators=" + decorators + ", resourcePath=" + resourcePath + ", instruction="
+				+ instruction + ", destination=" + destination + ", origin=" + origin + ", versionable=" + versionable
+				+ ", searcheable=" + searcheable + ", uuid=" + uuid + ", comment=" + comment + ", quoteRangeTimeLimit="
+				+ quoteRangeTimeLimit + ", quoteTimeSecondsLimit=" + quoteTimeSecondsLimit
+				+ ", activationDateRangeStart=" + activationDateRangeStart + ", activationDateRangeEnd="
+				+ activationDateRangeEnd + ", dirty=" + dirty + ", alias=" + alias + ", prefix=" + prefix + ", param1="
+				+ param1 + ", param2=" + param2 + ", param3=" + param3 + ", param4=" + param4 + ", param5=" + param5
+				+ ", param6=" + param6 + ", param7=" + param7 + ", param8=" + param8 + ", param9=" + param9
+				+ ", param10=" + param10 + ", clean=" + clean + ", execution=" + execution + ", action=" + action
+				+ ", method=" + method + "]";
+	}
 	
 }

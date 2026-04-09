@@ -35,6 +35,7 @@ public class RequestResource {
 	private String fingerPrint;
 	private String uuid;
 	private String puuid;
+	private boolean clean=true;
 	public String getToken() {
 		return token;
 	}
@@ -309,16 +310,6 @@ public class RequestResource {
 		this.uuid = uuid;
 	}
 
-	@Override
-	public String toString() {
-		return "RequestResource [parameters=" + parameters + ", commandName=" + commandName + ", pageNumber="
-				+ pageNumber + ", payload=" + payload + ", assetLibrary=" + assetLibrary + ", module=" + module
-				+ ", version=" + version + ", resourceName=" + resourceName + ", resourceType=" + resourceType
-				+ ", view=" + view + ", format=" + format + ", baseUri=" + baseUri + ", sessionId=" + sessionId
-				+ ", locale=" + locale + ", key=" + key + ", correlationId=" + correlationId + ", token=" + token
-				+ ", origin=" + origin + ", fingerPrint=" + fingerPrint + ", uuid=" + uuid + "]";
-	}
-
 	/**
 	 * @return the puuid
 	 */
@@ -332,6 +323,31 @@ public class RequestResource {
 	public void setPuuid(String puuid) {
 		this.puuid = puuid;
 	}
-	
+
+	/**
+	 * @return the clean
+	 */
+	public boolean isClean() {
+		return clean;
+	}
+
+	/**
+	 * @param clean the clean to set
+	 */
+	public void setClean(boolean clean) {
+		this.clean = clean;
+	}
+
+	@Override
+	public String toString() {
+		return "RequestResource [parameters=" + parameters + ", commandName=" + commandName + ", pageNumber="
+				+ pageNumber + ", payload=" + payload + ", assetLibrary=" + assetLibrary + ", module=" + module
+				+ ", version=" + version + ", resourceName=" + resourceName + ", resourceType=" + resourceType
+				+ ", view=" + view + ", format=" + format + ", baseUri=" + baseUri + ", sessionId=" + sessionId
+				+ ", locale=" + locale + ", key=" + key + ", correlationId=" + correlationId + ", token=" + token
+				+ ", origin=" + origin + ", fingerPrint=" + fingerPrint + ", uuid=" + uuid + ", puuid=" + puuid
+				+ ", clean=" + clean + "]";
+	}
+
 	
 }

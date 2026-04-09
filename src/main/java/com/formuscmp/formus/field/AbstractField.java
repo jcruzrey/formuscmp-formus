@@ -58,9 +58,10 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 	private String param8;
 	private String param9;
 	private String param10;
-	
+	private boolean clean=true;
 	private String ui;
-	
+	private String resourcePath;
+	private String level;
 	
 	/**
 	 * @return the alias
@@ -536,23 +537,6 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 		this.events = events;
 	}
 
-	
-
-	@Override
-	public String toString() {
-		return "AbstractField [name=" + name + ", componentType=" + componentType + ", css=" + css + ", order=" + order
-				+ ", fieldName=" + fieldName + ", sourceCode=" + sourceCode + ", validation=" + validation + ", value="
-				+ value + ", hidden=" + hidden + ", readOnly=" + readOnly + ", required=" + required + ", valid="
-				+ valid + ", error=" + error + ", showInBasket=" + showInBasket + ", id=" + id + ", length=" + length
-				+ ", group=" + group + ", persistible=" + persistible + ", origin=" + origin + ", format=" + format
-				+ ", searcheable=" + searcheable + ", instruction=" + instruction + ", decimals=" + decimals
-				+ ", dbFieldType=" + dbFieldType + ", label=" + label + ", uuid=" + uuid + ", comment=" + comment
-				+ ", template=" + template + ", affects=" + affects + ", filter=" + filter + ", events=" + events
-				+ ", alias=" + alias + ", param1=" + param1 + ", param2=" + param2 + ", param3=" + param3 + ", param4="
-				+ param4 + ", param5=" + param5 + ", param6=" + param6 + ", param7=" + param7 + ", param8=" + param8
-				+ ", param9=" + param9 + ", param10=" + param10 + ", ui=" + ui + "]";
-	}
-
 	public String getParam1() {
 		return param1;
 	}
@@ -640,6 +624,64 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 	public void setUi(String ui) {
 		this.ui = ui;
 	}
+
+	/**
+	 * @return the clean
+	 */
+	public boolean isClean() {
+		return clean;
+	}
+
+	/**
+	 * @param clean the clean to set
+	 */
+	public void setClean(boolean clean) {
+		this.clean = clean;
+	}
+
+	@Override
+	public String toString() {
+		return "AbstractField [name=" + name + ", componentType=" + componentType + ", css=" + css + ", order=" + order
+				+ ", fieldName=" + fieldName + ", sourceCode=" + sourceCode + ", validation=" + validation + ", value="
+				+ value + ", hidden=" + hidden + ", readOnly=" + readOnly + ", required=" + required + ", valid="
+				+ valid + ", error=" + error + ", showInBasket=" + showInBasket + ", id=" + id + ", length=" + length
+				+ ", group=" + group + ", persistible=" + persistible + ", origin=" + origin + ", format=" + format
+				+ ", searcheable=" + searcheable + ", instruction=" + instruction + ", decimals=" + decimals
+				+ ", dbFieldType=" + dbFieldType + ", label=" + label + ", uuid=" + uuid + ", comment=" + comment
+				+ ", template=" + template + ", affects=" + affects + ", filter=" + filter + ", events=" + events
+				+ ", alias=" + alias + ", param1=" + param1 + ", param2=" + param2 + ", param3=" + param3 + ", param4="
+				+ param4 + ", param5=" + param5 + ", param6=" + param6 + ", param7=" + param7 + ", param8=" + param8
+				+ ", param9=" + param9 + ", param10=" + param10 + ", clean=" + clean + ", ui=" + ui + "]";
+	}
+
+	/**
+	 * @return the resourcePath
+	 */
+	public String getResourcePath() {
+		return resourcePath;
+	}
+
+	/**
+	 * @param resourcePath the resourcePath to set
+	 */
+	public void setResourcePath(String resourcePath) {
+		this.resourcePath = resourcePath;
+	}
+
+	/**
+	 * @return the level
+	 */
+	public String getLevel() {
+		return level;
+	}
+
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	
 	
 	
 }
