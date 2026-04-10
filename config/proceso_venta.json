@@ -1,1 +1,0 @@
-{"@type":"Proceso","pasos":[{"orden":1,"nombre":"carrito","origen":"doctos","statusDestino":"forma.solicitud.carrito.guardar","nombreAccion":"forma.solicitud.carrito.nuevo","titulo":"Carrito de compras","version":null}],"nombre":"VentaEnLinea","status":"produccion","titulo":"Carrito"}

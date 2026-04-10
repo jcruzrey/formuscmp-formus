@@ -62,7 +62,7 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 	private String ui;
 	private String resourcePath;
 	private String level;
-	
+	private String suggestion;
 	/**
 	 * @return the alias
 	 */
@@ -639,21 +639,6 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 		this.clean = clean;
 	}
 
-	@Override
-	public String toString() {
-		return "AbstractField [name=" + name + ", componentType=" + componentType + ", css=" + css + ", order=" + order
-				+ ", fieldName=" + fieldName + ", sourceCode=" + sourceCode + ", validation=" + validation + ", value="
-				+ value + ", hidden=" + hidden + ", readOnly=" + readOnly + ", required=" + required + ", valid="
-				+ valid + ", error=" + error + ", showInBasket=" + showInBasket + ", id=" + id + ", length=" + length
-				+ ", group=" + group + ", persistible=" + persistible + ", origin=" + origin + ", format=" + format
-				+ ", searcheable=" + searcheable + ", instruction=" + instruction + ", decimals=" + decimals
-				+ ", dbFieldType=" + dbFieldType + ", label=" + label + ", uuid=" + uuid + ", comment=" + comment
-				+ ", template=" + template + ", affects=" + affects + ", filter=" + filter + ", events=" + events
-				+ ", alias=" + alias + ", param1=" + param1 + ", param2=" + param2 + ", param3=" + param3 + ", param4="
-				+ param4 + ", param5=" + param5 + ", param6=" + param6 + ", param7=" + param7 + ", param8=" + param8
-				+ ", param9=" + param9 + ", param10=" + param10 + ", clean=" + clean + ", ui=" + ui + "]";
-	}
-
 	/**
 	 * @return the resourcePath
 	 */
@@ -681,7 +666,36 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 	public void setLevel(String level) {
 		this.level = level;
 	}
-	
+
+	/**
+	 * @return the suggestion
+	 */
+	public String getSuggestion() {
+		return suggestion;
+	}
+
+	/**
+	 * @param suggestion the suggestion to set
+	 */
+	public void setSuggestion(String suggestion) {
+		this.suggestion = suggestion;
+	}
+
+	@Override
+	public String toString() {
+		return "AbstractField [name=" + name + ", componentType=" + componentType + ", css=" + css + ", order=" + order
+				+ ", fieldName=" + fieldName + ", sourceCode=" + sourceCode + ", validation=" + validation + ", value="
+				+ value + ", hidden=" + hidden + ", readOnly=" + readOnly + ", required=" + required + ", valid="
+				+ valid + ", error=" + error + ", showInBasket=" + showInBasket + ", id=" + id + ", length=" + length
+				+ ", group=" + group + ", persistible=" + persistible + ", origin=" + origin + ", format=" + format
+				+ ", searcheable=" + searcheable + ", instruction=" + instruction + ", decimals=" + decimals
+				+ ", dbFieldType=" + dbFieldType + ", label=" + label + ", uuid=" + uuid + ", comment=" + comment
+				+ ", template=" + template + ", affects=" + affects + ", filter=" + filter + ", events=" + events
+				+ ", alias=" + alias + ", param1=" + param1 + ", param2=" + param2 + ", param3=" + param3 + ", param4="
+				+ param4 + ", param5=" + param5 + ", param6=" + param6 + ", param7=" + param7 + ", param8=" + param8
+				+ ", param9=" + param9 + ", param10=" + param10 + ", clean=" + clean + ", ui=" + ui + ", resourcePath="
+				+ resourcePath + ", level=" + level + ", suggestion=" + suggestion + "]";
+	}
 	
 	
 }
