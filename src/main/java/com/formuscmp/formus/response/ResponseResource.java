@@ -33,6 +33,9 @@ public class ResponseResource {
 	@JsonIgnore
 	private String srcCode = null;
 	
+	//Expected view to show the model from the results
+	private String view;
+	
 	/**
 	 * 
 	 */
@@ -203,6 +206,20 @@ public class ResponseResource {
 
 	public void setUseCases(Map<String, UseCase> useCases) {
 		this.useCases = useCases;
+	}
+
+	/**
+	 * @return the view
+	 */
+	public String getView() {
+		return view;
+	}
+
+	/**
+	 * @param view the view to set
+	 */
+	public void setView(String view) {
+		this.view = view;
 	}
 	
 }
