@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -37,13 +40,13 @@ public class Dental_caracteristica extends GenerateCode{
 
 		if (idioma.equals("es_MX")) {
 			Button buttonGuardar = new Button();
-			buttonGuardar.setCommandName("guardar");
-			buttonGuardar.setComment("Boton guardar");
+			buttonGuardar.setCommandName("guardarpad");
+			buttonGuardar.setComment("Boton guardar padecimiento");
 			buttonGuardar.setComponentType("guardarjs");
 			buttonGuardar.setCss("btn btn-primary");
-			buttonGuardar.setEvents("nuevo");
+			buttonGuardar.setEvents("padecimiento,guardarpad");
 			buttonGuardar.setInstruction("Formulario guardado correctamente");
-			buttonGuardar.setLabel("Guardar");
+			buttonGuardar.setLabel("Guardar padecimiento");
 			buttonGuardar.setModule(modulo);
 			buttonGuardar.setName("guardar");
 			buttonGuardar.setOrder(1);
@@ -52,6 +55,40 @@ public class Dental_caracteristica extends GenerateCode{
 			buttonGuardar.setUuid(generarToken());
 			buttonGuardar.setVersion(version);
 			metodos.add(buttonGuardar);
+			
+			Button buttonGuardarTrat = new Button();
+			buttonGuardarTrat.setCommandName("guardartrat");
+			buttonGuardarTrat.setComment("Boton guardar tratamiento");
+			buttonGuardarTrat.setComponentType("guardarjs");
+			buttonGuardarTrat.setCss("btn btn-primary");
+			buttonGuardarTrat.setEvents("tratamiento,guardartrat");
+			buttonGuardarTrat.setInstruction("Formulario guardado correctamente");
+			buttonGuardarTrat.setLabel("Guardar tratamiento");
+			buttonGuardarTrat.setModule(modulo);
+			buttonGuardarTrat.setName("guardartrat");
+			buttonGuardarTrat.setOrder(1);
+			buttonGuardarTrat.setResourceName(recurso);
+			buttonGuardarTrat.setResourceType("form");
+			buttonGuardarTrat.setUuid(generarToken());
+			buttonGuardarTrat.setVersion(version);
+			metodos.add(buttonGuardarTrat);
+			
+			Button buttonGuardarCita = new Button();
+			buttonGuardarCita.setCommandName("guardarcita");
+			buttonGuardarCita.setComment("Boton guardar tratamiento");
+			buttonGuardarCita.setComponentType("guardarjs");
+			buttonGuardarCita.setCss("btn btn-primary");
+			buttonGuardarCita.setEvents("cita,guardarcita");
+			buttonGuardarCita.setInstruction("Formulario guardado correctamente");
+			buttonGuardarCita.setLabel("Guardar cita");
+			buttonGuardarCita.setModule(modulo);
+			buttonGuardarCita.setName("guardarcita");
+			buttonGuardarCita.setOrder(1);
+			buttonGuardarCita.setResourceName(recurso);
+			buttonGuardarCita.setResourceType("form");
+			buttonGuardarCita.setUuid(generarToken());
+			buttonGuardarCita.setVersion(version);
+			metodos.add(buttonGuardarCita);
 			
 			Button buttonActualizar = new Button();
 			buttonActualizar.setCommandName("actualizar");
@@ -155,19 +192,28 @@ public class Dental_caracteristica extends GenerateCode{
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> metodos = dameMetodosComunes(idioma, modulo, formulario, version, 1);
 
+		Map<String, List<Field>> decorators = new HashMap<String,List<Field>>();
+		List<Field> decoradoresTratamiento = new ArrayList<Field>();
+		
 		//Definir todos los campos *
+		Field codigocitaCampo = new Field();
 		Field statusCampo = new Field();
 		Field fyhCampo = new Field();
+		Field fyhfCampo = new Field();
 		Field dienteCampo = new Field();
 		Field obsCampo = new Field();
+		Field recetaCampo = new Field();
 		Field padecimientoCampo = new Field();
 		Field tratamientoCampo = new Field();
-		Field figuraCampo = new Field();
+		Field tratamientoDecCampo = new Field();
+		//Field figuraCampo = new Field();
 		Field uuidCampo = new Field();
 		Field uuidpCampo = new Field();
 		Field uuideCampo = new Field();
+		Field uuidrCampo = new Field();
 		Field consultaCampo = new Field();
-
+		Field consultaTCampo = new Field();
+		Field pacienteCodigo = new Field();
 		
 		Resource forma = new Resource();
 
@@ -192,12 +238,41 @@ public class Dental_caracteristica extends GenerateCode{
 		forma.setUuid(generarToken());
 		forma.setPersistible(true);
 		forma.setValidate(true);
+		forma.setLastModificationDate(new java.util.Date().getTime());
 
+		codigocitaCampo.setName("cita");
+		codigocitaCampo.setFieldName("cita");
+		codigocitaCampo.setCss("form-control");
+		codigocitaCampo.setOrder(orden);
+		codigocitaCampo.setComponentType("texto");
+		codigocitaCampo.setReadOnly(true);
+		codigocitaCampo.setHidden(false);
+		codigocitaCampo.setRequired(false);
+		codigocitaCampo.setShowInBasket(true);
+		codigocitaCampo.setId(false);
+		codigocitaCampo.setSearcheable(true);
+		codigocitaCampo.setValidation(null);
+		codigocitaCampo.setFormat(null);
+		codigocitaCampo.setGroup("header");
+		codigocitaCampo.setLength(60);
+		codigocitaCampo.setDbFieldType("varchar");
+		codigocitaCampo.setDecimals(0);
+		codigocitaCampo.setPersistible(true);
+		codigocitaCampo.setLabel("Codigo Cita");
+		codigocitaCampo.setUuid(generarToken());
+		codigocitaCampo.setComment("codigocita");
+		codigocitaCampo.setAffects(null);
+		codigocitaCampo.setFilter(null);
+		codigocitaCampo.setEvents("*");
+		codigocitaCampo.setOrigin(null);
+		codigocitaCampo.setValue("");
+		
+		orden++;
 		statusCampo.setName("status");
 		statusCampo.setFieldName("status");
 		statusCampo.setCss("form-control");
 		statusCampo.setOrder(orden);
-		statusCampo.setComponentType("texto");
+		statusCampo.setComponentType("lista");
 		statusCampo.setReadOnly(true);
 		statusCampo.setHidden(false);
 		statusCampo.setRequired(false);
@@ -217,7 +292,7 @@ public class Dental_caracteristica extends GenerateCode{
 		statusCampo.setAffects(null);
 		statusCampo.setFilter(null);
 		statusCampo.setEvents("*");
-		statusCampo.setOrigin(null);
+		statusCampo.setOrigin("{\"origin\":\"recurso\",\"resource\":\"inlinevalues\",\"fields\":[{\"name\":\"Padecimiento,Agendada,Tratamiento,Cancelada\"}]}");
 		statusCampo.setValue("");
 		
 		orden++;
@@ -226,13 +301,13 @@ public class Dental_caracteristica extends GenerateCode{
 		fyhCampo.setCss("form-control");
 		fyhCampo.setOrder(orden);
 		fyhCampo.setComponentType("texto");
-		fyhCampo.setReadOnly(false);
+		fyhCampo.setReadOnly(true);
 		fyhCampo.setHidden(false);
 		fyhCampo.setRequired(true);
 		fyhCampo.setShowInBasket(true);
 		fyhCampo.setId(false);
 		fyhCampo.setSearcheable(true);
-		fyhCampo.setValidation(null);
+		fyhCampo.setValidation("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$");
 		fyhCampo.setFormat(null);
 		fyhCampo.setGroup("header");
 		fyhCampo.setLength(0);
@@ -246,7 +321,36 @@ public class Dental_caracteristica extends GenerateCode{
 		fyhCampo.setFilter(null);
 		fyhCampo.setEvents("*");
 		fyhCampo.setOrigin(null);
-		fyhCampo.setValue("");
+		fyhCampo.setValue("${default::fechayHoraCorto}");
+		
+		orden++;
+		fyhfCampo.setName("fyhoraf");
+		fyhfCampo.setFieldName("fyhoraf");
+		fyhfCampo.setCss("form-control");
+		fyhfCampo.setOrder(orden);
+		fyhfCampo.setComponentType("texto");
+		fyhfCampo.setReadOnly(true);
+		fyhfCampo.setHidden(false);
+		fyhfCampo.setRequired(false);
+		fyhfCampo.setShowInBasket(false);
+		fyhfCampo.setId(false);
+		fyhfCampo.setSearcheable(false);
+		fyhfCampo.setValidation(null);
+		fyhfCampo.setFormat(null);
+		fyhfCampo.setGroup("header");
+		fyhfCampo.setLength(0);
+		fyhfCampo.setDbFieldType("datetime");
+		fyhfCampo.setDecimals(0);
+		fyhfCampo.setPersistible(true);
+		fyhfCampo.setLabel("Fecha/Hora final");
+		fyhfCampo.setUuid(generarToken());
+		fyhfCampo.setComment("Fecha/Hora Fin");
+		fyhfCampo.setAffects(null);
+		fyhfCampo.setFilter(null);
+		fyhfCampo.setEvents("*");
+		fyhfCampo.setOrigin(null);
+		fyhfCampo.setValue(null);
+		
 
 		orden++;
 		dienteCampo.setName("diente");
@@ -285,7 +389,7 @@ public class Dental_caracteristica extends GenerateCode{
 		uuidpCampo.setComponentType("texto");
 		uuidpCampo.setReadOnly(false);
 		uuidpCampo.setHidden(true);
-		uuidpCampo.setRequired(true);
+		uuidpCampo.setRequired(false);
 		uuidpCampo.setShowInBasket(true);
 		uuidpCampo.setId(false);
 		uuidpCampo.setSearcheable(true);
@@ -305,35 +409,6 @@ public class Dental_caracteristica extends GenerateCode{
 		//uuidpCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"diente\",\"fields\":[{\"name\":\"numero\", \"filter\":\"\"},{\"name\":\"uuid\", \"filter\":\"\"}]}");
 		uuidpCampo.setOrigin(null);
 		uuidpCampo.setValue("");
-		
-
-		orden++;		
-		figuraCampo.setName("figura");
-		figuraCampo.setFieldName("figura");
-		figuraCampo.setCss("form-control");
-		figuraCampo.setOrder(orden);
-		figuraCampo.setComponentType("texto");
-		figuraCampo.setReadOnly(false);
-		figuraCampo.setHidden(false);
-		figuraCampo.setRequired(true);
-		figuraCampo.setShowInBasket(true);
-		figuraCampo.setId(false);
-		figuraCampo.setSearcheable(true);
-		figuraCampo.setValidation(null);
-		figuraCampo.setFormat(null);
-		figuraCampo.setGroup("header");
-		figuraCampo.setLength(200);
-		figuraCampo.setDbFieldType("varchar");
-		figuraCampo.setDecimals(0);
-		figuraCampo.setPersistible(true);
-		figuraCampo.setLabel("Figura");
-		figuraCampo.setUuid(generarToken());
-		figuraCampo.setComment("figura");
-		figuraCampo.setAffects(null);
-		figuraCampo.setFilter(null);
-		figuraCampo.setEvents("*");
-		figuraCampo.setOrigin(null);
-		figuraCampo.setValue("");
 
 		orden++;
 		obsCampo.setName("obs");
@@ -343,7 +418,7 @@ public class Dental_caracteristica extends GenerateCode{
 		obsCampo.setComponentType("textoarea");
 		obsCampo.setReadOnly(false);
 		obsCampo.setHidden(false);
-		obsCampo.setRequired(true);
+		obsCampo.setRequired(false);
 		obsCampo.setShowInBasket(true);
 		obsCampo.setId(false);
 		obsCampo.setSearcheable(true);
@@ -362,13 +437,41 @@ public class Dental_caracteristica extends GenerateCode{
 		obsCampo.setEvents("*");
 		obsCampo.setOrigin(null);
 		obsCampo.setValue("");
+		
+		orden++;
+		recetaCampo.setName("receta");
+		recetaCampo.setFieldName("receta");
+		recetaCampo.setCss("form-control");
+		recetaCampo.setOrder(orden);
+		recetaCampo.setComponentType("textoarea");
+		recetaCampo.setReadOnly(false);
+		recetaCampo.setHidden(false);
+		recetaCampo.setRequired(false);
+		recetaCampo.setShowInBasket(true);
+		recetaCampo.setId(false);
+		recetaCampo.setSearcheable(true);
+		recetaCampo.setValidation(null);
+		recetaCampo.setFormat(null);
+		recetaCampo.setGroup("header");
+		recetaCampo.setLength(500);
+		recetaCampo.setDbFieldType("varchar");
+		recetaCampo.setDecimals(0);
+		recetaCampo.setPersistible(true);
+		recetaCampo.setLabel("Receta");
+		recetaCampo.setUuid(generarToken());
+		recetaCampo.setComment("receta");
+		recetaCampo.setAffects(null);
+		recetaCampo.setFilter(null);
+		recetaCampo.setEvents("*");
+		recetaCampo.setOrigin(null);
+		recetaCampo.setValue("");
 
 		orden++;
 		padecimientoCampo.setName("padecimiento");
 		padecimientoCampo.setFieldName("padecimiento");
 		padecimientoCampo.setCss("form-control");
 		padecimientoCampo.setOrder(orden);
-		padecimientoCampo.setComponentType("texto");
+		padecimientoCampo.setComponentType("padecimientos");
 		padecimientoCampo.setReadOnly(false);
 		padecimientoCampo.setHidden(false);
 		padecimientoCampo.setRequired(true);
@@ -378,7 +481,7 @@ public class Dental_caracteristica extends GenerateCode{
 		padecimientoCampo.setValidation(null);
 		padecimientoCampo.setFormat(null);
 		padecimientoCampo.setGroup("header");
-		padecimientoCampo.setLength(200);
+		padecimientoCampo.setLength(60);
 		padecimientoCampo.setDbFieldType("varchar");
 		padecimientoCampo.setDecimals(0);
 		padecimientoCampo.setPersistible(true);
@@ -388,7 +491,8 @@ public class Dental_caracteristica extends GenerateCode{
 		padecimientoCampo.setAffects(null);
 		padecimientoCampo.setFilter(null);
 		padecimientoCampo.setEvents("*");
-		padecimientoCampo.setOrigin(null);
+		padecimientoCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"padecimiento\",\"fields\":[{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"uuid\", \"filter\":\"\"}]}");
+		//padecimientoCampo.setOrigin(null);
 		padecimientoCampo.setValue("");
 		
 		orden++;
@@ -396,17 +500,17 @@ public class Dental_caracteristica extends GenerateCode{
 		tratamientoCampo.setFieldName("tratamiento");
 		tratamientoCampo.setCss("form-control");
 		tratamientoCampo.setOrder(orden);
-		tratamientoCampo.setComponentType("texto");
+		tratamientoCampo.setComponentType("tratamientos");
 		tratamientoCampo.setReadOnly(false);
 		tratamientoCampo.setHidden(false);
-		tratamientoCampo.setRequired(true);
+		tratamientoCampo.setRequired(false);
 		tratamientoCampo.setShowInBasket(true);
 		tratamientoCampo.setId(false);
 		tratamientoCampo.setSearcheable(true);
 		tratamientoCampo.setValidation(null);
 		tratamientoCampo.setFormat(null);
 		tratamientoCampo.setGroup("header");
-		tratamientoCampo.setLength(200);
+		tratamientoCampo.setLength(60);
 		tratamientoCampo.setDbFieldType("varchar");
 		tratamientoCampo.setDecimals(0);
 		tratamientoCampo.setPersistible(true);
@@ -416,8 +520,38 @@ public class Dental_caracteristica extends GenerateCode{
 		tratamientoCampo.setAffects(null);
 		tratamientoCampo.setFilter(null);
 		tratamientoCampo.setEvents("*");
-		tratamientoCampo.setOrigin(null);
+		tratamientoCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"tratamiento\",\"fields\":[{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"uuid\", \"filter\":\"\"}]}");
 		tratamientoCampo.setValue("");
+		
+		tratamientoDecCampo.setName("tratamiento");
+		tratamientoDecCampo.setFieldName("tratamiento");
+		tratamientoDecCampo.setCss("form-control");
+		tratamientoDecCampo.setOrder(orden);
+		tratamientoDecCampo.setComponentType("tratamientos");
+		tratamientoDecCampo.setReadOnly(false);
+		tratamientoDecCampo.setHidden(false);
+		tratamientoDecCampo.setRequired(true);
+		tratamientoDecCampo.setShowInBasket(true);
+		tratamientoDecCampo.setId(false);
+		tratamientoDecCampo.setSearcheable(true);
+		tratamientoDecCampo.setValidation(null);
+		tratamientoDecCampo.setFormat(null);
+		tratamientoDecCampo.setGroup("header");
+		tratamientoDecCampo.setLength(200);
+		tratamientoDecCampo.setDbFieldType("varchar");
+		tratamientoDecCampo.setDecimals(0);
+		tratamientoDecCampo.setPersistible(true);
+		tratamientoDecCampo.setLabel("Tratamiento");
+		tratamientoDecCampo.setUuid(generarToken());
+		tratamientoDecCampo.setComment("Tratamiento");
+		tratamientoDecCampo.setAffects(null);
+		tratamientoDecCampo.setFilter(null);
+		tratamientoDecCampo.setEvents("*");
+		tratamientoDecCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"tratamiento\",\"fields\":[{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"uuid\", \"filter\":\"\"}]}");
+		tratamientoDecCampo.setValue("");
+		
+		decoradoresTratamiento.add(tratamientoDecCampo);
+		forma.getDecorators().put("tratamiento", decoradoresTratamiento);
 		
 		orden++;		
 		uuidCampo.setName("uuid");
@@ -428,7 +562,7 @@ public class Dental_caracteristica extends GenerateCode{
 		uuidCampo.setReadOnly(true);
 		uuidCampo.setHidden(true);
 		uuidCampo.setRequired(true);
-		uuidCampo.setShowInBasket(true);
+		uuidCampo.setShowInBasket(false);
 		uuidCampo.setId(true);
 		uuidCampo.setSearcheable(true);
 		uuidCampo.setValidation(null);
@@ -456,7 +590,7 @@ public class Dental_caracteristica extends GenerateCode{
 		uuideCampo.setReadOnly(false);
 		uuideCampo.setHidden(true);
 		uuideCampo.setRequired(false);
-		uuideCampo.setShowInBasket(true);
+		uuideCampo.setShowInBasket(false);
 		uuideCampo.setId(false);
 		uuideCampo.setSearcheable(true);
 		uuideCampo.setValidation(null);
@@ -474,6 +608,34 @@ public class Dental_caracteristica extends GenerateCode{
 		uuideCampo.setEvents("*");
 		uuideCampo.setOrigin(null);
 		uuideCampo.setValue("");
+		
+		orden++;
+		uuidrCampo.setName("uuidr");
+		uuidrCampo.setFieldName("uuidr");
+		uuidrCampo.setCss("form-control");
+		uuidrCampo.setOrder(orden);
+		uuidrCampo.setComponentType("texto");
+		uuidrCampo.setReadOnly(false);
+		uuidrCampo.setHidden(true);
+		uuidrCampo.setRequired(false);
+		uuidrCampo.setShowInBasket(false);
+		uuidrCampo.setId(false);
+		uuidrCampo.setSearcheable(true);
+		uuidrCampo.setValidation(null);
+		uuidrCampo.setFormat(null);
+		uuidrCampo.setGroup("header");
+		uuidrCampo.setLength(60);
+		uuidrCampo.setDbFieldType("varchar");
+		uuidrCampo.setDecimals(0);
+		uuidrCampo.setPersistible(true);
+		uuidrCampo.setLabel("Receta");
+		uuidrCampo.setUuid(generarToken());
+		uuidrCampo.setComment("uuidr de receta");
+		uuidrCampo.setAffects(null);
+		uuidrCampo.setFilter(null);
+		uuidrCampo.setEvents("*");
+		uuidrCampo.setOrigin(null);
+		uuidrCampo.setValue("");
 		
 		orden++;
 		consultaCampo.setName("consulta");
@@ -494,28 +656,92 @@ public class Dental_caracteristica extends GenerateCode{
 		consultaCampo.setDbFieldType("varchar");
 		consultaCampo.setDecimals(0);
 		consultaCampo.setPersistible(true);
-		consultaCampo.setLabel("Consulta");
+		consultaCampo.setLabel("Consulta Padecimiento");
 		consultaCampo.setUuid(generarToken());
-		consultaCampo.setComment("Uuid Consulta");
+		consultaCampo.setComment("Consulta");
 		consultaCampo.setAffects(null);
 		consultaCampo.setFilter(null);
 		consultaCampo.setEvents("*");
 		consultaCampo.setOrigin(null);
 		consultaCampo.setValue("");
+		
+		orden++;
+		consultaTCampo.setName("consultat");
+		consultaTCampo.setFieldName("consultat");
+		consultaTCampo.setCss("form-control");
+		consultaTCampo.setOrder(orden);
+		consultaTCampo.setComponentType("texto");
+		consultaTCampo.setReadOnly(false);
+		consultaTCampo.setHidden(true);
+		consultaTCampo.setRequired(false);
+		consultaTCampo.setShowInBasket(true);
+		consultaTCampo.setId(false);
+		consultaTCampo.setSearcheable(true);
+		consultaTCampo.setValidation(null);
+		consultaTCampo.setFormat(null);
+		consultaTCampo.setGroup("header");
+		consultaTCampo.setLength(60);
+		consultaTCampo.setDbFieldType("varchar");
+		consultaTCampo.setDecimals(0);
+		consultaTCampo.setPersistible(true);
+		consultaTCampo.setLabel("Consulta Tratamiento");
+		consultaTCampo.setUuid(generarToken());
+		consultaTCampo.setComment("Consulta Tratamiento");
+		consultaTCampo.setAffects(null);
+		consultaTCampo.setFilter(null);
+		consultaTCampo.setEvents("*");
+		consultaTCampo.setOrigin(null);
+		consultaTCampo.setValue("");
 
+		orden++;
+		pacienteCodigo.setName("paciente");
+		pacienteCodigo.setFieldName("paciente");
+		pacienteCodigo.setCss("form-control");
+		pacienteCodigo.setOrder(orden);
+		pacienteCodigo.setComponentType("texto");
+		pacienteCodigo.setReadOnly(false);
+		pacienteCodigo.setHidden(false);
+		pacienteCodigo.setRequired(false);
+		pacienteCodigo.setShowInBasket(true);
+		pacienteCodigo.setId(false);
+		pacienteCodigo.setSearcheable(true);
+		pacienteCodigo.setValidation(null);
+		pacienteCodigo.setFormat(null);
+		pacienteCodigo.setGroup("header");
+		pacienteCodigo.setLength(60);
+		pacienteCodigo.setDbFieldType("varchar");
+		pacienteCodigo.setDecimals(0);
+		pacienteCodigo.setPersistible(true);
+		pacienteCodigo.setLabel("Paciente");
+		pacienteCodigo.setUuid(generarToken());
+		pacienteCodigo.setComment("Paciente");
+		pacienteCodigo.setAffects(null);
+		pacienteCodigo.setFilter(null);
+		pacienteCodigo.setEvents("*");
+		pacienteCodigo.setOrigin(null);
+		pacienteCodigo.setValue("");
+		
+		
 		//Agregar todos los campos *
+		campos.add(codigocitaCampo);
 		campos.add(statusCampo);
 		campos.add(fyhCampo);
+		campos.add(fyhfCampo);
 		campos.add(dienteCampo);
 		campos.add(obsCampo);
+		campos.add(recetaCampo);
 		campos.add(padecimientoCampo);
 		campos.add(tratamientoCampo);
-		campos.add(figuraCampo);
+		//campos.add(figuraCampo);
 		campos.add(uuidCampo);
 		campos.add(uuidpCampo);
 		campos.add(uuideCampo);
+		campos.add(uuidrCampo);
 		campos.add(consultaCampo);
-
+		campos.add(consultaTCampo);
+		campos.add(pacienteCodigo);
+		
+		
 		forma.setModel(campos);
 		forma.setMethods(metodos);
 

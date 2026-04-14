@@ -43,7 +43,7 @@ public class Dental_consulta extends GenerateCode{
 			buttonGuardar.setCss("btn btn-primary");
 			buttonGuardar.setEvents("nuevo");
 			buttonGuardar.setInstruction("Formulario guardado correctamente");
-			buttonGuardar.setLabel("Finalizar consulta");
+			buttonGuardar.setLabel("Guardar cambios");
 			buttonGuardar.setModule(modulo);
 			buttonGuardar.setName("guardar");
 			buttonGuardar.setOrder(1);
@@ -88,15 +88,15 @@ public class Dental_consulta extends GenerateCode{
 			metodos.add(buttonActualizar);
 			
 			Button buttonConsultar = new Button();
-			buttonConsultar.setCommandName("consultar");
-			buttonConsultar.setComment("Boton consultar");
-			buttonConsultar.setComponentType("consultarjs");
+			buttonConsultar.setCommandName("tratamiento");
+			buttonConsultar.setComment("Boton tratamiento");
+			buttonConsultar.setComponentType("tratamientojs");
 			buttonConsultar.setCss("btn btn-primary");
 			buttonConsultar.setEvents("nuevo,detalle");
-			buttonConsultar.setInstruction("Consultar padecimiento");
-			buttonConsultar.setLabel("Consultar Padecimiento");
+			buttonConsultar.setInstruction("Registrar tratamiento");
+			buttonConsultar.setLabel("Registrar tratamiento");
 			buttonConsultar.setModule(modulo);
-			buttonConsultar.setName("consultar");
+			buttonConsultar.setName("tratamiento");
 			buttonConsultar.setOrder(3);
 			buttonConsultar.setResourceName("caracteristica");
 			buttonConsultar.setResourceType("form");
@@ -105,21 +105,38 @@ public class Dental_consulta extends GenerateCode{
 			metodos.add(buttonConsultar);
 
 			Button buttonRegistrar = new Button();
-			buttonRegistrar.setCommandName("registrar");
-			buttonRegistrar.setComment("Boton registrar");
-			buttonRegistrar.setComponentType("registrarjs");
+			buttonRegistrar.setCommandName("padecimiento");
+			buttonRegistrar.setComment("Boton padecimiento");
+			buttonRegistrar.setComponentType("padecimientojs");
 			buttonRegistrar.setCss("btn btn-danger");
 			buttonRegistrar.setEvents("nuevo,detalle");
 			buttonRegistrar.setInstruction("Registrar padecimiento");
 			buttonRegistrar.setLabel("Registrar Padecimiento");
 			buttonRegistrar.setModule(modulo);
-			buttonRegistrar.setName("registrar");
+			buttonRegistrar.setName("padecimiento");
 			buttonRegistrar.setOrder(4);
 			buttonRegistrar.setResourceName("caracteristica");
 			buttonRegistrar.setResourceType("form");
 			buttonRegistrar.setUuid(generarToken());
 			buttonRegistrar.setVersion(version);
 			metodos.add(buttonRegistrar);
+			
+			/*Button buttonAgendar = new Button();
+			buttonAgendar.setCommandName("agendar");
+			buttonAgendar.setComment("Boton agendar");
+			buttonAgendar.setComponentType("agendarjs");
+			buttonAgendar.setCss("btn btn-danger");
+			buttonAgendar.setEvents("nuevo,detalle");
+			buttonAgendar.setInstruction("Agendar");
+			buttonAgendar.setLabel("Agendar");
+			buttonAgendar.setModule(modulo);
+			buttonAgendar.setName("agendar");
+			buttonAgendar.setOrder(4);
+			buttonAgendar.setResourceName("caracteristica");
+			buttonAgendar.setResourceType("form");
+			buttonAgendar.setUuid(generarToken());
+			buttonAgendar.setVersion(version);
+			metodos.add(buttonAgendar);*/
 			
 			
 		}else {
@@ -212,12 +229,15 @@ public class Dental_consulta extends GenerateCode{
 		Field codigocitaCampo = new Field();
 		Field codigoconsultaCampo = new Field();
 		Field faltaCampo = new Field();
+		Field faltafCampo = new Field();
 		Field sucursalCampo = new Field();
 		Field especialistaCampo = new Field();
 		Field pesoCampo = new Field();
 		Field estaturaCampo = new Field();
 		Field presionCampo = new Field();
 		Field temperaturaCampo = new Field();
+		Field statusCampo = new Field();
+		Field recetaCampo = new Field();
 		Field uuidCampo = new Field();
 		Field uuidpCampo = new Field();
 		Field uuideCampo = new Field();
@@ -245,7 +265,7 @@ public class Dental_consulta extends GenerateCode{
 		forma.setUuid(generarToken());
 		forma.setPersistible(true);
 		forma.setValidate(true);
-		forma.setLastModificationDate(new java.util.Date().getTime());;
+		forma.setLastModificationDate(new java.util.Date().getTime());
 
 
 		codigocitaCampo.setName("codigocita");
@@ -331,6 +351,34 @@ public class Dental_consulta extends GenerateCode{
 		faltaCampo.setOrigin(null);
 		faltaCampo.setValue("${default::fechayHoraCorto}");
 		
+		orden++;
+		faltafCampo.setName("fechayhoraf");
+		faltafCampo.setFieldName("fechayhoraf");
+		faltafCampo.setCss("form-control");
+		faltafCampo.setOrder(orden);
+		faltafCampo.setComponentType("texto");
+		faltafCampo.setReadOnly(true);
+		faltafCampo.setHidden(false);
+		faltafCampo.setRequired(false);
+		faltafCampo.setShowInBasket(true);
+		faltafCampo.setId(false);
+		faltafCampo.setSearcheable(true);
+		faltafCampo.setValidation("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$");
+		faltafCampo.setFormat(null);
+		faltafCampo.setGroup("header");
+		faltafCampo.setLength(10);
+		faltafCampo.setDbFieldType("datetime");
+		faltafCampo.setDecimals(0);
+		faltafCampo.setPersistible(true);
+		faltafCampo.setLabel("Fecha/Hora fin de consulta");
+		faltafCampo.setUuid(generarToken());
+		faltafCampo.setComment("falta");
+		faltafCampo.setAffects(null);
+		faltafCampo.setFilter(null);
+		faltafCampo.setEvents("*");
+		faltafCampo.setOrigin(null);
+		faltafCampo.setValue(null);
+		
 		orden++;		
 		sucursalCampo.setName("sucursal");
 		sucursalCampo.setFieldName("sucursal");
@@ -364,7 +412,7 @@ public class Dental_consulta extends GenerateCode{
 		especialistaCampo.setFieldName("especialista");
 		especialistaCampo.setCss("form-control");
 		especialistaCampo.setOrder(orden);
-		especialistaCampo.setComponentType("lista");
+		especialistaCampo.setComponentType("sucursal");
 		especialistaCampo.setReadOnly(false);
 		especialistaCampo.setHidden(false);
 		especialistaCampo.setRequired(true);
@@ -384,7 +432,7 @@ public class Dental_consulta extends GenerateCode{
 		especialistaCampo.setAffects(null);
 		especialistaCampo.setFilter(null);
 		especialistaCampo.setEvents("*");
-		especialistaCampo.setOrigin(null);
+		especialistaCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"codigo\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"especialista\"}]}");		
 		especialistaCampo.setValue("");
 
 
@@ -504,6 +552,62 @@ public class Dental_consulta extends GenerateCode{
 
 
 		orden++;
+		statusCampo.setName("status");
+		statusCampo.setFieldName("status");
+		statusCampo.setCss("form-control");
+		statusCampo.setOrder(orden);
+		statusCampo.setComponentType("lista");
+		statusCampo.setReadOnly(false);
+		statusCampo.setHidden(false);
+		statusCampo.setRequired(false);
+		statusCampo.setShowInBasket(true);
+		statusCampo.setId(false);
+		statusCampo.setSearcheable(false);
+		statusCampo.setValidation(null);
+		statusCampo.setFormat(null);
+		statusCampo.setGroup("header");
+		statusCampo.setLength(50);
+		statusCampo.setDbFieldType("varchar");
+		statusCampo.setDecimals(0);
+		statusCampo.setPersistible(true);
+		statusCampo.setLabel("Status consulta");
+		statusCampo.setUuid(generarToken());
+		statusCampo.setComment("Status");
+		statusCampo.setAffects(null);
+		statusCampo.setFilter(null);
+		statusCampo.setEvents("*");
+		statusCampo.setOrigin("{\"origin\":\"recurso\",\"resource\":\"inlinevalues\",\"fields\":[{\"name\":\"Iniciada,Finalizada,Cancelada\"}]}");
+		statusCampo.setValue("Iniciada");
+		
+		orden++;
+		recetaCampo.setName("receta");
+		recetaCampo.setFieldName("receta");
+		recetaCampo.setCss("form-control");
+		recetaCampo.setOrder(orden);
+		recetaCampo.setComponentType("lista");
+		recetaCampo.setReadOnly(false);
+		recetaCampo.setHidden(false);
+		recetaCampo.setRequired(false);
+		recetaCampo.setShowInBasket(true);
+		recetaCampo.setId(false);
+		recetaCampo.setSearcheable(false);
+		recetaCampo.setValidation(null);
+		recetaCampo.setFormat(null);
+		recetaCampo.setGroup("header");
+		recetaCampo.setLength(60);
+		recetaCampo.setDbFieldType("varchar");
+		recetaCampo.setDecimals(0);
+		recetaCampo.setPersistible(true);
+		recetaCampo.setLabel("Plantilla de receta");
+		recetaCampo.setUuid(generarToken());
+		recetaCampo.setComment("receta");
+		recetaCampo.setAffects(null);
+		recetaCampo.setFilter(null);
+		recetaCampo.setEvents("*");
+		recetaCampo.setOrigin("{\"origin\":\"recurso\",\"resource\":\"inlinevalues\",\"fields\":[{\"name\":\"Ninguna,Detalle,Resumen,Detalle y Resumen,Editar Detalle,Editar Resumen, Editar Detalle y Resumen\"}]}");
+		recetaCampo.setValue("Ninguna");
+		
+		orden++;
 		uuidCampo.setName("uuid");
 		uuidCampo.setFieldName("uuid");
 		uuidCampo.setCss("form-control");
@@ -594,12 +698,15 @@ public class Dental_consulta extends GenerateCode{
 		campos.add(codigocitaCampo);
 		campos.add(codigoconsultaCampo);
 		campos.add(faltaCampo);
+		campos.add(faltafCampo);
 		campos.add(sucursalCampo);
 		campos.add(especialistaCampo);
 		campos.add(pesoCampo);
 		campos.add(estaturaCampo);
 		campos.add(presionCampo);
 		campos.add(temperaturaCampo);
+		campos.add(statusCampo);
+		campos.add(recetaCampo);
 		campos.add(uuidCampo);
 		campos.add(uuidpCampo);
 		campos.add(uuideCampo);

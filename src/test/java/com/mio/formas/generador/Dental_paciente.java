@@ -186,7 +186,6 @@ public class Dental_paciente extends GenerateCode{
 		Field uuideCampo = new Field();
 		Field aprentescoCampo = new Field();
 		Field odontogramaCampo = new Field();
-		Field periodontogramaCampo = new Field();
 		
 		Resource forma = new Resource();
 
@@ -210,6 +209,7 @@ public class Dental_paciente extends GenerateCode{
 		forma.setUuid(generarToken());
 		forma.setPersistible(true);
 		forma.setValidate(true);
+		forma.setLastModificationDate(new java.util.Date().getTime());
 
 		codigoCampo.setName("codigo");
 		codigoCampo.setFieldName("codigo");
@@ -861,7 +861,7 @@ public class Dental_paciente extends GenerateCode{
 		idiomaCampo.setFormat(null);
 		idiomaCampo.setGroup("header");
 		idiomaCampo.setLength(45);
-		idiomaCampo.setDbFieldType("list");
+		idiomaCampo.setDbFieldType("varchar");
 		idiomaCampo.setDecimals(0);
 		idiomaCampo.setPersistible(true);
 		idiomaCampo.setLabel("Idioma");
@@ -957,7 +957,7 @@ public class Dental_paciente extends GenerateCode{
 		sucursalCampo.setAffects(null);
 		sucursalCampo.setFilter(null);
 		sucursalCampo.setEvents("*");
-		sucursalCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"sucursal\"}]}");		
+		sucursalCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"codigo\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"sucursal\"}]}");		
 		sucursalCampo.setValue("");
 		
 		orden++;
@@ -987,34 +987,6 @@ public class Dental_paciente extends GenerateCode{
 		odontogramaCampo.setEvents("*");
 		odontogramaCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"odontograma\",\"fields\":[{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"uuid\", \"filter\":\"\"}]}");
 		odontogramaCampo.setValue("");
-		
-		orden++;
-		periodontogramaCampo.setName("periodontograma");
-		periodontogramaCampo.setFieldName("periodontograma");
-		periodontogramaCampo.setCss("form-control");
-		periodontogramaCampo.setOrder(orden);
-		periodontogramaCampo.setComponentType("texto");
-		periodontogramaCampo.setReadOnly(true);
-		periodontogramaCampo.setHidden(false);
-		periodontogramaCampo.setRequired(false);
-		periodontogramaCampo.setShowInBasket(true);
-		periodontogramaCampo.setId(false);
-		periodontogramaCampo.setSearcheable(true);
-		periodontogramaCampo.setValidation(null);
-		periodontogramaCampo.setFormat(null);
-		periodontogramaCampo.setGroup("header");
-		periodontogramaCampo.setLength(60);
-		periodontogramaCampo.setDbFieldType("varchar");
-		periodontogramaCampo.setDecimals(0);
-		periodontogramaCampo.setPersistible(true);
-		periodontogramaCampo.setLabel("Periodontograma");
-		periodontogramaCampo.setUuid(generarToken());
-		periodontogramaCampo.setComment("Periodontograma");
-		periodontogramaCampo.setAffects(null);
-		periodontogramaCampo.setFilter(null);
-		periodontogramaCampo.setEvents("*");
-		periodontogramaCampo.setOrigin("");
-		periodontogramaCampo.setValue("");
 		
 		//Estos son los ultimos campos
 		
@@ -1130,7 +1102,6 @@ public class Dental_paciente extends GenerateCode{
 		campos.add(profesionCampo);
 		campos.add(sucursalCampo);
 		campos.add(odontogramaCampo);
-		campos.add(periodontogramaCampo);
 		
 		forma.setModel(campos);
 		forma.setMethods(metodos);

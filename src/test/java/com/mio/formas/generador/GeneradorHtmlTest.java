@@ -21,7 +21,7 @@ import com.formuscmp.formus.generator.IGenerador;
 import com.formuscmp.formus.resource.Resource;
 
 /**
- * @author jcruzrey
+ * @author jcruzreyf
  *
  */
 public class GeneradorHtmlTest {

@@ -69,6 +69,82 @@ public class Dental_cita extends GenerateCode{
 			buttonActualizar.setUuid(generarToken());
 			buttonActualizar.setVersion(version);
 			metodos.add(buttonActualizar);
+			
+			Button mostrarActualizar = new Button();
+			mostrarActualizar.setCommandName("mostrar");
+			mostrarActualizar.setComment("Boton mostrar");
+			mostrarActualizar.setComponentType("botonjs");
+			mostrarActualizar.setCss("btn btn-danger");
+			mostrarActualizar.setEvents("agenda");
+			mostrarActualizar.setInstruction("Formulario actualizado correctamente");
+			mostrarActualizar.setLabel("Mostrar");
+			mostrarActualizar.setModule(modulo);
+			mostrarActualizar.setName("mostrar");
+			mostrarActualizar.setOrder(2);
+			mostrarActualizar.setResourceName(recurso);
+			mostrarActualizar.setResourceType("form");
+			mostrarActualizar.setUuid(generarToken());
+			mostrarActualizar.setVersion(version);
+			metodos.add(mostrarActualizar);
+			
+			Button botonConfirmar = new Button();
+			botonConfirmar.setCommandName("confirmar");
+			botonConfirmar.setComment("Boton confirmar");
+			botonConfirmar.setComponentType("ligadd");
+			botonConfirmar.setCss("dropdown-item");
+			botonConfirmar.setEvents("mostrar");
+			botonConfirmar.setInstruction("Formulario actualizado correctamente");
+			botonConfirmar.setLabel("Confirmar");
+			botonConfirmar.setModule(modulo);
+			botonConfirmar.setName("confirmar");
+			botonConfirmar.setOrder(2);
+			botonConfirmar.setResourceName(recurso);
+			botonConfirmar.setResourceType("form");
+			botonConfirmar.setUuid(generarToken());
+			botonConfirmar.setVersion(version);
+			botonConfirmar.setTarget("#mensaje");
+			botonConfirmar.setSwap("outerHTML");
+			metodos.add(botonConfirmar);
+			
+			Button botonReagendar = new Button();
+			botonReagendar.setCommandName("reagendar");
+			botonReagendar.setComment("Boton mostrar");
+			botonReagendar.setComponentType("ligadd");
+			botonReagendar.setCss("dropdown-item");
+			botonReagendar.setEvents("mostrar");
+			botonReagendar.setInstruction("Formulario actualizado correctamente");
+			botonReagendar.setLabel("Reagendar");
+			botonReagendar.setModule(modulo);
+			botonReagendar.setName("reagendar");
+			botonReagendar.setOrder(2);
+			botonReagendar.setResourceName(recurso);
+			botonReagendar.setResourceType("form");
+			botonReagendar.setUuid(generarToken());
+			botonReagendar.setVersion(version);
+			botonReagendar.setTarget("#mensaje");
+			botonReagendar.setSwap("outerHTML");
+			metodos.add(botonReagendar);
+			
+			Button botonCancelar = new Button();
+			botonCancelar.setCommandName("cancelar");
+			botonCancelar.setComment("Boton cancelar");
+			botonCancelar.setComponentType("ligadd");
+			botonCancelar.setCss("dropdown-item");
+			botonCancelar.setEvents("mostrar");
+			botonCancelar.setInstruction("Formulario actualizado correctamente");
+			botonCancelar.setLabel("Cancelar");
+			botonCancelar.setModule(modulo);
+			botonCancelar.setName("cancelar");
+			botonCancelar.setOrder(2);
+			botonCancelar.setResourceName(recurso);
+			botonCancelar.setResourceType("form");
+			botonCancelar.setUuid(generarToken());
+			botonCancelar.setVersion(version);
+			botonCancelar.setTarget("#mensaje");
+			botonCancelar.setSwap("outerHTML");
+			metodos.add(botonCancelar);
+			
+			
 		}else {
 			Button buttonGuardar = new Button();
 			buttonGuardar.setCommandName("save");
@@ -162,6 +238,7 @@ public class Dental_cita extends GenerateCode{
 		Field sucursalCampo        = new Field();
 		Field nuevoPacienteCampo   = new Field();
 		Field pacienteCampo        = new Field();
+		Field statusCampo        = new Field();
 		Field uuidCampo            = new Field();
 		Field uuideCampo           = new Field();
 		Field uuidpCampo           = new Field();
@@ -207,13 +284,13 @@ public class Dental_cita extends GenerateCode{
 		codigoCampo.setValidation(null);
 		codigoCampo.setFormat(null);
 		codigoCampo.setGroup("header");
-		codigoCampo.setLength(60);
+		codigoCampo.setLength(20);
 		codigoCampo.setDbFieldType("varchar");
 		codigoCampo.setDecimals(0);
 		codigoCampo.setPersistible(true);
 		codigoCampo.setLabel("Codigo Cita (Auto)");
 		codigoCampo.setUuid(generarToken());
-		codigoCampo.setComment("codigoconsulta");
+		codigoCampo.setComment("Cita");
 		codigoCampo.setAffects(null);
 		codigoCampo.setFilter(null);
 		codigoCampo.setEvents("*");
@@ -239,7 +316,7 @@ public class Dental_cita extends GenerateCode{
 		fechayhoraCampo.setDbFieldType("datetime");
 		fechayhoraCampo.setDecimals(0);
 		fechayhoraCampo.setPersistible(true);
-		fechayhoraCampo.setLabel("Fecha/Hora de la cita (aaaa-mm-dd 24:00:00)");
+		fechayhoraCampo.setLabel("Fecha/Hora");
 		fechayhoraCampo.setUuid(generarToken());
 		fechayhoraCampo.setComment("fechayhora");
 		fechayhoraCampo.setAffects(null);
@@ -331,7 +408,7 @@ public class Dental_cita extends GenerateCode{
 		nuevoPacienteCampo.setEvents("*");
 		nuevoPacienteCampo.setOrigin(null);
 		nuevoPacienteCampo.setValue("");
-
+		
 		orden++;
 		pacienteCampo.setName("paciente");
 		pacienteCampo.setFieldName("paciente");
@@ -359,6 +436,34 @@ public class Dental_cita extends GenerateCode{
 		pacienteCampo.setEvents("*");
 		pacienteCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"codigo\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"paciente\"}]}");		
 		pacienteCampo.setValue("");
+
+		orden++;
+		statusCampo.setName("status");
+		statusCampo.setFieldName("status");
+		statusCampo.setCss("form-control");
+		statusCampo.setOrder(orden);
+		statusCampo.setComponentType("lista");
+		statusCampo.setReadOnly(false);
+		statusCampo.setHidden(false);
+		statusCampo.setRequired(false);
+		statusCampo.setShowInBasket(true);
+		statusCampo.setId(false);
+		statusCampo.setSearcheable(false);
+		statusCampo.setValidation(null);
+		statusCampo.setFormat(null);
+		statusCampo.setGroup("header");
+		statusCampo.setLength(50);
+		statusCampo.setDbFieldType("varchar");
+		statusCampo.setDecimals(0);
+		statusCampo.setPersistible(true);
+		statusCampo.setLabel("Status cita");
+		statusCampo.setUuid(generarToken());
+		statusCampo.setComment("Status");
+		statusCampo.setAffects(null);
+		statusCampo.setFilter(null);
+		statusCampo.setEvents("*");
+		statusCampo.setOrigin("{\"origin\":\"recurso\",\"resource\":\"inlinevalues\",\"fields\":[{\"name\":\"Agendada,Reagendada,Confirmada,En Progreso,Atendida,Cancelada\"}]}");
+		statusCampo.setValue("Agendada");
 
 		orden++;
 		uuidCampo.setName("uuid");
@@ -451,6 +556,7 @@ public class Dental_cita extends GenerateCode{
 		campos.add(sucursalCampo);
 		campos.add(nuevoPacienteCampo);
 		campos.add(pacienteCampo);
+		campos.add(statusCampo);
 		campos.add(uuidCampo);
 		campos.add(uuideCampo);
 		campos.add(uuidpCampo);
