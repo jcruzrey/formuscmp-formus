@@ -265,6 +265,7 @@ public class Dental_consulta extends GenerateCode{
 		forma.setUuid(generarToken());
 		forma.setPersistible(true);
 		forma.setValidate(true);
+		forma.setPersistible(true);
 		forma.setLastModificationDate(new java.util.Date().getTime());
 
 
@@ -598,13 +599,13 @@ public class Dental_consulta extends GenerateCode{
 		recetaCampo.setDbFieldType("varchar");
 		recetaCampo.setDecimals(0);
 		recetaCampo.setPersistible(true);
-		recetaCampo.setLabel("Plantilla de receta");
+		recetaCampo.setLabel("Receta");
 		recetaCampo.setUuid(generarToken());
 		recetaCampo.setComment("receta");
 		recetaCampo.setAffects(null);
 		recetaCampo.setFilter(null);
 		recetaCampo.setEvents("*");
-		recetaCampo.setOrigin("{\"origin\":\"recurso\",\"resource\":\"inlinevalues\",\"fields\":[{\"name\":\"Ninguna,Detalle,Resumen,Detalle y Resumen,Editar Detalle,Editar Resumen, Editar Detalle y Resumen\"}]}");
+		recetaCampo.setOrigin("{\"origin\":\"recurso\",\"resource\":\"inlinevalues\",\"fields\":[{\"name\":\"Ninguna,Previsualizar,Editar\"}]}");
 		recetaCampo.setValue("Ninguna");
 		
 		orden++;

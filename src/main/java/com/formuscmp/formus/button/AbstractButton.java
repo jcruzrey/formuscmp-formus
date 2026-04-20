@@ -5,6 +5,7 @@ package com.formuscmp.formus.button;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * Defines a button to be used in the UI as component
@@ -41,6 +42,7 @@ public abstract class AbstractButton implements Comparable<AbstractButton>, Seri
 	private Long execution = 0L;
 	private String resourcePath;
 	private String level;
+	private String javaClass;
 	/**
 	 * 
 	 * @return instruction
@@ -404,16 +406,6 @@ public abstract class AbstractButton implements Comparable<AbstractButton>, Seri
 		this.execution = execution;
 	}
 	
-	@Override
-	public String toString() {
-		return "AbstractButton [commandName=" + commandName + ", name=" + name + ", label=" + label + ", componentType="
-				+ componentType + ", css=" + css + ", order=" + order + ", sourceCode=" + sourceCode + ", resourceName="
-				+ resourceName + ", module=" + module + ", hidden=" + hidden + ", resourceType=" + resourceType
-				+ ", version=" + version + ", events=" + events + ", status=" + status + ", view=" + view
-				+ ", instruction=" + instruction + ", uuid=" + uuid + ", comment=" + comment + ", template=" + template
-				+ ", icon=" + icon + ", alias=" + alias + ", ui=" + ui + ", target=" + target + ", swap=" + swap
-				+ ", execution=" + execution + "]";
-	}
 	/**
 	 * @return the resourcePath
 	 */
@@ -437,6 +429,56 @@ public abstract class AbstractButton implements Comparable<AbstractButton>, Seri
 	 */
 	public void setLevel(String level) {
 		this.level = level;
+	}
+	public String getJavaClass() {
+		return javaClass;
+	}
+	public void setJavaClass(String javaClass) {
+		this.javaClass = javaClass;
+	}
+	
+	@Override
+	public String toString() {
+		return "AbstractButton [commandName=" + commandName + ", name=" + name + ", label=" + label + ", componentType="
+				+ componentType + ", css=" + css + ", order=" + order + ", sourceCode=" + sourceCode + ", resourceName="
+				+ resourceName + ", module=" + module + ", hidden=" + hidden + ", resourceType=" + resourceType
+				+ ", version=" + version + ", events=" + events + ", status=" + status + ", view=" + view
+				+ ", instruction=" + instruction + ", uuid=" + uuid + ", comment=" + comment + ", template=" + template
+				+ ", icon=" + icon + ", alias=" + alias + ", ui=" + ui + ", target=" + target + ", swap=" + swap
+				+ ", execution=" + execution + ", resourcePath=" + resourcePath + ", level=" + level + ", javaClass="
+				+ javaClass + "]";
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(alias, commandName, comment, componentType, css, events, execution, hidden, icon,
+				instruction, javaClass, label, level, module, name, order, resourceName, resourcePath, resourceType,
+				sourceCode, status, swap, target, template, ui, uuid, version, view);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractButton other = (AbstractButton) obj;
+		return Objects.equals(alias, other.alias) && Objects.equals(commandName, other.commandName)
+				&& Objects.equals(comment, other.comment) && Objects.equals(componentType, other.componentType)
+				&& Objects.equals(css, other.css) && Objects.equals(events, other.events)
+				&& Objects.equals(execution, other.execution) && hidden == other.hidden
+				&& Objects.equals(icon, other.icon) && Objects.equals(instruction, other.instruction)
+				&& Objects.equals(javaClass, other.javaClass) && Objects.equals(label, other.label)
+				&& Objects.equals(level, other.level) && Objects.equals(module, other.module)
+				&& Objects.equals(name, other.name) && order == other.order
+				&& Objects.equals(resourceName, other.resourceName) && Objects.equals(resourcePath, other.resourcePath)
+				&& Objects.equals(resourceType, other.resourceType) && Objects.equals(sourceCode, other.sourceCode)
+				&& Objects.equals(status, other.status) && Objects.equals(swap, other.swap)
+				&& Objects.equals(target, other.target) && Objects.equals(template, other.template)
+				&& Objects.equals(ui, other.ui) && Objects.equals(uuid, other.uuid)
+				&& Objects.equals(version, other.version) && Objects.equals(view, other.view);
 	}
 
 }
