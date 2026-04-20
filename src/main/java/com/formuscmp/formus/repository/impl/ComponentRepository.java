@@ -299,7 +299,17 @@ public class ComponentRepository implements IRepository, Closeable{
 							String llaveCacheForma = forma.getUuid();
 							MenuDto menu = new MenuDto(splittedFileName[splittedFileName.length - 6], forma.getTitle(), null, forma.getVersion(), forma.getUuid(),
 									forma.getModule(), resourceType, forma.getName(), forma.isCreateable());
-							forma.setResourcePath(filePath.toString());
+							
+							String rutaJson = "";
+							if (filePath!=null) {
+								
+								int idx = filePath.toString().indexOf("config");
+								if (idx > -1) {
+									rutaJson = filePath.toString().substring(idx);
+								}
+							}
+							
+							forma.setResourcePath(rutaJson);
 							
 							jedisSet(llaveCacheForma, objectMapper.writeValueAsString(forma));
 							lista.add(menu);

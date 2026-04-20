@@ -180,7 +180,7 @@ public class Dental_receta extends GenerateCode {
 		forma.setModule(modulo);
 		forma.setBasket("basket");
 		forma.setCreateable(true);
-		forma.setTable("recetamedica");
+		forma.setTable("recetadental");
 		forma.setValidate(true);
 		forma.setInstruction("Por favor complete la receta");
 		forma.setUuid(generarToken());
@@ -229,7 +229,7 @@ public class Dental_receta extends GenerateCode {
 		nombreCampo.setHidden(false);
 		nombreCampo.setRequired(true);
 		nombreCampo.setShowInBasket(true);
-		nombreCampo.setId(true);
+		nombreCampo.setId(false);
 		nombreCampo.setSearcheable(true);
 		nombreCampo.setValidation(null);
 		nombreCampo.setFormat(null);

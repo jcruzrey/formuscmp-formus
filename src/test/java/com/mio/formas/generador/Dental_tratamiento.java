@@ -160,6 +160,7 @@ public class Dental_tratamiento extends GenerateCode {
 		Field nombreCampo = new Field();
 		Field descriptorCampo = new Field();
 		Field precioCampo = new Field();
+		Field tiempoCampo = new Field();
 		Field uuidCampo = new Field();
 		Field uuideCampo = new Field();
 		Field uuidpCampo = new Field();
@@ -300,6 +301,34 @@ public class Dental_tratamiento extends GenerateCode {
 		precioCampo.setOrigin(null);
 		precioCampo.setValue("");
 		
+		orden++;		
+		tiempoCampo.setName("tiempo");
+		tiempoCampo.setFieldName("tiempo");
+		tiempoCampo.setCss("form-control");
+		tiempoCampo.setOrder(orden);
+		tiempoCampo.setComponentType("texto");
+		tiempoCampo.setReadOnly(false);
+		tiempoCampo.setHidden(false);
+		tiempoCampo.setRequired(true);
+		tiempoCampo.setShowInBasket(true);
+		tiempoCampo.setId(false);
+		tiempoCampo.setSearcheable(true);
+		tiempoCampo.setValidation("^-?\\d{1,3}$");
+		tiempoCampo.setFormat("000");
+		tiempoCampo.setGroup("header");
+		tiempoCampo.setLength(3);
+		tiempoCampo.setDbFieldType("int");
+		tiempoCampo.setDecimals(0);
+		tiempoCampo.setPersistible(true);
+		tiempoCampo.setLabel("Tiempo de atencion promedio en minutos");
+		tiempoCampo.setUuid(generarToken());
+		tiempoCampo.setComment("tiempo");
+		tiempoCampo.setAffects(null);
+		tiempoCampo.setFilter(null);
+		tiempoCampo.setEvents("*");
+		tiempoCampo.setOrigin(null);
+		tiempoCampo.setValue("");
+		
 		orden++;
 		uuidCampo.setName("uuid");
 		uuidCampo.setFieldName("uuid");
@@ -388,6 +417,7 @@ public class Dental_tratamiento extends GenerateCode {
 		campos.add(codigoCampo);
 		campos.add(nombreCampo);
 		campos.add(descriptorCampo);
+		campos.add(tiempoCampo);
 		campos.add(precioCampo);
 		campos.add(uuidCampo);
 		campos.add(uuideCampo);
