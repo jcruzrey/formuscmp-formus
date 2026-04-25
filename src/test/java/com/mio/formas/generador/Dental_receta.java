@@ -173,7 +173,7 @@ public class Dental_receta extends GenerateCode {
 		forma.setPrefix("RCA");
 		forma.setCommandName("guardar");
 		forma.setName("receta");
-		forma.setView("recet01");
+		forma.setView("receta01");
 		forma.setTitle("Receta Dental");
 		forma.setVersion("1.0");
 		forma.setStatus("produccion");
@@ -472,6 +472,7 @@ public class Dental_receta extends GenerateCode {
 		uuideCampo.setValue("");
 
 		// Agregar todos los campos *
+		campos.add(codigoCampo);
 		campos.add(nombreCampo);
 		campos.add(fechaCampo);
 		campos.add(edadCampo);
