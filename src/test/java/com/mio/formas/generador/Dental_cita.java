@@ -58,7 +58,7 @@ public class Dental_cita extends GenerateCode{
 			buttonActualizar.setComment("Boton actualizar");
 			buttonActualizar.setComponentType("botonjs");
 			buttonActualizar.setCss("btn btn-danger");
-			buttonActualizar.setEvents("actualizar,detalle");
+			buttonActualizar.setEvents("guardar,actualizar");
 			buttonActualizar.setInstruction("Formulario actualizado correctamente");
 			buttonActualizar.setLabel("Actualizar");
 			buttonActualizar.setModule(modulo);
@@ -168,7 +168,7 @@ public class Dental_cita extends GenerateCode{
 			buttonActualizar.setComment("Update button");
 			buttonActualizar.setComponentType("buttonjs");
 			buttonActualizar.setCss("btn btn-danger");
-			buttonActualizar.setEvents("update,detail");
+			buttonActualizar.setEvents("save,update");
 			buttonActualizar.setInstruction("Form updated succesfully");
 			buttonActualizar.setLabel("Update");
 			buttonActualizar.setModule(modulo);
@@ -208,7 +208,7 @@ public class Dental_cita extends GenerateCode{
 			metodoDetalle.setEvents("save,update,detail");
 		}
 		metodoDetalle.setUuid(generarToken());
-		metodos.add(metodoDetalle);
+		//metodos.add(metodoDetalle);
 		return metodos;
 	}
 
