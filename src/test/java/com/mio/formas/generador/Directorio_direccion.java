@@ -154,12 +154,12 @@ public class Directorio_direccion extends GenerateCode{
 		forma.setPrefix("DID");
 		forma.setCommandName("guardar");
 		forma.setName("direccion");
-		forma.setView("vista");
+		forma.setView("basket");
 		forma.setTitle("direccion");
 		forma.setVersion("1.0");
 		forma.setStatus("produccion");
 		forma.setModule(modulo);
-		forma.setBasket("direccion");
+		forma.setBasket("basket");
 		forma.setCreateable(true);
 		forma.setTable("direccion");
 		forma.setValidate(true);
@@ -220,13 +220,13 @@ public class Directorio_direccion extends GenerateCode{
 		grupoCampo.setDbFieldType("varchar");
 		grupoCampo.setDecimals(0);
 		grupoCampo.setPersistible(true);
-		grupoCampo.setLabel("grupo");
+		grupoCampo.setLabel("A donde pertence la direccion");
 		grupoCampo.setUuid(generarToken());
 		grupoCampo.setComment("grupo");
 		grupoCampo.setAffects(null);
 		grupoCampo.setFilter(null);
 		grupoCampo.setEvents("*");
-		grupoCampo.setOrigin("{\"origin\":\"recurso\",\"resource\":\"inlinevalues\",\"fields\":[{\"name\":\"Hogar,Envio,Facturacion\"}]}");
+		grupoCampo.setOrigin("{\"origin\":\"recurso\",\"resource\":\"inlinevalues\",\"fields\":[{\"name\":\"Hogar,Envio,Facturación\"}]}");
 		grupoCampo.setValue("");
 		
 		orden++;
@@ -284,6 +284,34 @@ public class Directorio_direccion extends GenerateCode{
 		calleCampo.setEvents("*");
 		calleCampo.setOrigin(null);
 		calleCampo.setValue("");
+		
+		orden++;
+		linea2Campo.setName("linea2");
+		linea2Campo.setFieldName("linea2");
+		linea2Campo.setCss("form-control");
+		linea2Campo.setOrder(orden);
+		linea2Campo.setComponentType("texto");
+		linea2Campo.setReadOnly(false);
+		linea2Campo.setHidden(false);
+		linea2Campo.setRequired(false);
+		linea2Campo.setShowInBasket(true);
+		linea2Campo.setId(false);
+		linea2Campo.setSearcheable(true);
+		linea2Campo.setValidation(null);
+		linea2Campo.setFormat(null);
+		linea2Campo.setGroup("header");
+		linea2Campo.setLength(20);
+		linea2Campo.setDbFieldType("varchar");
+		linea2Campo.setDecimals(0);
+		linea2Campo.setPersistible(true);
+		linea2Campo.setLabel("Linea 2 de direccion (Opcional)");
+		linea2Campo.setUuid(generarToken());
+		linea2Campo.setComment("no ext");
+		linea2Campo.setAffects(null);
+		linea2Campo.setFilter(null);
+		linea2Campo.setEvents("*");
+		linea2Campo.setOrigin(null);
+		linea2Campo.setValue("");
 		
 		orden++;
 		ciudadCampo.setName("ciudad");
@@ -370,34 +398,6 @@ public class Directorio_direccion extends GenerateCode{
 		cpostalCampo.setValue("");
 		
 		orden++;
-		linea2Campo.setName("linea2");
-		linea2Campo.setFieldName("linea2");
-		linea2Campo.setCss("form-control");
-		linea2Campo.setOrder(orden);
-		linea2Campo.setComponentType("texto");
-		linea2Campo.setReadOnly(false);
-		linea2Campo.setHidden(false);
-		linea2Campo.setRequired(false);
-		linea2Campo.setShowInBasket(true);
-		linea2Campo.setId(false);
-		linea2Campo.setSearcheable(true);
-		linea2Campo.setValidation(null);
-		linea2Campo.setFormat(null);
-		linea2Campo.setGroup("header");
-		linea2Campo.setLength(20);
-		linea2Campo.setDbFieldType("varchar");
-		linea2Campo.setDecimals(0);
-		linea2Campo.setPersistible(true);
-		linea2Campo.setLabel("Linea 2");
-		linea2Campo.setUuid(generarToken());
-		linea2Campo.setComment("no ext");
-		linea2Campo.setAffects(null);
-		linea2Campo.setFilter(null);
-		linea2Campo.setEvents("*");
-		linea2Campo.setOrigin(null);
-		linea2Campo.setValue("");
-		
-		orden++;
 		uuidCampo.setName("uuid");
 		uuidCampo.setFieldName("uuid");
 		uuidCampo.setCss("form-control");
@@ -458,7 +458,7 @@ public class Directorio_direccion extends GenerateCode{
 		uuidpCampo.setFieldName("uuidp");
 		uuidpCampo.setCss("form-control");
 		uuidpCampo.setOrder(orden);
-		uuidpCampo.setComponentType("texto");
+		uuidpCampo.setComponentType("sucursal");
 		uuidpCampo.setReadOnly(false);
 		uuidpCampo.setHidden(true);
 		uuidpCampo.setRequired(false);
@@ -472,13 +472,13 @@ public class Directorio_direccion extends GenerateCode{
 		uuidpCampo.setDbFieldType("varchar");
 		uuidpCampo.setDecimals(0);
 		uuidpCampo.setPersistible(true);
-		uuidpCampo.setLabel("uuidp");
+		uuidpCampo.setLabel("Directorio");
 		uuidpCampo.setUuid(generarToken());
 		uuidpCampo.setComment("uuidp");
 		uuidpCampo.setAffects(null);
 		uuidpCampo.setFilter(null);
 		uuidpCampo.setEvents("*");
-		uuidpCampo.setOrigin(null);
+		uuidpCampo.setOrigin("{\"origin\":\"tabla\",\"resource\":\"dircto\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"codigo\", \"filter\":\"\"},{\"name\":\"nombre\", \"filter\":\"\"},{\"name\":\"tipo\", \"filter\":\"\"}]}");		
 		uuidpCampo.setValue("");
 
 		//Agregar todos los campos *
