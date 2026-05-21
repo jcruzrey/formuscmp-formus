@@ -41,7 +41,7 @@ public class Dental_consulta extends GenerateCode{
 			buttonGuardar.setComment("Boton guardar");
 			buttonGuardar.setComponentType("guardarjs");
 			buttonGuardar.setCss("btn btn-primary");
-			buttonGuardar.setEvents("nuevo");
+			buttonGuardar.setEvents("nuevo1");
 			buttonGuardar.setInstruction("Formulario guardado correctamente");
 			buttonGuardar.setLabel("Guardar cambios");
 			buttonGuardar.setModule(modulo);
@@ -51,6 +51,7 @@ public class Dental_consulta extends GenerateCode{
 			buttonGuardar.setResourceType("form");
 			buttonGuardar.setUuid(generarToken());
 			buttonGuardar.setVersion(version);
+			buttonGuardar.setTarget("#consultaForma");
 			metodos.add(buttonGuardar);
 
 			Button buttonReceta = new Button();
@@ -75,7 +76,7 @@ public class Dental_consulta extends GenerateCode{
 			buttonActualizar.setComment("Boton actualizar");
 			buttonActualizar.setComponentType("botonjs");
 			buttonActualizar.setCss("btn btn-danger");
-			buttonActualizar.setEvents("actualizar,detalle");
+			buttonActualizar.setEvents("nuevo,actualizar,detalle");
 			buttonActualizar.setInstruction("Formulario actualizado correctamente");
 			buttonActualizar.setLabel("Actualizar");
 			buttonActualizar.setModule(modulo);
@@ -85,6 +86,7 @@ public class Dental_consulta extends GenerateCode{
 			buttonActualizar.setResourceType("form");
 			buttonActualizar.setUuid(generarToken());
 			buttonActualizar.setVersion(version);
+			buttonActualizar.setTarget("#consultaForma");
 			metodos.add(buttonActualizar);
 			
 			Button buttonConsultar = new Button();
@@ -555,7 +557,7 @@ public class Dental_consulta extends GenerateCode{
 		orden++;
 		statusCampo.setName("status");
 		statusCampo.setFieldName("status");
-		statusCampo.setCss("form-control");
+		statusCampo.setCss("form-select");
 		statusCampo.setOrder(orden);
 		statusCampo.setComponentType("lista");
 		statusCampo.setReadOnly(false);
@@ -583,7 +585,7 @@ public class Dental_consulta extends GenerateCode{
 		orden++;
 		recetaCampo.setName("receta");
 		recetaCampo.setFieldName("receta");
-		recetaCampo.setCss("form-control");
+		recetaCampo.setCss("form-select");
 		recetaCampo.setOrder(orden);
 		recetaCampo.setComponentType("lista");
 		recetaCampo.setReadOnly(false);
@@ -616,7 +618,7 @@ public class Dental_consulta extends GenerateCode{
 		uuidCampo.setComponentType("texto");
 		uuidCampo.setReadOnly(true);
 		uuidCampo.setHidden(true);
-		uuidCampo.setRequired(true);
+		uuidCampo.setRequired(false);
 		uuidCampo.setShowInBasket(true);
 		uuidCampo.setId(true);
 		uuidCampo.setSearcheable(true);

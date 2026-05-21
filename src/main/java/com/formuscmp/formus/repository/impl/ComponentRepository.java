@@ -289,13 +289,13 @@ public class ComponentRepository implements IRepository, Closeable{
 					}else {
 						Resource forma = generador.get(filePath, Resource.class);
 						if ((null!=forma) && (null!=forma.getUuid())) {
-							/*forma.setUuid(generateToken());
+							forma.setUuid(generateToken());
 							//if (forma.getDecorators()==null || forma.getDecorators().size()==0) {
 								forma.getModel().stream().forEach(f -> f.setUuid(generateToken()));
 								forma.getMethods().stream().forEach(b -> b.setUuid(generateToken()));
 								//forma.setLastModificationDate(0L);
 							//}
-							generador.put(filePath, forma);*/
+							generador.put(filePath, forma);
 							String llaveCacheForma = forma.getUuid();
 							MenuDto menu = new MenuDto(splittedFileName[splittedFileName.length - 6], forma.getTitle(), null, forma.getVersion(), forma.getUuid(),
 									forma.getModule(), resourceType, forma.getName(), forma.isCreateable());
