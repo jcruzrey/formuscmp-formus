@@ -815,7 +815,7 @@ public class Dental_paciente extends GenerateCode{
 		faltaCampo.setFilter(null);
 		faltaCampo.setEvents("*");
 		faltaCampo.setOrigin(null);
-		faltaCampo.setValue("${default::todayShort}");
+		faltaCampo.setValue("${default::hoyCorto}");
 		
 		orden++;
 		statusCampo.setName("status");
