@@ -265,7 +265,6 @@ public class Dental_cita extends GenerateCode{
 		forma.setComment("Formulario para registrar las citas");
 		forma.setOrigin("ui::case");
 		forma.setDestination("db::mysql");
-		forma.setUuid(generarToken());
 		forma.setPersistible(true);
 		forma.setValidate(true);
 		forma.setLastModificationDate(new java.util.Date().getTime());

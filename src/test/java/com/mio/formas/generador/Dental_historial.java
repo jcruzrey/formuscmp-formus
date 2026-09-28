@@ -227,7 +227,7 @@ public class Dental_historial extends GenerateCode{
 		preguntaCampo.setComponentType("texto");
 		preguntaCampo.setReadOnly(false);
 		preguntaCampo.setHidden(false);
-		preguntaCampo.setRequired(false);
+		preguntaCampo.setRequired(true);
 		preguntaCampo.setShowInBasket(false);
 		preguntaCampo.setId(false);
 		preguntaCampo.setSearcheable(false);
@@ -255,7 +255,7 @@ public class Dental_historial extends GenerateCode{
 		observacionCampo.setComponentType("texto");
 		observacionCampo.setReadOnly(false);
 		observacionCampo.setHidden(false);
-		observacionCampo.setRequired(false);
+		observacionCampo.setRequired(true);
 		observacionCampo.setShowInBasket(false);
 		observacionCampo.setId(false);
 		observacionCampo.setSearcheable(false);
@@ -283,7 +283,7 @@ public class Dental_historial extends GenerateCode{
 		sinoCampo.setComponentType("botonradio");
 		sinoCampo.setReadOnly(false);
 		sinoCampo.setHidden(false);
-		sinoCampo.setRequired(false);
+		sinoCampo.setRequired(true);
 		sinoCampo.setShowInBasket(false);
 		sinoCampo.setId(false);
 		sinoCampo.setSearcheable(false);
@@ -311,7 +311,7 @@ public class Dental_historial extends GenerateCode{
 		especifiqueCampo.setComponentType("texto");
 		especifiqueCampo.setReadOnly(false);
 		especifiqueCampo.setHidden(false);
-		especifiqueCampo.setRequired(false);
+		especifiqueCampo.setRequired(true);
 		especifiqueCampo.setShowInBasket(false);
 		especifiqueCampo.setId(false);
 		especifiqueCampo.setSearcheable(false);
@@ -339,7 +339,7 @@ public class Dental_historial extends GenerateCode{
 		grupoCampo.setComponentType("lista");
 		grupoCampo.setReadOnly(false);
 		grupoCampo.setHidden(false);
-		grupoCampo.setRequired(false);
+		grupoCampo.setRequired(true);
 		grupoCampo.setShowInBasket(false);
 		grupoCampo.setId(false);
 		grupoCampo.setSearcheable(false);

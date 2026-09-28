@@ -315,9 +315,11 @@ public class ComponentRepository implements IRepository, Closeable{
 							lista.add(menu);
 							//System.out.println(forma.getUuid());
 						}
-						/*if (forma.getName().equals("usuario")) {
+						/*if (forma.getName().equals("plan")) {
 							System.out.println(forma.getUuid());
-							System.out.println("usuario");
+							System.out.println("plan");
+						}else {
+							System.out.println(forma.getName() + "->" + forma.getUuid());
 						}*/
 					}
 				}

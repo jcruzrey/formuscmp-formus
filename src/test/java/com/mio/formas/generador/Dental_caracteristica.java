@@ -215,6 +215,12 @@ public class Dental_caracteristica extends GenerateCode{
 		Field consultaTCampo = new Field();
 		Field pacienteCodigo = new Field();
 		
+		Field precioCampo = new Field();
+		Field pagoCampo = new Field();
+		Field descuentoCampo = new Field();
+		Field ivaCampo = new Field();
+		Field totalCampo = new Field();
+		
 		Resource forma = new Resource();
 
 		//Ajustar *
@@ -721,6 +727,151 @@ public class Dental_caracteristica extends GenerateCode{
 		pacienteCodigo.setOrigin(null);
 		pacienteCodigo.setValue("");
 		
+		orden++;
+		precioCampo.setName("precio");
+		precioCampo.setFieldName("precio");
+		precioCampo.setCss("form-control");
+		precioCampo.setOrder(orden);
+		precioCampo.setComponentType("texto");
+		precioCampo.setReadOnly(false);
+		precioCampo.setHidden(false);
+		precioCampo.setRequired(false);
+		precioCampo.setShowInBasket(true);
+		precioCampo.setId(false);
+		precioCampo.setSearcheable(true);
+		precioCampo.setValidation("^(?:0|[1-9]\\d*)(?:\\.\\d+)?$");
+		precioCampo.setFormat(null);
+		precioCampo.setGroup("header");
+		precioCampo.setLength(10);
+		precioCampo.setDbFieldType("decimal");
+		precioCampo.setDecimals(2);
+		precioCampo.setPersistible(true);
+		precioCampo.setLabel("Precio");
+		precioCampo.setUuid(generarToken());
+		precioCampo.setComment("Precio");
+		precioCampo.setAffects(null);
+		precioCampo.setFilter(null);
+		precioCampo.setEvents("*");
+		precioCampo.setOrigin(null);
+		precioCampo.setValue("0");
+		precioCampo.setSuggestion("0");
+		
+		orden++;
+		pagoCampo.setName("pago");
+		pagoCampo.setFieldName("pago");
+		pagoCampo.setCss("form-control");
+		pagoCampo.setOrder(orden);
+		pagoCampo.setComponentType("texto");
+		pagoCampo.setReadOnly(false);
+		pagoCampo.setHidden(false);
+		pagoCampo.setRequired(false);
+		pagoCampo.setShowInBasket(true);
+		pagoCampo.setId(false);
+		pagoCampo.setSearcheable(true);
+		pagoCampo.setValidation("^(?:0|[1-9]\\d*)(?:\\.\\d+)?$");
+		pagoCampo.setFormat(null);
+		pagoCampo.setGroup("header");
+		pagoCampo.setLength(10);
+		pagoCampo.setDbFieldType("decimal");
+		pagoCampo.setDecimals(2);
+		pagoCampo.setPersistible(true);
+		pagoCampo.setLabel("Pago");
+		pagoCampo.setUuid(generarToken());
+		pagoCampo.setComment("pago");
+		pagoCampo.setAffects(null);
+		pagoCampo.setFilter(null);
+		pagoCampo.setEvents("*");
+		pagoCampo.setOrigin(null);
+		pagoCampo.setValue("0");
+		pagoCampo.setSuggestion("0");
+		
+		
+		orden++;
+		descuentoCampo.setName("descuento");
+		descuentoCampo.setFieldName("descuento");
+		descuentoCampo.setCss("form-control");
+		descuentoCampo.setOrder(orden);
+		descuentoCampo.setComponentType("texto");
+		descuentoCampo.setReadOnly(false);
+		descuentoCampo.setHidden(false);
+		descuentoCampo.setRequired(false);
+		descuentoCampo.setShowInBasket(true);
+		descuentoCampo.setId(false);
+		descuentoCampo.setSearcheable(true);
+		descuentoCampo.setValidation("^(?:0|[1-9]\\d*)(?:\\.\\d+)?$");
+		descuentoCampo.setFormat(null);
+		descuentoCampo.setGroup("header");
+		descuentoCampo.setLength(10);
+		descuentoCampo.setDbFieldType("decimal");
+		descuentoCampo.setDecimals(2);
+		descuentoCampo.setPersistible(true);
+		descuentoCampo.setLabel("Descuento");
+		descuentoCampo.setUuid(generarToken());
+		descuentoCampo.setComment("descuento");
+		descuentoCampo.setAffects(null);
+		descuentoCampo.setFilter(null);
+		descuentoCampo.setEvents("*");
+		descuentoCampo.setOrigin(null);
+		descuentoCampo.setValue("0");
+		descuentoCampo.setSuggestion("0");
+		
+		orden++;
+		ivaCampo.setName("iva");
+		ivaCampo.setFieldName("iva");
+		ivaCampo.setCss("form-control");
+		ivaCampo.setOrder(orden);
+		ivaCampo.setComponentType("texto");
+		ivaCampo.setReadOnly(false);
+		ivaCampo.setHidden(false);
+		ivaCampo.setRequired(false);
+		ivaCampo.setShowInBasket(true);
+		ivaCampo.setId(false);
+		ivaCampo.setSearcheable(true);
+		ivaCampo.setValidation("^(?:0|[1-9]\\d*)(?:\\.\\d+)?$");
+		ivaCampo.setFormat(null);
+		ivaCampo.setGroup("header");
+		ivaCampo.setLength(10);
+		ivaCampo.setDbFieldType("decimal");
+		ivaCampo.setDecimals(2);
+		ivaCampo.setPersistible(true);
+		ivaCampo.setLabel("Iva");
+		ivaCampo.setUuid(generarToken());
+		ivaCampo.setComment("iva");
+		ivaCampo.setAffects(null);
+		ivaCampo.setFilter(null);
+		ivaCampo.setEvents("*");
+		ivaCampo.setOrigin(null);
+		ivaCampo.setValue("0");
+		ivaCampo.setSuggestion("0");
+		
+		orden++;
+		totalCampo.setName("total");
+		totalCampo.setFieldName("total");
+		totalCampo.setCss("form-control");
+		totalCampo.setOrder(orden);
+		totalCampo.setComponentType("texto");
+		totalCampo.setReadOnly(false);
+		totalCampo.setHidden(false);
+		totalCampo.setRequired(false);
+		totalCampo.setShowInBasket(true);
+		totalCampo.setId(false);
+		totalCampo.setSearcheable(true);
+		totalCampo.setValidation("^(?:0|[1-9]\\d*)(?:\\.\\d+)?$");
+		totalCampo.setFormat(null);
+		totalCampo.setGroup("header");
+		totalCampo.setLength(10);
+		totalCampo.setDbFieldType("decimal");
+		totalCampo.setDecimals(2);
+		totalCampo.setPersistible(true);
+		totalCampo.setLabel("Total");
+		totalCampo.setUuid(generarToken());
+		totalCampo.setComment("Total");
+		totalCampo.setAffects(null);
+		totalCampo.setFilter(null);
+		totalCampo.setEvents("*");
+		totalCampo.setOrigin(null);
+		totalCampo.setValue("0");
+		totalCampo.setSuggestion("0");
 		
 		//Agregar todos los campos *
 		campos.add(codigocitaCampo);
@@ -739,8 +890,12 @@ public class Dental_caracteristica extends GenerateCode{
 		campos.add(uuidrCampo);
 		campos.add(consultaCampo);
 		campos.add(consultaTCampo);
+		campos.add(precioCampo);
 		campos.add(pacienteCodigo);
-		
+		campos.add(pagoCampo);
+		campos.add(descuentoCampo);
+		campos.add(ivaCampo);
+		campos.add(totalCampo);
 		
 		forma.setModel(campos);
 		forma.setMethods(metodos);

@@ -1,0 +1,1 @@
+<TableView.Column name="${campo.nombre}" width="${campo.ancho}" headerData="${campo.nombre}" />

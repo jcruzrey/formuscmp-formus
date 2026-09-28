@@ -237,7 +237,7 @@ public class Dental_consulta extends GenerateCode{
 		Field pesoCampo = new Field();
 		Field estaturaCampo = new Field();
 		Field presionCampo = new Field();
-		Field temperaturaCampo = new Field();
+		Field planCampo = new Field();
 		Field statusCampo = new Field();
 		Field recetaCampo = new Field();
 		Field uuidCampo = new Field();
@@ -526,32 +526,32 @@ public class Dental_consulta extends GenerateCode{
 
 
 		orden++;
-		temperaturaCampo.setName("temperatura");
-		temperaturaCampo.setFieldName("temperatura");
-		temperaturaCampo.setCss("form-control");
-		temperaturaCampo.setOrder(orden);
-		temperaturaCampo.setComponentType("texto");
-		temperaturaCampo.setReadOnly(false);
-		temperaturaCampo.setHidden(false);
-		temperaturaCampo.setRequired(true);
-		temperaturaCampo.setShowInBasket(true);
-		temperaturaCampo.setId(false);
-		temperaturaCampo.setSearcheable(true);
-		temperaturaCampo.setValidation(null);
-		temperaturaCampo.setFormat(null);
-		temperaturaCampo.setGroup("header");
-		temperaturaCampo.setLength(10);
-		temperaturaCampo.setDbFieldType("varchar");
-		temperaturaCampo.setDecimals(0);
-		temperaturaCampo.setPersistible(true);
-		temperaturaCampo.setLabel("Temperatura");
-		temperaturaCampo.setUuid(generarToken());
-		temperaturaCampo.setComment("temperatura");
-		temperaturaCampo.setAffects(null);
-		temperaturaCampo.setFilter(null);
-		temperaturaCampo.setEvents("*");
-		temperaturaCampo.setOrigin(null);
-		temperaturaCampo.setValue("");
+		planCampo.setName("plan");
+		planCampo.setFieldName("plan");
+		planCampo.setCss("form-control");
+		planCampo.setOrder(orden);
+		planCampo.setComponentType("texto");
+		planCampo.setReadOnly(false);
+		planCampo.setHidden(false);
+		planCampo.setRequired(true);
+		planCampo.setShowInBasket(true);
+		planCampo.setId(false);
+		planCampo.setSearcheable(true);
+		planCampo.setValidation(null);
+		planCampo.setFormat(null);
+		planCampo.setGroup("header");
+		planCampo.setLength(60);
+		planCampo.setDbFieldType("varchar");
+		planCampo.setDecimals(0);
+		planCampo.setPersistible(true);
+		planCampo.setLabel("Plan");
+		planCampo.setUuid(generarToken());
+		planCampo.setComment("plan");
+		planCampo.setAffects(null);
+		planCampo.setFilter(null);
+		planCampo.setEvents("*");
+		planCampo.setOrigin(null);
+		planCampo.setValue("");
 
 
 		orden++;
@@ -707,7 +707,7 @@ public class Dental_consulta extends GenerateCode{
 		campos.add(pesoCampo);
 		campos.add(estaturaCampo);
 		campos.add(presionCampo);
-		campos.add(temperaturaCampo);
+		campos.add(planCampo);
 		campos.add(statusCampo);
 		campos.add(recetaCampo);
 		campos.add(uuidCampo);

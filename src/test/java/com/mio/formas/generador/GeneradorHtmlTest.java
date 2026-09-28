@@ -18,13 +18,14 @@ import com.formuscmp.formus.button.Button;
 import com.formuscmp.formus.field.Field;
 import com.formuscmp.formus.generator.Generador;
 import com.formuscmp.formus.generator.IGenerador;
+import com.formuscmp.formus.resource.GenerateCode;
 import com.formuscmp.formus.resource.Resource;
 
 /**
  * @author jcruzreyf
  *
  */
-public class GeneradorHtmlTest {
+public class GeneradorHtmlTest extends GenerateCode{
 	
 	private String[] templatesPath = new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"}; 
 	/**
@@ -718,12 +719,12 @@ public class GeneradorHtmlTest {
 		guardar.setName("guardar");
 		guardar.setCommandName("guardar");
 		guardar.setLabel("Guardar");
-		guardar.setComponentType("submit");
+		guardar.setComponentType("botonjs");
 		guardar.setCss("btn btn-primary");
 		guardar.setResourceName("forma");
 		guardar.setModule("case");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 		guardar.setView("forma");
@@ -737,7 +738,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("forma");
 		cancelar.setModule("case");
 		cancelar.setOrder(2);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("nuevo");
 		
@@ -978,7 +979,7 @@ public class GeneradorHtmlTest {
 		guardar.setName("guardar");
 		guardar.setCommandName("guardar");
 		guardar.setLabel("Guardar");
-		guardar.setComponentType("submit");
+		guardar.setComponentType("botonjs");
 		guardar.setCss("btn btn-primary");
 		guardar.setResourceName("basket");
 		guardar.setModule("case");
@@ -997,7 +998,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("forma");
 		cancelar.setModule("case");
 		cancelar.setOrder(2);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("nuevo");
 		
@@ -1187,7 +1188,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("accion");
 		guardar.setModule("case");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 		guardar.setView("forma");
@@ -1201,7 +1202,7 @@ public class GeneradorHtmlTest {
 		actualizar.setResourceName("accion");
 		actualizar.setModule("case");
 		actualizar.setOrder(1);
-		actualizar.setResourceType("forma");
+		actualizar.setResourceType("form");
 		actualizar.setVersion("1.0");
 		actualizar.setEvents("detalle");
 		actualizar.setView("forma");
@@ -1485,7 +1486,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("campo");
 		guardar.setModule("case");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 		guardar.setView("forma");
@@ -1499,7 +1500,7 @@ public class GeneradorHtmlTest {
 		actualizar.setResourceName("campo");
 		actualizar.setModule("case");
 		actualizar.setOrder(1);
-		actualizar.setResourceType("forma");
+		actualizar.setResourceType("form");
 		actualizar.setVersion("1.0");
 		actualizar.setEvents("detalle");
 		actualizar.setView("forma");
@@ -1854,7 +1855,7 @@ public class GeneradorHtmlTest {
 	public void testGuardarFormaCaseCaracteristica() throws IOException {
 		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
 
-		Path filePath = fileConfigLocation.resolve("caracteristica.json").normalize();
+		Path filePath = fileConfigLocation.resolve("caracteristica_es_MX.json").normalize();
 
 		IGenerador<Resource> generador = new Generador<Resource>(templatesPath);
 		List<Field> campos = new ArrayList<Field>();
@@ -1864,10 +1865,15 @@ public class GeneradorHtmlTest {
 		Field campoCodigo = new Field();
 		Field campoMostrar = new Field();
 		Field campoTitulo = new Field();
+		int orden=1;
 
 		Field campoOrden = new Field();
 		Field campoRegistro = new Field();
-
+		
+		Field uuidCampo            = new Field();
+		Field uuideCampo           = new Field();
+		Field uuidpCampo           = new Field();
+		
 		Button guardar = new Button();
 		guardar.setName("guardar");
 		guardar.setCommandName("guardar");
@@ -1877,102 +1883,219 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("caracteristica");
 		guardar.setModule("inventario");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 		guardar.setView("caracteristica");
+		guardar.setUuid(generarToken());
 
 		acciones.add(guardar);
 
-		campoCodigo.setName("Padre");
+		
+		campoCodigo.setName("padre");
 		campoCodigo.setFieldName("padre");
 		campoCodigo.setCss("form-control");
-		campoCodigo.setOrder(1);
+		campoCodigo.setOrder(orden);
 		campoCodigo.setComponentType("texto");
 		campoCodigo.setReadOnly(false);
 		campoCodigo.setHidden(false);
 		campoCodigo.setRequired(true);
 		campoCodigo.setShowInBasket(true);
 		campoCodigo.setId(false);
-		campoCodigo.setFormat("Padre");
+		campoCodigo.setFormat("");
 		campoCodigo.setGroup("cabecero");
-		campoCodigo.setLength(20);
+		campoCodigo.setLength(60);
+		campoCodigo.setLabel("Padre");
+		campoCodigo.setDecimals(0);
+		campoCodigo.setDbFieldType("varchar");
 
-		campoTitulo.setName("Origen");
+		orden++;
+		campoTitulo.setName("origen");
 		campoTitulo.setFieldName("origen");
 		campoTitulo.setCss("form-control");
-		campoTitulo.setOrder(2);
+		campoTitulo.setOrder(orden);
 		campoTitulo.setComponentType("texto");
 		campoTitulo.setReadOnly(false);
 		campoTitulo.setHidden(false);
 		campoTitulo.setRequired(true);
 		campoTitulo.setShowInBasket(true);
 		campoTitulo.setId(false);
-		campoTitulo.setFormat("Otigrn");
+		campoTitulo.setFormat("");
 		campoTitulo.setGroup("cabecero");
 		campoTitulo.setLength(50);
+		campoTitulo.setLabel("Origen");
+		campoTitulo.setDecimals(0);
+		campoTitulo.setDbFieldType("varchar");
 
-		campoMostrar.setName("Nombre");
+		orden++;
+		campoMostrar.setName("nombre");
 		campoMostrar.setFieldName("nombre");
 		campoMostrar.setCss("form-control");
-		campoMostrar.setOrder(3);
+		campoMostrar.setOrder(orden);
 		campoMostrar.setComponentType("texto");
 		campoMostrar.setReadOnly(false);
 		campoMostrar.setHidden(false);
 		campoMostrar.setRequired(true);
 		campoMostrar.setShowInBasket(true);
 		campoMostrar.setId(false);
-		campoMostrar.setFormat("Nombre");
+		campoMostrar.setFormat("");
 		campoMostrar.setGroup("cabecero");
 		campoMostrar.setLength(50);
+		campoMostrar.setLabel("Nombre");
+		campoMostrar.setDecimals(0);
+		campoMostrar.setDbFieldType("varchar");
 
-		campoOrden.setName("Valor");
+		orden++;
+		campoOrden.setName("valor");
 		campoOrden.setFieldName("valor");
 		campoOrden.setCss("form-control");
-		campoOrden.setOrder(4);
+		campoOrden.setOrder(orden);
 		campoOrden.setComponentType("texto");
 		campoOrden.setReadOnly(false);
 		campoOrden.setHidden(false);
 		campoOrden.setRequired(true);
 		campoOrden.setShowInBasket(true);
 		campoOrden.setId(false);
-		campoOrden.setFormat("Valor");
+		campoOrden.setFormat("");
 		campoOrden.setGroup("cabecero");
-		campoOrden.setLength(20);
+		campoOrden.setLength(100);
+		campoOrden.setLabel("Valor");
+		campoOrden.setDecimals(0);
+		campoOrden.setDbFieldType("varchar");
 
-		campoRegistro.setName("Registro");
+		orden++;
+		campoRegistro.setName("registro");
 		campoRegistro.setFieldName("registro");
 		campoRegistro.setCss("form-control");
-		campoRegistro.setOrder(5);
+		campoRegistro.setOrder(orden);
 		campoRegistro.setComponentType("texto");
 		campoRegistro.setReadOnly(false);
 		campoRegistro.setHidden(false);
 		campoRegistro.setRequired(true);
 		campoRegistro.setShowInBasket(true);
 		campoRegistro.setId(false);
-		campoRegistro.setFormat("Registro");
+		campoRegistro.setFormat("");
 		campoRegistro.setGroup("cabecero");		
 		campoRegistro.setLength(50);
+		campoRegistro.setLabel("Registro");
+		campoRegistro.setDecimals(0);
+		campoRegistro.setDbFieldType("varchar");
+		
+		orden++;
+		uuidCampo.setName("uuid");
+		uuidCampo.setFieldName("uuid");
+		uuidCampo.setCss("form-control");
+		uuidCampo.setOrder(orden);
+		uuidCampo.setComponentType("texto");
+		uuidCampo.setReadOnly(true);
+		uuidCampo.setHidden(true);
+		uuidCampo.setRequired(true);
+		uuidCampo.setShowInBasket(true);
+		uuidCampo.setId(true);
+		uuidCampo.setSearcheable(false);
+		uuidCampo.setValidation(null);
+		uuidCampo.setFormat(null);
+		uuidCampo.setGroup("header");
+		uuidCampo.setLength(60);
+		uuidCampo.setDbFieldType("varchar");
+		uuidCampo.setDecimals(0);
+		uuidCampo.setPersistible(true);
+		uuidCampo.setLabel("uuid");
+		uuidCampo.setUuid(generarToken());
+		uuidCampo.setComment("uuid");
+		uuidCampo.setAffects(null);
+		uuidCampo.setFilter(null);
+		uuidCampo.setEvents("*");
+		uuidCampo.setOrigin(null);
+		uuidCampo.setValue("${default::uuid}");
 
+		orden++;
+		uuideCampo.setName("uuide");
+		uuideCampo.setFieldName("uuide");
+		uuideCampo.setCss("form-control");
+		uuideCampo.setOrder(orden);
+		uuideCampo.setComponentType("texto");
+		uuideCampo.setReadOnly(false);
+		uuideCampo.setHidden(true);
+		uuideCampo.setRequired(false);
+		uuideCampo.setShowInBasket(false);
+		uuideCampo.setId(false);
+		uuideCampo.setSearcheable(false);
+		uuideCampo.setValidation(null);
+		uuideCampo.setFormat(null);
+		uuideCampo.setGroup("header");
+		uuideCampo.setLength(60);
+		uuideCampo.setDbFieldType("varchar");
+		uuideCampo.setDecimals(0);
+		uuideCampo.setPersistible(true);
+		uuideCampo.setLabel("uuide");
+		uuideCampo.setUuid(generarToken());
+		uuideCampo.setComment("uuide");
+		uuideCampo.setAffects(null);
+		uuideCampo.setFilter(null);
+		uuideCampo.setEvents("*");
+		uuideCampo.setOrigin(null);
+		uuideCampo.setValue("");
+
+		orden++;
+		uuidpCampo.setName("uuidp");
+		uuidpCampo.setFieldName("uuidp");
+		uuidpCampo.setCss("form-control");
+		uuidpCampo.setOrder(orden);
+		uuidpCampo.setComponentType("texto");
+		uuidpCampo.setReadOnly(false);
+		uuidpCampo.setHidden(true);
+		uuidpCampo.setRequired(false);
+		uuidpCampo.setShowInBasket(false);
+		uuidpCampo.setId(false);
+		uuidpCampo.setSearcheable(false);
+		uuidpCampo.setValidation(null);
+		uuidpCampo.setFormat(null);
+		uuidpCampo.setGroup("header");
+		uuidpCampo.setLength(60);
+		uuidpCampo.setDbFieldType("varchar");
+		uuidpCampo.setDecimals(0);
+		uuidpCampo.setPersistible(true);
+		uuidpCampo.setLabel("uuidp");
+		uuidpCampo.setUuid(generarToken());
+		uuidpCampo.setComment("uuidp");
+		uuidpCampo.setAffects(null);
+		uuidpCampo.setFilter(null);
+		uuidpCampo.setEvents("*");
+		uuidpCampo.setOrigin(null);
+		uuidpCampo.setValue("");
+		
 		campos.add(campoTitulo);
 		campos.add(campoMostrar);
 		campos.add(campoCodigo);
 		campos.add(campoOrden);
 		campos.add(campoRegistro);
+		campos.add(uuidCampo);
+		campos.add(uuideCampo);
+		campos.add(uuidpCampo);
 
 		forma.setModel(campos);
 		forma.setMethods(acciones);
 		forma.setCommandName("guardar");
 		forma.setName("caracteristica");
 		forma.setView("caracteristica");
-		forma.setTitle("Caracteristica");
+		forma.setTitle("Caracteristica de un producto, servicio o kit");
 		forma.setVersion("1.0");
 		forma.setStatus("produccion");
 		forma.setModule("inventario");
 		forma.setBasket("caracteristica");
 		forma.setCreateable(false);
 		forma.setValidate(true);
-		forma.setTable("caracteristica");
+		forma.setTable("caracs");
+		
+		forma.setPersistible(true);
+		forma.setInstruction("Por favor complete la informacion de la caracteristica del producto");
+		forma.setUuid(generarToken());
+		forma.setComment("Formulario para registrar las carcateristicas de los productos");
+		forma.setOrigin("ui::case");
+		forma.setDestination("db::mysql");
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		
 		try {
 			generador.put(filePath, forma);
 		} catch (JsonGenerationException e) {
@@ -2090,7 +2213,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("jugador");
 		guardar.setModule("directorio");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -2102,7 +2225,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("jugador");
 		cancelar.setModule("directorio");
 		cancelar.setOrder(2);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("nuevo");
 		acciones.add(guardar);
@@ -2236,7 +2359,7 @@ public class GeneradorHtmlTest {
 	public void testGuardarFormaProducto() throws IOException {
 		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
 
-		Path filePath = fileConfigLocation.resolve("producto.json").normalize();
+		Path filePath = fileConfigLocation.resolve("producto_es_MX.json").normalize();
 
 		IGenerador<Resource> generador = new Generador<Resource>(templatesPath);
 		List<Field> campos = new ArrayList<Field>();
@@ -2276,7 +2399,12 @@ public class GeneradorHtmlTest {
 		Field porsurtir = new Field();
 		Field obs = new Field();
 		Field status = new Field();
-
+		Field lprecio = new Field();
+		Field uuidCampo            = new Field();
+		Field uuideCampo           = new Field();
+		Field uuidpCampo           = new Field();
+		int orden =1;
+		
 		Resource forma = new Resource();
 		List<Field> decoradoresBuscar = new ArrayList<Field>();
 
@@ -2290,7 +2418,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("producto");
 		guardar.setModule("inventario");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -2303,9 +2431,9 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("producto");
 		cancelar.setModule("inventario");
 		cancelar.setOrder(1);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
-		cancelar.setEvents("nuevo");
+		cancelar.setEvents("detalle,guardar");
 
 
 		Button editar = new Button();
@@ -2317,9 +2445,9 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("producto");
 		editar.setModule("inventario");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
-		editar.setEvents("detalle");
+		editar.setEvents("detalle,guardar");
 
 		Button buscar = new Button();
 		buscar.setCommandName("buscar");
@@ -2339,10 +2467,10 @@ public class GeneradorHtmlTest {
 		acciones.add(editar);
 		acciones.add(cancelar);
 
-		tipo.setName("Tipo");
+		tipo.setName("tipo");
 		tipo.setFieldName("tipo");
 		tipo.setCss("form-control");
-		tipo.setOrder(1);
+		tipo.setOrder(orden);
 		tipo.setComponentType("texto");
 		tipo.setReadOnly(true);
 		tipo.setHidden(true);
@@ -2353,8 +2481,11 @@ public class GeneradorHtmlTest {
 		tipo.setGroup("cabecero");
 		tipo.setPersistible(true);
 		tipo.setValue("producto");
-		tipo.setFormat("{TIPO}");
+		tipo.setFormat("");
 		tipo.setSearcheable(true);
+		tipo.setLabel("Tipo de documento");
+		tipo.setDecimals(0);
+		tipo.setDbFieldType("varchar");
 
 		//decoradores
 		/*Campo decoradorTipo = new Campo();
@@ -2377,10 +2508,11 @@ public class GeneradorHtmlTest {
 
 		decoradoresBuscar.add(decoradorTipo);*/
 
-		codigo.setName("Codigo");
+		orden++;
+		codigo.setName("codigo");
 		codigo.setFieldName("codigo");
 		codigo.setCss("form-control");
-		codigo.setOrder(2);
+		codigo.setOrder(orden);
 		codigo.setComponentType("texto");
 		codigo.setReadOnly(true);
 		codigo.setHidden(false);
@@ -2394,14 +2526,16 @@ public class GeneradorHtmlTest {
 		//codigo.setAutogenerado(false);
 		codigo.setFormat("{TIPO-CONS}");
 		codigo.setSearcheable(true);
-
+		codigo.setLabel("Codigo");
+		codigo.setDecimals(0);
+		codigo.setDbFieldType("varchar");
 
 		//decoradores
 		Field decoradorCodigo = new Field();
 		decoradorCodigo.setName("Codigo");
 		decoradorCodigo.setFieldName("codigo");
 		decoradorCodigo.setCss("form-control");
-		decoradorCodigo.setOrder(2);
+		decoradorCodigo.setOrder(orden);
 		decoradorCodigo.setComponentType("texto");
 		decoradorCodigo.setReadOnly(true);
 		decoradorCodigo.setHidden(false);
@@ -2418,10 +2552,11 @@ public class GeneradorHtmlTest {
 
 		decoradoresBuscar.add(decoradorCodigo);
 
-		sat.setName("Codigo SAT");
+		orden++;
+		sat.setName("codigosat");
 		sat.setFieldName("codigosat");
 		sat.setCss("form-control");
-		sat.setOrder(3);
+		sat.setOrder(orden);
 		sat.setComponentType("texto");
 		sat.setReadOnly(false);
 		sat.setHidden(false);
@@ -2433,13 +2568,17 @@ public class GeneradorHtmlTest {
 		sat.setPersistible(true);
 		sat.setValue("");
 		sat.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		sat.setFormat("Codigo SAT");
+		sat.setFormat("");
 		sat.setSearcheable(true);
+		sat.setLabel("Codigo SAT");
+		sat.setDecimals(0);
+		sat.setDbFieldType("varchar");
 
-		calterno.setName("Codigo alterno");
+		orden++;
+		calterno.setName("calterno");
 		calterno.setFieldName("calterno");
 		calterno.setCss("form-control");
-		calterno.setOrder(4);
+		calterno.setOrder(orden);
 		calterno.setComponentType("texto");
 		calterno.setReadOnly(false);
 		calterno.setHidden(false);
@@ -2451,13 +2590,17 @@ public class GeneradorHtmlTest {
 		calterno.setPersistible(true);
 		calterno.setValue("");
 		calterno.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		calterno.setFormat("Codigo alterno");
+		calterno.setFormat("");
 		calterno.setSearcheable(true);
+		calterno.setLabel("Codigo alterno");
+		calterno.setDecimals(0);
+		calterno.setDbFieldType("varchar");
 
-		descripcion.setName("Descripcion");
+		orden++;
+		descripcion.setName("descripcion");
 		descripcion.setFieldName("descripcion");
 		descripcion.setCss("form-control");
-		descripcion.setOrder(5);
+		descripcion.setOrder(orden);
 		descripcion.setComponentType("texto");
 		descripcion.setReadOnly(false);
 		descripcion.setHidden(false);
@@ -2469,13 +2612,17 @@ public class GeneradorHtmlTest {
 		descripcion.setPersistible(true);
 		descripcion.setValue("");
 		descripcion.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		descripcion.setFormat("Descripcion");
+		descripcion.setFormat("");
 		descripcion.setSearcheable(true);
-
-		uentrada.setName("U. Entrada");
+		descripcion.setLabel("Descripcion");
+		descripcion.setDecimals(0);
+		descripcion.setDbFieldType("varchar");
+		
+		orden++;
+		uentrada.setName("uentrada");
 		uentrada.setFieldName("uentrada");
 		uentrada.setCss("form-control");
-		uentrada.setOrder(6);
+		uentrada.setOrder(orden);
 		uentrada.setComponentType("umedida");
 		uentrada.setReadOnly(false);
 		uentrada.setHidden(false);
@@ -2487,13 +2634,17 @@ public class GeneradorHtmlTest {
 		uentrada.setPersistible(true);
 		uentrada.setValue("");
 		uentrada.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		uentrada.setFormat("U. Entrada");
+		uentrada.setFormat("");
 		uentrada.setSearcheable(false);
+		uentrada.setLabel("U. Entrada");
+		uentrada.setDecimals(0);
+		uentrada.setDbFieldType("varchar");
 
-		usalida.setName("U. Salida");
+		orden++;
+		usalida.setName("usalida");
 		usalida.setFieldName("usalida");
 		usalida.setCss("form-control");
-		usalida.setOrder(7);
+		usalida.setOrder(orden);
 		usalida.setComponentType("umedida");
 		usalida.setReadOnly(false);
 		usalida.setHidden(false);
@@ -2505,13 +2656,17 @@ public class GeneradorHtmlTest {
 		usalida.setPersistible(true);
 		usalida.setValue("");
 		usalida.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		usalida.setFormat("U. Salida");
+		usalida.setFormat("");
 		usalida.setSearcheable(false);
+		usalida.setLabel("U. Salida");
+		usalida.setDecimals(0);
+		usalida.setDbFieldType("varchar");
 
+		orden++;
 		categoria.setName("Categoria");
 		categoria.setFieldName("categoria");
 		categoria.setCss("form-control");
-		categoria.setOrder(8);
+		categoria.setOrder(orden);
 		categoria.setComponentType("texto");
 		categoria.setReadOnly(false);
 		categoria.setHidden(false);
@@ -2523,13 +2678,17 @@ public class GeneradorHtmlTest {
 		categoria.setPersistible(true);
 		categoria.setValue("");
 		categoria.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		categoria.setFormat("Categoria");
+		categoria.setFormat("");
 		categoria.setSearcheable(false);
+		categoria.setLabel("Categoria");
+		categoria.setDecimals(0);
+		categoria.setDbFieldType("varchar");
 
-		factor.setName("Factor empaque");
+		orden++;
+		factor.setName("factor");
 		factor.setFieldName("factor");
 		factor.setCss("form-control");
-		factor.setOrder(9);
+		factor.setOrder(orden);
 		factor.setComponentType("moneda");
 		factor.setReadOnly(false);
 		factor.setHidden(false);
@@ -2541,13 +2700,17 @@ public class GeneradorHtmlTest {
 		factor.setPersistible(true);
 		factor.setValue("0");
 		factor.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		factor.setFormat("Factor empaque");
+		factor.setFormat("");
 		factor.setSearcheable(false);
+		factor.setLabel("Factor empaque");
+		factor.setDecimals(0);
+		factor.setDbFieldType("varchar");
 
-		uempaque.setName("Unidades Empaque");
+		orden++;
+		uempaque.setName("uempaque");
 		uempaque.setFieldName("uempaque");
 		uempaque.setCss("form-control");
-		uempaque.setOrder(10);
+		uempaque.setOrder(orden);
 		uempaque.setComponentType("moneda");
 		uempaque.setReadOnly(false);
 		uempaque.setHidden(false);
@@ -2559,13 +2722,17 @@ public class GeneradorHtmlTest {
 		uempaque.setPersistible(true);
 		uempaque.setValue("0");
 		uempaque.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		uempaque.setFormat("Unidades Empaque");
+		uempaque.setFormat("");
 		uempaque.setSearcheable(false);
+		uempaque.setLabel("Unidades Empaque");
+		uempaque.setDecimals(0);
+		uempaque.setDbFieldType("varchar");
 
-		tsurtido.setName("Tiempo Surtido");
+		orden++;
+		tsurtido.setName("tsurtido");
 		tsurtido.setFieldName("tsurtido");
 		tsurtido.setCss("form-control");
-		tsurtido.setOrder(11);
+		tsurtido.setOrder(orden);
 		tsurtido.setComponentType("texto");
 		tsurtido.setReadOnly(false);
 		tsurtido.setHidden(false);
@@ -2577,13 +2744,17 @@ public class GeneradorHtmlTest {
 		tsurtido.setPersistible(true);
 		tsurtido.setValue("");
 		tsurtido.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		tsurtido.setFormat("Tiempo Surtido");
+		tsurtido.setFormat("");
 		tsurtido.setSearcheable(false);
+		tsurtido.setLabel("Tiempo Surtido");
+		tsurtido.setDecimals(0);
+		tsurtido.setDbFieldType("varchar");
 
-		imagen.setName("Imagen");
+		orden++;
+		imagen.setName("imagen");
 		imagen.setFieldName("imagen");
 		imagen.setCss("form-control");
-		imagen.setOrder(12);
+		imagen.setOrder(orden);
 		imagen.setComponentType("texto");
 		imagen.setReadOnly(false);
 		imagen.setHidden(false);
@@ -2593,17 +2764,21 @@ public class GeneradorHtmlTest {
 		imagen.setLength(100);
 		imagen.setGroup("cabecero");
 		imagen.setPersistible(true);
-		imagen.setValue("0");
+		imagen.setValue("");
 		imagen.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		imagen.setFormat("Imagen");
+		imagen.setFormat("");
 		imagen.setSearcheable(false);
+		imagen.setLabel("Imagen");
+		imagen.setDecimals(0);
+		imagen.setDbFieldType("varchar");
 
-		usuario.setName("Usuario");
+		orden++;
+		usuario.setName("usuario");
 		usuario.setFieldName("usuario");
 		usuario.setCss("form-control");
-		usuario.setOrder(13);
+		usuario.setOrder(orden);
 		usuario.setComponentType("texto");
-		usuario.setReadOnly(false);
+		usuario.setReadOnly(true);
 		usuario.setHidden(false);
 		usuario.setRequired(false);
 		usuario.setShowInBasket(false);
@@ -2611,17 +2786,21 @@ public class GeneradorHtmlTest {
 		usuario.setLength(100);
 		usuario.setGroup("cabecero");
 		usuario.setPersistible(true);
-		usuario.setValue("0");
+		usuario.setValue("${default::username}");
 		usuario.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		usuario.setFormat("Usuario");
+		usuario.setFormat("");
 		usuario.setSearcheable(false);
+		usuario.setLabel("Usuario Alta");
+		usuario.setDecimals(0);
+		usuario.setDbFieldType("varchar");
 
-		fecha.setName("Fecha");
+		orden++;
+		fecha.setName("fecha");
 		fecha.setFieldName("fecha");
 		fecha.setCss("form-control");
-		fecha.setOrder(14);
+		fecha.setOrder(orden);
 		fecha.setComponentType("fecha");
-		fecha.setReadOnly(false);
+		fecha.setReadOnly(true);
 		fecha.setHidden(false);
 		fecha.setRequired(false);
 		fecha.setShowInBasket(false);
@@ -2629,10 +2808,13 @@ public class GeneradorHtmlTest {
 		fecha.setLength(20);
 		fecha.setGroup("cabecero");
 		fecha.setPersistible(true);
-		fecha.setValue("");
+		fecha.setValue("${default::hoyCorto}");
 		fecha.setValidation("^\\d{4}-\\d{2}-\\d{2}$");
 		fecha.setFormat("yyyy-MM-dd");
 		fecha.setSearcheable(false);
+		fecha.setLabel("Fecha alta");
+		fecha.setDecimals(0);
+		fecha.setDbFieldType("date");
 
 		/*longitud.setNombre("Longitud");
 		longitud.setBd("longitud");
@@ -2724,40 +2906,49 @@ public class GeneradorHtmlTest {
 		ancho.setFormato("Ancho");
 		ancho.setBuscable(false);*/
 
+		orden++;
 		noserie.setName("No de series");
 		noserie.setFieldName("noserie");
 		noserie.setCss("form-control");
-		noserie.setOrder(20);
+		noserie.setOrder(orden);
 		noserie.setComponentType("checkbox");
 		noserie.setReadOnly(false);
 		noserie.setHidden(false);
 		noserie.setRequired(false);
 		noserie.setShowInBasket(true);
 		noserie.setId(false);
-		noserie.setLength(10);
+		noserie.setLength(100);
 		noserie.setGroup("cantidades");
 		noserie.setPersistible(true);
 		noserie.setValue("");
+		noserie.setLabel("No de series");
+		noserie.setDecimals(0);
+		noserie.setDbFieldType("varchar");
 
-		lote.setName("Lote");
+		orden++;
+		lote.setName("lote");
 		lote.setFieldName("lote");
 		lote.setCss("form-control");
-		lote.setOrder(21);
+		lote.setOrder(orden);
 		lote.setComponentType("checkbox");
 		lote.setReadOnly(false);
 		lote.setHidden(false);
 		lote.setRequired(false);
 		lote.setShowInBasket(true);
 		lote.setId(false);
-		lote.setLength(10);
+		lote.setLength(50);
 		lote.setGroup("cantidades");
 		lote.setPersistible(true);
 		lote.setValue("");
+		lote.setLabel("Lote");
+		lote.setDecimals(0);
+		lote.setDbFieldType("varchar");
 
-		pedimento.setName("Predimento aduanal");
+		orden++;
+		pedimento.setName("pedimento");
 		pedimento.setFieldName("pedimento");
 		pedimento.setCss("form-control");
-		pedimento.setOrder(22);
+		pedimento.setOrder(orden);
 		pedimento.setComponentType("checkbox");
 		pedimento.setReadOnly(false);
 		pedimento.setHidden(false);
@@ -2768,11 +2959,15 @@ public class GeneradorHtmlTest {
 		pedimento.setGroup("cantidades");
 		pedimento.setPersistible(true);
 		pedimento.setValue("");
+		pedimento.setLabel("Predimento aduanal");
+		pedimento.setDecimals(0);
+		pedimento.setDbFieldType("varchar");
 
-		cmoneda.setName("Moneda");
+		orden++;
+		cmoneda.setName("moneda");
 		cmoneda.setFieldName("moneda");
 		cmoneda.setCss("form-control");
-		cmoneda.setOrder(23);
+		cmoneda.setOrder(orden);
 		cmoneda.setComponentType("cmoneda");
 		cmoneda.setReadOnly(false);
 		cmoneda.setHidden(false);
@@ -2783,11 +2978,15 @@ public class GeneradorHtmlTest {
 		cmoneda.setGroup("cantidades");
 		cmoneda.setPersistible(true);
 		cmoneda.setValue("");
+		cmoneda.setLabel("Moneda");
+		cmoneda.setDecimals(0);
+		cmoneda.setDbFieldType("varchar");
 
-		ccontable.setName("Cuenta C.");
+		orden++;
+		ccontable.setName("ccontable");
 		ccontable.setFieldName("ccontable");
 		ccontable.setCss("form-control");
-		ccontable.setOrder(24);
+		ccontable.setOrder(orden);
 		ccontable.setComponentType("texto");
 		ccontable.setReadOnly(false);
 		ccontable.setHidden(false);
@@ -2799,12 +2998,16 @@ public class GeneradorHtmlTest {
 		ccontable.setPersistible(true);
 		ccontable.setValue("");
 		ccontable.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		ccontable.setFormat("Cuenta C.");
+		ccontable.setFormat("");
+		ccontable.setLabel("Cuenta C.");
+		ccontable.setDecimals(0);
+		ccontable.setDbFieldType("varchar");
 
-		costeo.setName("Costeo");
+		orden++;
+		costeo.setName("costeo");
 		costeo.setFieldName("costeo");
 		costeo.setCss("form-control");
-		costeo.setOrder(25);
+		costeo.setOrder(orden);
 		costeo.setComponentType("costeo");
 		costeo.setReadOnly(false);
 		costeo.setHidden(false);
@@ -2814,14 +3017,18 @@ public class GeneradorHtmlTest {
 		costeo.setLength(20);
 		costeo.setGroup("cantidades");
 		costeo.setPersistible(true);
-		costeo.setFormat("Costeo");
+		costeo.setFormat("");
 		costeo.setValue("");
+		costeo.setLabel("Costeo");
+		costeo.setDecimals(0);
+		costeo.setDbFieldType("varchar");
 
-		existencias.setName("Existencias");
+		orden++;
+		existencias.setName("existencias");
 		existencias.setFieldName("existencias");
 		existencias.setCss("form-control");
-		existencias.setOrder(26);
-		existencias.setComponentType("moneda");
+		existencias.setOrder(orden);
+		existencias.setComponentType("texto");
 		existencias.setReadOnly(true);
 		existencias.setHidden(false);
 		existencias.setRequired(false);
@@ -2832,12 +3039,16 @@ public class GeneradorHtmlTest {
 		existencias.setPersistible(true);
 		existencias.setValue("0");
 		existencias.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		existencias.setFormat("Existencias");
+		existencias.setFormat("00.00");
+		existencias.setLabel("Existencias");
+		existencias.setDecimals(0);
+		existencias.setDbFieldType("decimal");
 
-		sminimo.setName("Stock minimo");
+		orden++;
+		sminimo.setName("sminimo");
 		sminimo.setFieldName("sminimo");
 		sminimo.setCss("form-control");
-		sminimo.setOrder(27);
+		sminimo.setOrder(orden);
 		sminimo.setComponentType("moneda");
 		sminimo.setReadOnly(false);
 		sminimo.setHidden(false);
@@ -2849,13 +3060,17 @@ public class GeneradorHtmlTest {
 		sminimo.setPersistible(true);
 		sminimo.setValue("0");
 		sminimo.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		sminimo.setFormat("Stock minimo");
+		sminimo.setFormat("00.00");
+		sminimo.setLabel("Stock minimo");
+		sminimo.setDecimals(2);
+		sminimo.setDbFieldType("decimal");
 
-		smaximo.setName("Stock maximo");
+		orden++;
+		smaximo.setName("smaximo");
 		smaximo.setFieldName("smaximo");
 		smaximo.setCss("form-control");
-		smaximo.setOrder(28);
-		smaximo.setComponentType("moneda");
+		smaximo.setOrder(orden);
+		smaximo.setComponentType("texto");
 		smaximo.setReadOnly(false);
 		smaximo.setHidden(false);
 		smaximo.setRequired(false);
@@ -2866,13 +3081,17 @@ public class GeneradorHtmlTest {
 		smaximo.setPersistible(true);
 		smaximo.setValue("0");
 		smaximo.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		smaximo.setFormat("Stock maximo");
+		smaximo.setFormat("00.00");
+		smaximo.setLabel("Stock maximo");
+		smaximo.setDecimals(2);
+		smaximo.setDbFieldType("decimal");
 
+		orden++;
 		comprometido.setName("Comprometido");
 		comprometido.setFieldName("comprometido");
 		comprometido.setCss("form-control");
-		comprometido.setOrder(29);
-		comprometido.setComponentType("moneda");
+		comprometido.setOrder(orden);
+		comprometido.setComponentType("texto");
 		comprometido.setReadOnly(true);
 		comprometido.setHidden(false);
 		comprometido.setRequired(false);
@@ -2883,13 +3102,17 @@ public class GeneradorHtmlTest {
 		comprometido.setPersistible(true);
 		comprometido.setValue("0");
 		comprometido.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		comprometido.setFormat("Comprometido");
+		comprometido.setFormat("00.00");
+		comprometido.setLabel("Comprometido");
+		comprometido.setDecimals(2);
+		comprometido.setDbFieldType("decimal");
 
-		porrecibir.setName("Por recibir");
+		orden++;
+		porrecibir.setName("porrecibir");
 		porrecibir.setFieldName("porrecibir");
 		porrecibir.setCss("form-control");
-		porrecibir.setOrder(30);
-		porrecibir.setComponentType("moneda");
+		porrecibir.setOrder(orden);
+		porrecibir.setComponentType("texto");
 		porrecibir.setReadOnly(true);
 		porrecibir.setHidden(false);
 		porrecibir.setRequired(false);
@@ -2900,13 +3123,17 @@ public class GeneradorHtmlTest {
 		porrecibir.setPersistible(true);
 		porrecibir.setValue("0");
 		porrecibir.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		porrecibir.setFormat("Por recibir");
+		porrecibir.setFormat("00.00");
+		porrecibir.setLabel("Por recibir");
+		porrecibir.setDecimals(2);
+		porrecibir.setDbFieldType("decimal");
 
-		porsurtir.setName("Por surtir");
+		orden++;
+		porsurtir.setName("porsurtir");
 		porsurtir.setFieldName("porsurtir");
 		porsurtir.setCss("form-control");
-		porsurtir.setOrder(31);
-		porsurtir.setComponentType("moneda");
+		porsurtir.setOrder(orden);
+		porsurtir.setComponentType("texto");
 		porsurtir.setReadOnly(true);
 		porsurtir.setHidden(false);
 		porsurtir.setRequired(false);
@@ -2917,12 +3144,16 @@ public class GeneradorHtmlTest {
 		porsurtir.setPersistible(true);
 		porsurtir.setValue("0");
 		porsurtir.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		porsurtir.setFormat("Por surtir");
+		porsurtir.setFormat("");
+		porsurtir.setLabel("Por surtir");
+		porsurtir.setDecimals(2);
+		porsurtir.setDbFieldType("decimal");
 
-		obs.setName("Observaciones");
+		orden++;
+		obs.setName("obs");
 		obs.setFieldName("obs");
 		obs.setCss("form-control");
-		obs.setOrder(32);
+		obs.setOrder(orden);
 		obs.setComponentType("textoarea");
 		obs.setReadOnly(false);
 		obs.setHidden(false);
@@ -2934,12 +3165,16 @@ public class GeneradorHtmlTest {
 		obs.setPersistible(true);
 		obs.setValue("");
 		obs.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		obs.setFormat("Observaciones");
+		obs.setFormat("");
+		obs.setLabel("Observaciones");
+		obs.setDecimals(0);
+		obs.setDbFieldType("varchar");
 
-		status.setName("Status");
+		orden++;
+		status.setName("status");
 		status.setFieldName("status");
 		status.setCss("form-control");
-		status.setOrder(33);
+		status.setOrder(orden);
 		status.setComponentType("texto");
 		status.setReadOnly(true);
 		status.setHidden(true);
@@ -2948,11 +3183,120 @@ public class GeneradorHtmlTest {
 		status.setId(false);
 		status.setLength(20);
 		status.setGroup("cabecero");
-		status.setPersistible(false);
+		status.setPersistible(true);
 		status.setValue("nuevo");
 		status.setValidation("");
-		status.setFormat("Status");
+		status.setFormat("");
+		status.setLabel("Status");
+		status.setDecimals(0);
+		status.setDbFieldType("varchar");
 
+		orden++;
+		lprecio.setName("lprecio");
+		lprecio.setFieldName("lprecio");
+		lprecio.setCss("form-control");
+		lprecio.setOrder(orden);
+		lprecio.setComponentType("lprecio");
+		lprecio.setReadOnly(false);
+		lprecio.setHidden(false);
+		lprecio.setRequired(false);
+		lprecio.setShowInBasket(true);
+		lprecio.setId(false);
+		lprecio.setLength(60);
+		lprecio.setGroup("cabecero");
+		lprecio.setPersistible(true);
+		lprecio.setValue("");
+		lprecio.setValidation("");
+		lprecio.setFormat("");
+		lprecio.setLabel("Lista de precios");
+		lprecio.setDecimals(0);
+		lprecio.setDbFieldType("varchar");
+		lprecio.setOrigin("{\"origin\":\"tabla\",\"resource\":\"lprecio\",\"fields\":[{\"name\":\"uuid\"},{\"name\":\"nombre\"}]}");
+		
+		orden++;
+		uuidCampo.setName("uuid");
+		uuidCampo.setFieldName("uuid");
+		uuidCampo.setCss("form-control");
+		uuidCampo.setOrder(orden);
+		uuidCampo.setComponentType("texto");
+		uuidCampo.setReadOnly(true);
+		uuidCampo.setHidden(true);
+		uuidCampo.setRequired(true);
+		uuidCampo.setShowInBasket(true);
+		uuidCampo.setId(true);
+		uuidCampo.setSearcheable(false);
+		uuidCampo.setValidation(null);
+		uuidCampo.setFormat(null);
+		uuidCampo.setGroup("header");
+		uuidCampo.setLength(60);
+		uuidCampo.setDbFieldType("varchar");
+		uuidCampo.setDecimals(0);
+		uuidCampo.setPersistible(true);
+		uuidCampo.setLabel("uuid");
+		uuidCampo.setUuid(generarToken());
+		uuidCampo.setComment("uuid");
+		uuidCampo.setAffects(null);
+		uuidCampo.setFilter(null);
+		uuidCampo.setEvents("*");
+		uuidCampo.setOrigin(null);
+		uuidCampo.setValue("${default::uuid}");
+
+		orden++;
+		uuideCampo.setName("uuide");
+		uuideCampo.setFieldName("uuide");
+		uuideCampo.setCss("form-control");
+		uuideCampo.setOrder(orden);
+		uuideCampo.setComponentType("texto");
+		uuideCampo.setReadOnly(false);
+		uuideCampo.setHidden(true);
+		uuideCampo.setRequired(false);
+		uuideCampo.setShowInBasket(false);
+		uuideCampo.setId(false);
+		uuideCampo.setSearcheable(false);
+		uuideCampo.setValidation(null);
+		uuideCampo.setFormat(null);
+		uuideCampo.setGroup("header");
+		uuideCampo.setLength(60);
+		uuideCampo.setDbFieldType("varchar");
+		uuideCampo.setDecimals(0);
+		uuideCampo.setPersistible(true);
+		uuideCampo.setLabel("uuide");
+		uuideCampo.setUuid(generarToken());
+		uuideCampo.setComment("uuide");
+		uuideCampo.setAffects(null);
+		uuideCampo.setFilter(null);
+		uuideCampo.setEvents("*");
+		uuideCampo.setOrigin(null);
+		uuideCampo.setValue("");
+
+		orden++;
+		uuidpCampo.setName("uuidp");
+		uuidpCampo.setFieldName("uuidp");
+		uuidpCampo.setCss("form-control");
+		uuidpCampo.setOrder(orden);
+		uuidpCampo.setComponentType("texto");
+		uuidpCampo.setReadOnly(false);
+		uuidpCampo.setHidden(true);
+		uuidpCampo.setRequired(false);
+		uuidpCampo.setShowInBasket(false);
+		uuidpCampo.setId(false);
+		uuidpCampo.setSearcheable(false);
+		uuidpCampo.setValidation(null);
+		uuidpCampo.setFormat(null);
+		uuidpCampo.setGroup("header");
+		uuidpCampo.setLength(60);
+		uuidpCampo.setDbFieldType("varchar");
+		uuidpCampo.setDecimals(0);
+		uuidpCampo.setPersistible(true);
+		uuidpCampo.setLabel("uuidp");
+		uuidpCampo.setUuid(generarToken());
+		uuidpCampo.setComment("uuidp");
+		uuidpCampo.setAffects(null);
+		uuidpCampo.setFilter(null);
+		uuidpCampo.setEvents("*");
+		uuidpCampo.setOrigin(null);
+		uuidpCampo.setValue("");
+		
 		campos.add(tipo);
 		campos.add(codigo);
 		campos.add(sat);
@@ -2980,7 +3324,11 @@ public class GeneradorHtmlTest {
 		campos.add(porsurtir);
 		campos.add(obs);
 		campos.add(status);
-
+		campos.add(lprecio);
+		campos.add(uuidCampo);
+		campos.add(uuideCampo);
+		campos.add(uuidpCampo);
+		
 		/*campos.add(longitud);
 		campos.add(altura);
 		campos.add(grosor);
@@ -3001,8 +3349,19 @@ public class GeneradorHtmlTest {
 		forma.setCreateable(true);
 		forma.setTable("prodserv");
 		forma.setValidate(true);
+
+		forma.setPersistible(true);
+		forma.setInstruction("Por favor complete la informacion del producto");
+		forma.setUuid(generarToken());
+		forma.setComment("Formulario para registrar los productos");
+		forma.setOrigin("ui::case");
+		forma.setDestination("db::mysql");
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		
 		forma.getDecorators().put("nuevo", decoradoresBuscar);
 		forma.getDecorators().put("buscar", decoradoresBuscar);
+		
+		
 		try {
 			generador.put(filePath, forma);
 		} catch (JsonGenerationException e) {
@@ -3075,7 +3434,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("producto");
 		guardar.setModule("inventario");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -3088,7 +3447,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("producto");
 		cancelar.setModule("inventario");
 		cancelar.setOrder(1);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("nuevo");
 
@@ -3102,7 +3461,7 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("producto");
 		editar.setModule("inventario");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
@@ -3857,7 +4216,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("producto");
 		guardar.setModule("inventario");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -3870,7 +4229,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("producto");
 		cancelar.setModule("inventario");
 		cancelar.setOrder(1);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("nuevo");
 
@@ -3883,7 +4242,7 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("producto");
 		editar.setModule("inventario");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
@@ -4505,7 +4864,7 @@ public class GeneradorHtmlTest {
 	public void testGuardarFormaServicio() throws IOException {
 		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
 
-		Path filePath = fileConfigLocation.resolve("servicio.json").normalize();
+		Path filePath = fileConfigLocation.resolve("servicio_es_MX.json").normalize();
 
 		IGenerador<Resource> generador = new Generador<Resource>(templatesPath);
 		List<Field> campos = new ArrayList<Field>();
@@ -4521,6 +4880,10 @@ public class GeneradorHtmlTest {
 		Field status = new Field();
 		Field lprecio = new Field();
 
+		Field uuidCampo            = new Field();
+		Field uuideCampo           = new Field();
+		Field uuidpCampo           = new Field();
+		int orden =1;
 		Resource forma = new Resource();
 
 		Button guardar = new Button();
@@ -4532,24 +4895,26 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("servicio");
 		guardar.setModule("inventario");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
 		Button editar = new Button();
 		editar.setName("actualizar");
+		editar.setCommandName("actualizar");
 		editar.setLabel("Actualizar");
 		editar.setComponentType("botonjs");
 		editar.setCss("btn btn-info");
 		editar.setResourceName("servicio");
 		editar.setModule("inventario");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
 		Button buscar = new Button();
 		buscar.setName("buscar");
+		buscar.setCommandName("buscar");
 		buscar.setLabel("Buscar");
 		buscar.setComponentType("submit");
 		buscar.setCss("btn btn-secondary");
@@ -4564,10 +4929,10 @@ public class GeneradorHtmlTest {
 		acciones.add(editar);
 		acciones.add(buscar);
 
-		campoTipo.setName("Tipo");
+		campoTipo.setName("tipo");
 		campoTipo.setFieldName("tipo");
 		campoTipo.setCss("form-control");
-		campoTipo.setOrder(1);
+		campoTipo.setOrder(orden);
 		campoTipo.setComponentType("texto");
 		campoTipo.setReadOnly(true);
 		campoTipo.setHidden(true);
@@ -4578,11 +4943,15 @@ public class GeneradorHtmlTest {
 		campoTipo.setGroup("cabecero");
 		campoTipo.setPersistible(true);
 		campoTipo.setValue("servicio");
+		campoTipo.setLabel("Tipo de documento");
+		campoTipo.setDecimals(0);
+		campoTipo.setDbFieldType("varchar");
 
-		campoCodigo.setName("Codigo");
+		orden++;
+		campoCodigo.setName("codigo");
 		campoCodigo.setFieldName("codigo");
 		campoCodigo.setCss("form-control");
-		campoCodigo.setOrder(2);
+		campoCodigo.setOrder(orden);
 		campoCodigo.setComponentType("texto");
 		campoCodigo.setReadOnly(true);
 		campoCodigo.setHidden(false);
@@ -4594,13 +4963,18 @@ public class GeneradorHtmlTest {
 		campoCodigo.setPersistible(true);
 		campoCodigo.setValue("");
 		//campoCodigo.setAutogenerado(false);
-		campoCodigo.setFormat("{TIPO-CONS}");
+		campoCodigo.setFormat("");
 		campoCodigo.setSearcheable(true);
-
-		satCodigo.setName("Codigo SAT");
+		campoCodigo.setLabel("Codigo (Auto)");
+		campoCodigo.setDecimals(0);
+		campoCodigo.setDbFieldType("varchar");
+		campoCodigo.setSuggestion("Autogenerado al guardar el registro");
+		
+		orden++;
+		satCodigo.setName("codigosat");
 		satCodigo.setFieldName("codigosat");
 		satCodigo.setCss("form-control");
-		satCodigo.setOrder(3);
+		satCodigo.setOrder(orden);
 		satCodigo.setComponentType("texto");
 		satCodigo.setReadOnly(false);
 		satCodigo.setHidden(false);
@@ -4614,11 +4988,15 @@ public class GeneradorHtmlTest {
 		satCodigo.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
 		satCodigo.setFormat("Codigo SAT");
 		satCodigo.setSearcheable(true);
+		satCodigo.setLabel("Codigo SAT");
+		satCodigo.setDecimals(0);
+		satCodigo.setDbFieldType("varchar");
 
+		orden++;
 		campoDescripcion.setName("Descripcion");
 		campoDescripcion.setFieldName("descripcion");
 		campoDescripcion.setCss("form-control");
-		campoDescripcion.setOrder(4);
+		campoDescripcion.setOrder(orden);
 		campoDescripcion.setComponentType("texto");
 		campoDescripcion.setReadOnly(false);
 		campoDescripcion.setHidden(false);
@@ -4632,30 +5010,37 @@ public class GeneradorHtmlTest {
 		campoDescripcion.setValidation("");
 		campoDescripcion.setFormat("Descripcion");
 		campoDescripcion.setSearcheable(true);
+		campoDescripcion.setLabel("Descripcion");
+		campoDescripcion.setDecimals(0);
+		campoDescripcion.setDbFieldType("varchar");
 
-		imagen.setName("Imagen");
+		orden++;
+		imagen.setName("imagen");
 		imagen.setFieldName("imagen");
 		imagen.setCss("form-control");
-		imagen.setOrder(5);
+		imagen.setOrder(orden);
 		imagen.setComponentType("texto");
 		imagen.setReadOnly(false);
 		imagen.setHidden(false);
 		imagen.setRequired(false);
 		imagen.setShowInBasket(false);
 		imagen.setId(false);
-		imagen.setLength(100);
+		imagen.setLength(200);
 		imagen.setGroup("cabecero");
 		imagen.setPersistible(true);
-		imagen.setValue("0");
+		imagen.setValue("");
 		imagen.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
 		imagen.setFormat("Imagen");
 		imagen.setSearcheable(false);
+		imagen.setLabel("Imagen");
+		imagen.setDecimals(0);
+		imagen.setDbFieldType("varchar");
 
-
-		categoria.setName("Categoria");
+		orden++;
+		categoria.setName("categoria");
 		categoria.setFieldName("categoria");
 		categoria.setCss("form-control");
-		categoria.setOrder(6);
+		categoria.setOrder(orden);
 		categoria.setComponentType("texto");
 		categoria.setReadOnly(false);
 		categoria.setHidden(false);
@@ -4669,31 +5054,39 @@ public class GeneradorHtmlTest {
 		categoria.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
 		categoria.setFormat("Categoria");
 		categoria.setSearcheable(false);
+		categoria.setLabel("Categoria");
+		categoria.setDecimals(0);
+		categoria.setDbFieldType("varchar");
 
-		usuario.setName("Usuario");
+		orden++;
+		usuario.setName("usuario");
 		usuario.setFieldName("usuario");
 		usuario.setCss("form-control");
-		usuario.setOrder(7);
+		usuario.setOrder(orden);
 		usuario.setComponentType("texto");
 		usuario.setReadOnly(false);
 		usuario.setHidden(false);
 		usuario.setRequired(false);
 		usuario.setShowInBasket(false);
 		usuario.setId(false);
-		usuario.setLength(100);
+		usuario.setLength(60);
 		usuario.setGroup("cabecero");
 		usuario.setPersistible(true);
-		usuario.setValue("0");
+		usuario.setValue("");
 		usuario.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
 		usuario.setFormat("Usuario");
 		usuario.setSearcheable(false);
+		usuario.setLabel("Usuario responsable");
+		usuario.setDecimals(0);
+		usuario.setDbFieldType("varchar");
 
-		fecha.setName("Fecha");
+		orden++;
+		fecha.setName("fecha");
 		fecha.setFieldName("fecha");
 		fecha.setCss("form-control");
-		fecha.setOrder(8);
+		fecha.setOrder(orden);
 		fecha.setComponentType("fecha");
-		fecha.setReadOnly(false);
+		fecha.setReadOnly(true);
 		fecha.setHidden(false);
 		fecha.setRequired(false);
 		fecha.setShowInBasket(false);
@@ -4701,15 +5094,19 @@ public class GeneradorHtmlTest {
 		fecha.setLength(20);
 		fecha.setGroup("cabecero");
 		fecha.setPersistible(true);
-		fecha.setValue("");
+		fecha.setValue("${default::hoyCorto}");
 		fecha.setValidation("^\\d{4}-\\d{2}-\\d{2}$");
 		fecha.setFormat("yyyy-MM-dd");
 		fecha.setSearcheable(false);
+		fecha.setLabel("Fecha de registro");
+		fecha.setDecimals(0);
+		fecha.setDbFieldType("date");
 
+		orden++;
 		status.setName("Status");
 		status.setFieldName("status");
 		status.setCss("form-control");
-		status.setOrder(9);
+		status.setOrder(orden);
 		status.setComponentType("texto");
 		status.setReadOnly(true);
 		status.setHidden(true);
@@ -4718,27 +5115,119 @@ public class GeneradorHtmlTest {
 		status.setId(false);
 		status.setLength(20);
 		status.setGroup("cabecero");
-		status.setPersistible(false);
+		status.setPersistible(true);
 		status.setValue("nuevo");
 		status.setValidation("");
-		status.setFormat("Status");
+		status.setFormat("");
+		status.setLabel("Status");
+		status.setDecimals(0);
+		status.setDbFieldType("varchar");
 		
-		lprecio.setName("Precios");
+		orden++;
+		lprecio.setName("lprecio");
 		lprecio.setFieldName("lprecio");
 		lprecio.setCss("form-control");
-		lprecio.setOrder(10);
-		lprecio.setComponentType("texto");
+		lprecio.setOrder(orden);
+		lprecio.setComponentType("lprecio");
 		lprecio.setReadOnly(false);
 		lprecio.setHidden(false);
-		lprecio.setRequired(true);
+		lprecio.setRequired(false);
 		lprecio.setShowInBasket(true);
 		lprecio.setId(false);
-		lprecio.setLength(20);
+		lprecio.setLength(60);
 		lprecio.setGroup("cabecero");
-		lprecio.setPersistible(false);
-		lprecio.setValue("CAT-01");
+		lprecio.setPersistible(true);
+		lprecio.setValue("");
 		lprecio.setValidation("");
-		lprecio.setFormat("Lista de precios");
+		lprecio.setFormat("");
+		lprecio.setLabel("Lista de precios");
+		lprecio.setDecimals(0);
+		lprecio.setDbFieldType("varchar");
+		lprecio.setOrigin("{\"origin\":\"tabla\",\"resource\":\"lprecio\",\"fields\":[{\"name\":\"uuid\"},{\"name\":\"nombre\"}]}");
+		
+		orden++;
+		uuidCampo.setName("uuid");
+		uuidCampo.setFieldName("uuid");
+		uuidCampo.setCss("form-control");
+		uuidCampo.setOrder(orden);
+		uuidCampo.setComponentType("texto");
+		uuidCampo.setReadOnly(true);
+		uuidCampo.setHidden(true);
+		uuidCampo.setRequired(true);
+		uuidCampo.setShowInBasket(true);
+		uuidCampo.setId(true);
+		uuidCampo.setSearcheable(false);
+		uuidCampo.setValidation(null);
+		uuidCampo.setFormat(null);
+		uuidCampo.setGroup("header");
+		uuidCampo.setLength(60);
+		uuidCampo.setDbFieldType("varchar");
+		uuidCampo.setDecimals(0);
+		uuidCampo.setPersistible(true);
+		uuidCampo.setLabel("uuid");
+		uuidCampo.setUuid(generarToken());
+		uuidCampo.setComment("uuid");
+		uuidCampo.setAffects(null);
+		uuidCampo.setFilter(null);
+		uuidCampo.setEvents("*");
+		uuidCampo.setOrigin(null);
+		uuidCampo.setValue("${default::uuid}");
+
+		orden++;
+		uuideCampo.setName("uuide");
+		uuideCampo.setFieldName("uuide");
+		uuideCampo.setCss("form-control");
+		uuideCampo.setOrder(orden);
+		uuideCampo.setComponentType("texto");
+		uuideCampo.setReadOnly(false);
+		uuideCampo.setHidden(true);
+		uuideCampo.setRequired(false);
+		uuideCampo.setShowInBasket(false);
+		uuideCampo.setId(false);
+		uuideCampo.setSearcheable(false);
+		uuideCampo.setValidation(null);
+		uuideCampo.setFormat(null);
+		uuideCampo.setGroup("header");
+		uuideCampo.setLength(60);
+		uuideCampo.setDbFieldType("varchar");
+		uuideCampo.setDecimals(0);
+		uuideCampo.setPersistible(true);
+		uuideCampo.setLabel("uuide");
+		uuideCampo.setUuid(generarToken());
+		uuideCampo.setComment("uuide");
+		uuideCampo.setAffects(null);
+		uuideCampo.setFilter(null);
+		uuideCampo.setEvents("*");
+		uuideCampo.setOrigin(null);
+		uuideCampo.setValue("");
+
+		orden++;
+		uuidpCampo.setName("uuidp");
+		uuidpCampo.setFieldName("uuidp");
+		uuidpCampo.setCss("form-control");
+		uuidpCampo.setOrder(orden);
+		uuidpCampo.setComponentType("texto");
+		uuidpCampo.setReadOnly(false);
+		uuidpCampo.setHidden(true);
+		uuidpCampo.setRequired(false);
+		uuidpCampo.setShowInBasket(false);
+		uuidpCampo.setId(false);
+		uuidpCampo.setSearcheable(false);
+		uuidpCampo.setValidation(null);
+		uuidpCampo.setFormat(null);
+		uuidpCampo.setGroup("header");
+		uuidpCampo.setLength(60);
+		uuidpCampo.setDbFieldType("varchar");
+		uuidpCampo.setDecimals(0);
+		uuidpCampo.setPersistible(true);
+		uuidpCampo.setLabel("uuidp");
+		uuidpCampo.setUuid(generarToken());
+		uuidpCampo.setComment("uuidp");
+		uuidpCampo.setAffects(null);
+		uuidpCampo.setFilter(null);
+		uuidpCampo.setEvents("*");
+		uuidpCampo.setOrigin(null);
+		uuidpCampo.setValue("");
 
 		campos.add(campoTipo);
 		campos.add(satCodigo);
@@ -4750,7 +5239,10 @@ public class GeneradorHtmlTest {
 		campos.add(fecha);
 		campos.add(status);
 		campos.add(lprecio);
-
+		campos.add(uuidCampo);
+		campos.add(uuideCampo);
+		campos.add(uuidpCampo);
+		
 		forma.setModel(campos);
 		forma.setMethods(acciones);
 		forma.setCommandName("guardar");
@@ -4764,6 +5256,14 @@ public class GeneradorHtmlTest {
 		forma.setCreateable(true);
 		forma.setTable("prodserv");
 		forma.setValidate(true);
+		forma.setPersistible(true);
+		forma.setInstruction("Por favor complete la informacion del servicio");
+		forma.setUuid(generarToken());
+		forma.setComment("Formulario para registrar los servicios");
+		forma.setOrigin("ui::case");
+		forma.setDestination("db::mysql");
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		
 		try {
 			generador.put(filePath, forma);
 		} catch (JsonGenerationException e) {
@@ -4828,7 +5328,7 @@ public class GeneradorHtmlTest {
 		verError.setResourceName("ingreso");
 		verError.setModule("comprobante");
 		verError.setOrder(3);
-		verError.setResourceType("forma");
+		verError.setResourceType("form");
 		verError.setVersion("1.0");
 		verError.setEvents("detalle");
 		verError.setStatus("CFDI33196");
@@ -4856,7 +5356,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("ingreso");
 		guardar.setModule("comprobantes");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("3.3");
 		guardar.setEvents("nuevo");
 		guardar.setStatus("nuevo");
@@ -4870,7 +5370,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("usuario");
 		cancelar.setModule("directorio");
 		cancelar.setOrder(1);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("detalle");
 		cancelar.setStatus("guardar");
@@ -4884,10 +5384,10 @@ public class GeneradorHtmlTest {
 		cancelarCFDi.setResourceName("usuario");
 		cancelarCFDi.setModule("directorio");
 		cancelarCFDi.setOrder(1);
-		cancelarCFDi.setResourceType("forma");
+		cancelarCFDi.setResourceType("form");
 		cancelarCFDi.setVersion("1.0");
 		cancelarCFDi.setEvents("detalle");
-		cancelarCFDi.setStatus("timbrar");
+		cancelarCFDi.setStatus("nuevo");
 
 		Button eliminar = new Button();
 		eliminar.setCommandName("actualizar");
@@ -4898,7 +5398,7 @@ public class GeneradorHtmlTest {
 		eliminar.setResourceName("ingreso");
 		eliminar.setModule("comprobantes");
 		eliminar.setOrder(5);
-		eliminar.setResourceType("forma");
+		eliminar.setResourceType("form");
 		eliminar.setVersion("3.3");
 		eliminar.setEvents("detalle");
 		eliminar.setStatus("guardar");
@@ -4913,7 +5413,7 @@ public class GeneradorHtmlTest {
 		timbrar.setResourceName("ingreso");
 		timbrar.setModule("comprobantes");
 		timbrar.setOrder(6);
-		timbrar.setResourceType("forma");
+		timbrar.setResourceType("form");
 		timbrar.setVersion("3.3");
 		timbrar.setEvents("detalle");
 		timbrar.setStatus("guardar");
@@ -5505,7 +6005,7 @@ public class GeneradorHtmlTest {
 		verError.setResourceName("reservacion");
 		verError.setModule("solicitud");
 		verError.setOrder(3);
-		verError.setResourceType("forma");
+		verError.setResourceType("form");
 		verError.setVersion("1.0");
 		verError.setEvents("detalle");
 		verError.setStatus("CFDI33196");
@@ -5528,12 +6028,12 @@ public class GeneradorHtmlTest {
 		guardar.setCommandName("guardar");
 		guardar.setName("guardar");
 		guardar.setLabel("Submit");
-		guardar.setComponentType("submit");
+		guardar.setComponentType("botonjs");
 		guardar.setCss("btn btn-primary w-100 py-3");
 		guardar.setResourceName("reservacion");
 		guardar.setModule("solicitud");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 		guardar.setStatus("nuevo");
@@ -5547,7 +6047,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("usuario");
 		cancelar.setModule("directorio");
 		cancelar.setOrder(1);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("detalle");
 		cancelar.setStatus("guardar");
@@ -5562,7 +6062,7 @@ public class GeneradorHtmlTest {
 		eliminar.setResourceName("ingreso");
 		eliminar.setModule("comprobantes");
 		eliminar.setOrder(5);
-		eliminar.setResourceType("forma");
+		eliminar.setResourceType("form");
 		eliminar.setVersion("3.3");
 		eliminar.setEvents("detalle");
 		eliminar.setStatus("guardar");
@@ -6095,7 +6595,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("ingreso");
 		guardar.setModule("comprobantes");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("3.3");
 		guardar.setEvents("nuevo");
 		guardar.setStatus("nuevo");
@@ -6109,7 +6609,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("usuario");
 		cancelar.setModule("directorio");
 		cancelar.setOrder(1);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("detalle");
 		cancelar.setStatus("guardar");
@@ -6123,7 +6623,7 @@ public class GeneradorHtmlTest {
 		eliminar.setResourceName("remision");
 		eliminar.setModule("documentos");
 		eliminar.setOrder(5);
-		eliminar.setResourceType("forma");
+		eliminar.setResourceType("form");
 		eliminar.setVersion("1.0");
 		eliminar.setEvents("detalle");
 		eliminar.setStatus("guardar");
@@ -6137,7 +6637,7 @@ public class GeneradorHtmlTest {
 		timbrar.setResourceName("ingreso");
 		timbrar.setModule("comprobantes");
 		timbrar.setOrder(6);
-		timbrar.setResourceType("forma");
+		timbrar.setResourceType("form");
 		timbrar.setVersion("3.3");
 		timbrar.setEvents("detalle");
 		timbrar.setStatus("guardar");
@@ -6473,7 +6973,7 @@ public class GeneradorHtmlTest {
 		fechaPago.setPersistible(true);
 		fechaPago.setValidation("^\\d{4}-\\d{2}-\\d{2}$");
 		fechaPago.setFormat("yyyy-MM-dd");
-		fechaPago.setValue("${hoyCorto}");
+		fechaPago.setValue("${default::hoyCorto}");
 
 		obs.setName("Observaciones");
 		obs.setFieldName("obs");
@@ -6746,7 +7246,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("ingreso");
 		guardar.setModule("comprobantes");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("3.3");
 		guardar.setEvents("nuevo");
 
@@ -6759,7 +7259,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("usuario");
 		cancelar.setModule("directorio");
 		cancelar.setOrder(1);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("detalle");
 
@@ -6772,7 +7272,7 @@ public class GeneradorHtmlTest {
 		eliminar.setResourceName("ingreso");
 		eliminar.setModule("comprobantes");
 		eliminar.setOrder(5);
-		eliminar.setResourceType("forma");
+		eliminar.setResourceType("form");
 		eliminar.setVersion("3.3");
 		eliminar.setEvents("detalle");
 
@@ -6785,7 +7285,7 @@ public class GeneradorHtmlTest {
 		timbrar.setResourceName("ingreso");
 		timbrar.setModule("comprobantes");
 		timbrar.setOrder(6);
-		timbrar.setResourceType("forma");
+		timbrar.setResourceType("form");
 		timbrar.setVersion("3.3");
 		timbrar.setEvents("detalle");
 
@@ -7364,7 +7864,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("ocompra");
 		guardar.setModule("solicitud");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -7377,7 +7877,7 @@ public class GeneradorHtmlTest {
 		eliminar.setResourceName("ocompra");
 		eliminar.setModule("solicitud");
 		eliminar.setOrder(5);
-		eliminar.setResourceType("forma");
+		eliminar.setResourceType("form");
 		eliminar.setVersion("1.0");
 		eliminar.setEvents("detalle");
 
@@ -7703,7 +8203,7 @@ public class GeneradorHtmlTest {
 		fechaPago.setGroup("pago");
 		fechaPago.setPersistible(true);
 		fechaPago.setFormat("yyyy-MM-dd");
-		fechaPago.setValue("${hoyCorto}");
+		fechaPago.setValue("${default::hoyCorto}");
 
 		obs.setName("Observaciones");
 		obs.setFieldName("obs");
@@ -7922,7 +8422,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("pedido");
 		guardar.setModule("solicitud");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -8259,7 +8759,7 @@ public class GeneradorHtmlTest {
 		fechaPago.setGroup("pago");
 		fechaPago.setPersistible(true);
 		fechaPago.setFormat("yyyy-MM-dd");
-		fechaPago.setValue("${hoyCorto}");
+		fechaPago.setValue("${default::hoyCorto}");
 
 		obs.setName("Observaciones");
 		obs.setFieldName("obs");
@@ -8430,12 +8930,11 @@ public class GeneradorHtmlTest {
 			e.printStackTrace();
 		}
 	}
-
 	@Test
 	public void testGuardarFormaCotizacion() throws IOException {
 		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
 
-		Path filePath = fileConfigLocation.resolve("cotizacion.json").normalize();
+		Path filePath = fileConfigLocation.resolve("cotizacion_es_MX.json").normalize();
 
 		IGenerador<Resource> generador = new Generador<Resource>(templatesPath);
 		List<Field> campos = new ArrayList<Field>();
@@ -8479,7 +8978,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("cotizacion");
 		guardar.setModule("solicitud");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -8529,7 +9028,7 @@ public class GeneradorHtmlTest {
 		campoCodigo.setPersistible(true);
 		campoCodigo.setAutogenerado(true);*/
 
-		tipo.setName("Tipo de documento");
+		tipo.setName("tipo");
 		tipo.setFieldName("tipo");
 		tipo.setCss("form-control");
 		tipo.setOrder(1);
@@ -8542,11 +9041,14 @@ public class GeneradorHtmlTest {
 		tipo.setLength(20);
 		tipo.setGroup("cabecero");
 		tipo.setPersistible(true);
-		tipo.setValue("cotizacion");
+		tipo.setValue("cotizacon");
 		tipo.setFormat("");
+		tipo.setLabel("Tipo de documento");
+		tipo.setDecimals(0);
+		tipo.setDbFieldType("varchar");
 
 
-		campoCodigo.setName("Folio interno");
+		campoCodigo.setName("codigo");
 		campoCodigo.setFieldName("codigo");
 		campoCodigo.setCss("form-control");
 		campoCodigo.setOrder(2);
@@ -8560,9 +9062,12 @@ public class GeneradorHtmlTest {
 		campoCodigo.setGroup("cabecero");
 		campoCodigo.setPersistible(true);
 		//campoCodigo.setAutogenerado(true);
-		campoCodigo.setFormat("{TIPO-CONS}");
+		campoCodigo.setFormat("");
 		//campoCodigo.setAutogenerado(false);
-
+		campoCodigo.setLabel("Codigo (Auto)");
+		campoCodigo.setSuggestion("Codigo asignado automaticamente");
+		campoCodigo.setDecimals(0);
+		campoCodigo.setDbFieldType("varchar");
 		/*
 		 * campoCampo.setNombre("Automatico"); campoCampo.setBd("AUTO");
 		 * campoCampo.setCss("form-control"); campoCampo.setOrden(2);
@@ -8572,7 +9077,7 @@ public class GeneradorHtmlTest {
 		 * campoCampo.setGrupo("cabecero"); campoCampo.setPersistible(false);
 		 */
 
-		aMaterno.setName("Codigo emisor");
+		aMaterno.setName("emisorcodigo");
 		aMaterno.setFieldName("emisorcodigo");
 		aMaterno.setCss("form-control");
 		aMaterno.setOrder(3);
@@ -8584,10 +9089,14 @@ public class GeneradorHtmlTest {
 		aMaterno.setId(false);
 		aMaterno.setLength(20);
 		aMaterno.setGroup("emisor");
-		aMaterno.setPersistible(false);
-		aMaterno.setFormat("Codigo emisor");
+		aMaterno.setPersistible(true);
+		aMaterno.setFormat("");
+		aMaterno.setSuggestion("Codigo emisor");
+		aMaterno.setLabel("Codigo emisor");
+		aMaterno.setDecimals(0);
+		aMaterno.setDbFieldType("varchar");
 
-		aPaterno.setName("RFC emisor");
+		aPaterno.setName("emisor");
 		aPaterno.setFieldName("emisor");
 		aPaterno.setCss("form-control");
 		aPaterno.setOrder(4);
@@ -8601,9 +9110,13 @@ public class GeneradorHtmlTest {
 		aPaterno.setGroup("emisor");
 		aPaterno.setPersistible(true);
 		aPaterno.setValidation("^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$");
-		aPaterno.setFormat("RFC emisor");
+		aPaterno.setSuggestion("RFC emisor");
+		aPaterno.setFormat("");
+		aPaterno.setLabel("RFC emisor");
+		aPaterno.setDecimals(0);
+		aPaterno.setDbFieldType("varchar");
 
-		fNacim.setName("Codigo receptor");
+		fNacim.setName("receptorcodigo");
 		fNacim.setFieldName("receptorcodigo");
 		fNacim.setCss("form-control");
 		fNacim.setOrder(5);
@@ -8615,10 +9128,14 @@ public class GeneradorHtmlTest {
 		fNacim.setId(false);
 		fNacim.setLength(20);
 		fNacim.setGroup("receptor");
-		fNacim.setPersistible(false);
-		fNacim.setFormat("Codigo receptor");
+		fNacim.setPersistible(true);
+		fNacim.setFormat("");
+		fNacim.setLabel("Codigo receptor");
+		fNacim.setSuggestion("Codigo receptor");
+		fNacim.setDecimals(0);
+		fNacim.setDbFieldType("varchar");
 
-		posicion.setName("RFC receptor");
+		posicion.setName("receptor");
 		posicion.setFieldName("receptor");
 		posicion.setCss("form-control");
 		posicion.setOrder(6);
@@ -8632,9 +9149,13 @@ public class GeneradorHtmlTest {
 		posicion.setGroup("receptor");
 		posicion.setPersistible(true);
 		posicion.setValidation("^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$");
-		posicion.setFormat("RFC receptor");
+		posicion.setFormat("");
+		posicion.setLabel("RFC receptor");
+		posicion.setSuggestion("RFC receptor");
+		posicion.setDecimals(0);
+		posicion.setDbFieldType("varchar");
 
-		puntuacion.setName("Uso CFDi");
+		puntuacion.setName("uso");
 		puntuacion.setFieldName("uso");
 		puntuacion.setCss("form-control");
 		puntuacion.setOrder(7);
@@ -8648,10 +9169,13 @@ public class GeneradorHtmlTest {
 		puntuacion.setGroup("receptor");
 		puntuacion.setPersistible(true);
 		puntuacion.setValidation("");
-		puntuacion.setFormat("Uso CFDi");
+		puntuacion.setFormat("");
 		puntuacion.setValue("");
+		puntuacion.setLabel("Uso CFDi");
+		puntuacion.setDecimals(0);
+		puntuacion.setDbFieldType("varchar");
 
-		goles.setName("Direccion de facturación");
+		goles.setName("dirfactura");
 		goles.setFieldName("dirfactura");
 		goles.setCss("form-control");
 		goles.setOrder(8);
@@ -8663,10 +9187,13 @@ public class GeneradorHtmlTest {
 		goles.setId(false);
 		goles.setLength(20);
 		goles.setGroup("direccionFiscal");
-		goles.setPersistible(false);
+		goles.setPersistible(true);
 		goles.setFormat("Direccion de facturación");
+		goles.setLabel("Direccion de facturación");
+		goles.setDecimals(0);
+		goles.setDbFieldType("varchar");
 
-		categoria.setName("Calle");
+		categoria.setName("calle");
 		categoria.setFieldName("calle");
 		categoria.setCss("form-control");
 		categoria.setOrder(10);
@@ -8676,12 +9203,15 @@ public class GeneradorHtmlTest {
 		categoria.setRequired(false);
 		categoria.setShowInBasket(false);
 		categoria.setId(false);
-		categoria.setLength(20);
+		categoria.setLength(200);
 		categoria.setGroup("direccionFiscal");
 		categoria.setPersistible(true);
 		categoria.setFormat("Calle");
-
-		usuario.setName("No Int");
+		categoria.setLabel("Calle");
+		categoria.setDecimals(0);
+		categoria.setDbFieldType("varchar");
+		
+		usuario.setName("noint");
 		usuario.setFieldName("noint");
 		usuario.setCss("form-control");
 		usuario.setOrder(11);
@@ -8694,9 +9224,12 @@ public class GeneradorHtmlTest {
 		usuario.setLength(10);
 		usuario.setGroup("direccionFiscal");
 		usuario.setPersistible(true);
-		usuario.setFormat("No Int");
-
-		fecha.setName("No Ext");
+		usuario.setFormat("");
+		usuario.setLabel("No Int");
+		usuario.setDecimals(0);
+		usuario.setDbFieldType("varchar");
+		
+		fecha.setName("noext");
 		fecha.setFieldName("noext");
 		fecha.setCss("form-control");
 		fecha.setOrder(12);
@@ -8709,9 +9242,12 @@ public class GeneradorHtmlTest {
 		fecha.setLength(10);
 		fecha.setGroup("direccionFiscal");
 		fecha.setPersistible(true);	
-		fecha.setFormat("No Ext");
-
-		municipio.setName("Municipio");
+		fecha.setFormat("");
+		fecha.setLabel("No Ext");
+		fecha.setDecimals(0);
+		fecha.setDbFieldType("varchar");
+		
+		municipio.setName("municipio");
 		municipio.setFieldName("municipio");
 		municipio.setCss("form-control");
 		municipio.setOrder(13);
@@ -8721,12 +9257,15 @@ public class GeneradorHtmlTest {
 		municipio.setRequired(false);
 		municipio.setShowInBasket(false);
 		municipio.setId(false);
-		municipio.setLength(20);
+		municipio.setLength(200);
 		municipio.setGroup("direccionFiscal");
 		municipio.setPersistible(true);	
-		municipio.setFormat("Municipio");
+		municipio.setFormat("");
+		municipio.setLabel("Municipio");
+		municipio.setDecimals(0);
+		municipio.setDbFieldType("varchar");
 
-		poblacion.setName("Población");
+		poblacion.setName("poblacion");
 		poblacion.setFieldName("poblacion");
 		poblacion.setCss("form-control");
 		poblacion.setOrder(14);
@@ -8736,12 +9275,15 @@ public class GeneradorHtmlTest {
 		poblacion.setRequired(false);
 		poblacion.setShowInBasket(false);
 		poblacion.setId(false);
-		poblacion.setLength(20);
+		poblacion.setLength(200);
 		poblacion.setGroup("direccionFiscal");
 		poblacion.setPersistible(true);	
 		poblacion.setFormat("Población");
-
-		ciudad.setName("Ciudad");
+		poblacion.setLabel("Población");
+		poblacion.setDecimals(0);
+		poblacion.setDbFieldType("varchar");
+		
+		ciudad.setName("ciudad");
 		ciudad.setFieldName("ciudad");
 		ciudad.setCss("form-control");
 		ciudad.setOrder(15);
@@ -8751,12 +9293,15 @@ public class GeneradorHtmlTest {
 		ciudad.setRequired(false);
 		ciudad.setShowInBasket(false);
 		ciudad.setId(false);
-		ciudad.setLength(20);
+		ciudad.setLength(200);
 		ciudad.setGroup("direccionFiscal");
 		ciudad.setPersistible(true);	
-		ciudad.setFormat("Ciudad");
-
-		imagen.setName("C. P.");
+		ciudad.setFormat("");
+		ciudad.setLabel("Ciudad");
+		ciudad.setDecimals(0);
+		ciudad.setDbFieldType("varchar");
+		
+		imagen.setName("cp");
 		imagen.setFieldName("cp");
 		imagen.setCss("form-control");
 		imagen.setOrder(16);
@@ -8766,13 +9311,15 @@ public class GeneradorHtmlTest {
 		imagen.setRequired(false);
 		imagen.setShowInBasket(false);
 		imagen.setId(false);
-		imagen.setLength(10);
+		imagen.setLength(20);
 		imagen.setGroup("direccionFiscal");
 		imagen.setPersistible(true);
-		imagen.setFormat("C. P.");
+		imagen.setFormat("");
+		imagen.setLabel("C. P.");
+		imagen.setDecimals(0);
+		imagen.setDbFieldType("varchar");
 
-
-		estado.setName("Estado");
+		estado.setName("estado");
 		estado.setFieldName("estado");
 		estado.setCss("form-control");
 		estado.setOrder(17);
@@ -8786,8 +9333,11 @@ public class GeneradorHtmlTest {
 		estado.setPersistible(true);
 		estado.setLength(255);
 		estado.setFormat("Estado");
+		estado.setLabel("Estado");
+		estado.setDecimals(0);
+		estado.setDbFieldType("varchar");
 
-		metodopago.setName("Metodo de pago");
+		metodopago.setName("metodopago");
 		metodopago.setFieldName("metodopago");
 		metodopago.setCss("form-control");
 		metodopago.setOrder(18);
@@ -8800,10 +9350,13 @@ public class GeneradorHtmlTest {
 		metodopago.setGroup("direccionFiscal");
 		metodopago.setPersistible(true);
 		metodopago.setLength(10);
-		metodopago.setFormat("Metodo de pago");
+		metodopago.setFormat("");
 		metodopago.setValue("");
+		metodopago.setLabel("Metodo de pago");
+		metodopago.setDecimals(0);
+		metodopago.setDbFieldType("varchar");
 
-		formapago.setName("Forma de pago");
+		formapago.setName("formapago");
 		formapago.setFieldName("formapago");
 		formapago.setCss("form-control");
 		formapago.setOrder(19);
@@ -8816,10 +9369,13 @@ public class GeneradorHtmlTest {
 		formapago.setLength(6);
 		formapago.setGroup("pago");
 		formapago.setPersistible(false);
-		formapago.setFormat("Forma de pago");
+		formapago.setFormat("");
 		formapago.setValue("");
-
-		cantidad.setName("Monto");
+		formapago.setLabel("Forma de pago");
+		formapago.setDecimals(0);
+		formapago.setDbFieldType("varchar");
+		
+		cantidad.setName("monto");
 		cantidad.setFieldName("monto");
 		cantidad.setCss("form-control");
 		cantidad.setOrder(20);
@@ -8829,12 +9385,15 @@ public class GeneradorHtmlTest {
 		cantidad.setRequired(true);
 		cantidad.setShowInBasket(false);
 		cantidad.setId(false);
-		cantidad.setLength(20);
+		cantidad.setLength(12);
 		cantidad.setGroup("pago");
 		cantidad.setPersistible(false);
 		cantidad.setFormat("00.00");
+		cantidad.setLabel("Monto");
+		cantidad.setDecimals(0);
+		cantidad.setDbFieldType("decimal");
 
-		fechaPago.setName("Fecha");
+		fechaPago.setName("fecha");
 		fechaPago.setFieldName("fecha");
 		fechaPago.setCss("form-control");
 		fechaPago.setOrder(21);
@@ -8848,9 +9407,12 @@ public class GeneradorHtmlTest {
 		fechaPago.setGroup("pago");
 		fechaPago.setPersistible(true);
 		fechaPago.setFormat("yyyy-MM-dd");
-		fechaPago.setValue("${hoyCorto}");
+		fechaPago.setValue("${default::hoyCorto}");
+		fechaPago.setLabel("Fecha");
+		fechaPago.setDecimals(0);
+		fechaPago.setDbFieldType("date");
 
-		obs.setName("Observaciones");
+		obs.setName("obs");
 		obs.setFieldName("obs");
 		obs.setCss("form-control");
 		obs.setOrder(21);
@@ -8860,81 +9422,95 @@ public class GeneradorHtmlTest {
 		obs.setRequired(true);
 		obs.setShowInBasket(false);
 		obs.setId(false);
-		obs.setLength(20);
+		obs.setLength(200);
 		obs.setGroup("pago");
 		obs.setPersistible(false);
 		obs.setFormat("Observaciones");
+		obs.setLabel("Observaciones");
+		obs.setDecimals(0);
+		obs.setDbFieldType("varchar");
 
-		subtotal.setName("Subtotal");
+		subtotal.setName("subtotal");
 		subtotal.setFieldName("subtotal");
 		subtotal.setCss("form-control");
 		subtotal.setOrder(22);
-		subtotal.setComponentType("moneda");
+		subtotal.setComponentType("texto");
 		subtotal.setReadOnly(true);
 		subtotal.setHidden(false);
 		subtotal.setRequired(true);
 		subtotal.setShowInBasket(true);
 		subtotal.setId(false);
-		subtotal.setLength(20);
+		subtotal.setLength(12);
 		subtotal.setGroup("totales");
 		subtotal.setPersistible(false);
-		subtotal.setValue("00.00");
+		subtotal.setValue("0");
 		subtotal.setFormat("00.00");
-
-		descuento.setName("Descuento");
+		subtotal.setLabel("Subtotal");
+		subtotal.setDecimals(2);
+		subtotal.setDbFieldType("decimal");
+		
+		descuento.setName("descuento");
 		descuento.setFieldName("descuento");
 		descuento.setCss("form-control");
 		descuento.setOrder(23);
-		descuento.setComponentType("moneda");
+		descuento.setComponentType("texto");
 		descuento.setReadOnly(true);
 		descuento.setHidden(false);
 		descuento.setRequired(true);
 		descuento.setShowInBasket(true);
 		descuento.setId(false);
-		descuento.setLength(20);
+		descuento.setLength(12);
 		descuento.setGroup("totales");
 		descuento.setPersistible(false);
-		descuento.setValue("00.00");
-		descuento.setFormat("00.00");
+		descuento.setValue("0");
+		descuento.setFormat("0");
+		descuento.setLabel("Descuento");
+		descuento.setDecimals(2);
+		descuento.setDbFieldType("decimal");
 
-
-		impret.setName("Impuesto retenido");
+		impret.setName("impret");
 		impret.setFieldName("impret");
 		impret.setCss("form-control");
 		impret.setOrder(24);
-		impret.setComponentType("moneda");
+		impret.setComponentType("texto");
 		impret.setReadOnly(true);
 		impret.setHidden(false);
 		impret.setRequired(true);
 		impret.setShowInBasket(true);
 		impret.setId(false);
-		impret.setLength(20);
+		impret.setLength(12);
 		impret.setGroup("totales");
 		impret.setPersistible(false);
-		impret.setValue("00.00");
+		impret.setValue("0");
 		impret.setFormat("00.00");
+		impret.setLabel("Impuesto retenido");
+		impret.setDecimals(2);
+		impret.setDbFieldType("decimal");
 
-		imptras.setName("Impuesto trasladado");
+		imptras.setName("imptras");
 		imptras.setFieldName("imptras");
 		imptras.setCss("form-control");
 		imptras.setOrder(25);
-		imptras.setComponentType("moneda");
+		imptras.setComponentType("texto");
 		imptras.setReadOnly(true);
 		imptras.setHidden(false);
 		imptras.setRequired(true);
 		imptras.setShowInBasket(true);
 		imptras.setId(false);
-		imptras.setLength(20);
+		imptras.setLength(12);
 		imptras.setGroup("totales");
 		imptras.setPersistible(false);
-		imptras.setValue("00.00");
+		imptras.setValue("0");
 		imptras.setFormat("00.00");
+		impret.setLabel("Impuesto trasladado");
+		impret.setDecimals(2);
+		impret.setDbFieldType("decimal");
 
-		total.setName("Total");
+		total.setName("total");
 		total.setFieldName("total");
 		total.setCss("form-control");
 		total.setOrder(26);
-		total.setComponentType("moneda");
+		total.setComponentType("texto");
 		total.setReadOnly(true);
 		total.setHidden(false);
 		total.setRequired(true);
@@ -8943,11 +9519,14 @@ public class GeneradorHtmlTest {
 		total.setLength(20);
 		total.setGroup("totales");
 		total.setPersistible(false);
-		total.setValue("00.00");
+		total.setValue("0");
 		total.setValidation("[a-zA-Z0-9,.;:_'\\s-]+$");
 		total.setFormat("00.00");
+		total.setLabel("Total");
+		total.setDecimals(2);
+		total.setDbFieldType("decimal");
 
-		status.setName("Status");
+		status.setName("status");
 		status.setFieldName("status");
 		status.setCss("form-control");
 		status.setOrder(27);
@@ -8962,8 +9541,11 @@ public class GeneradorHtmlTest {
 		status.setPersistible(false);
 		status.setValue("Nueva");
 		status.setValidation("");
-		status.setFormat("Status");
-
+		status.setFormat("");
+		status.setLabel("Status");
+		status.setDecimals(0);
+		status.setDbFieldType("varchar");
+		
 		campos.add(status);
 		campos.add(total);
 		campos.add(impret);
@@ -9007,6 +9589,701 @@ public class GeneradorHtmlTest {
 		forma.setValidate(true);
 		forma.setVersionable(false);
 
+		
+		forma.setPersistible(true);
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		
+
+		forma.setInstruction("Por favor complete la informacion de la cotizacion");
+		forma.setUuid(generarToken());
+		forma.setComment("Formulario para registrar cotizaciones");
+		forma.setOrigin("ui::case");
+		forma.setDestination("db::mysql");
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		
+		try {
+			generador.put(filePath, forma);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testGuardarFormaPresupuesto() throws IOException {
+		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
+
+		Path filePath = fileConfigLocation.resolve("presupuesto_es_MX.json").normalize();
+
+		IGenerador<Resource> generador = new Generador<Resource>(templatesPath);
+		List<Field> campos = new ArrayList<Field>();
+		List<Button> acciones = new ArrayList<Button>();
+		Field campoCodigo = new Field();
+		//Campo campoCampo = new Campo();
+		Field aMaterno = new Field();
+		Field aPaterno = new Field();
+		Field fNacim = new Field();
+		Field posicion = new Field();
+		Field goles = new Field();
+		Field puntuacion = new Field();
+		Field imagen = new Field();
+		Field categoria = new Field();
+		Field usuario = new Field();
+		Field fecha = new Field();
+		Resource forma = new Resource();
+		Field municipio = new Field();
+		Field poblacion = new Field();
+		Field ciudad = new Field();
+		Field estado = new Field();
+		Field metodopago = new Field();
+		Field formapago = new Field();
+		Field cantidad = new Field();
+		Field fechaPago = new Field();
+		Field obs = new Field();
+		Field tipo = new Field();
+		Field subtotal = new Field();
+		Field descuento = new Field();
+		Field imptras = new Field();
+		Field impret = new Field();
+		Field total = new Field();
+		Field status = new Field();
+
+		Button guardar = new Button();
+		guardar.setCommandName("guardar");
+		guardar.setName("guardar");
+		guardar.setLabel("Guardar");
+		guardar.setComponentType("botonjs");
+		guardar.setCss("btn btn-primary");
+		guardar.setResourceName("presupuesto");
+		guardar.setModule("solicitud");
+		guardar.setOrder(1);
+		guardar.setResourceType("form");
+		guardar.setVersion("1.0");
+		guardar.setEvents("nuevo");
+
+		Button carrito = new Button();
+		carrito.setCommandName("nuevo");
+		carrito.setName("nuevo");
+		carrito.setLabel("Productos/Servicios");
+		carrito.setComponentType("location");
+		carrito.setCss("btn btn-success");
+		carrito.setResourceName("prodserv");
+		carrito.setModule("inventario");
+		carrito.setOrder(3);
+		carrito.setResourceType("basket");
+		carrito.setVersion("1.0");
+		carrito.setEvents("detalle,guardar");
+
+		acciones.add(guardar);
+		acciones.add(carrito);
+
+		/*tipo.setNombre("Tipo de documento");
+		tipo.setBd("tipo");
+		tipo.setCss("form-control");
+		tipo.setOrden(1);
+		tipo.setType("texto");
+		tipo.setLectura(true);
+		tipo.setOculto(false);
+		tipo.setRequerido(false);
+		tipo.setLista(true);
+		tipo.setId(false);
+		tipo.setLongitud(20);
+		tipo.setGrupo("cabecero");
+		tipo.setPersistible(true);
+		tipo.setValor("cotizacion");
+
+		campoCodigo.setNombre("Folio interno");
+		campoCodigo.setBd("codigo");
+		campoCodigo.setCss("form-control");
+		campoCodigo.setOrden(2);
+		campoCodigo.setType("texto");
+		campoCodigo.setLectura(false);
+		campoCodigo.setOculto(false);
+		campoCodigo.setRequerido(true);
+		campoCodigo.setLista(true);
+		campoCodigo.setId(true);
+		campoCodigo.setLongitud(20);
+		campoCodigo.setGrupo("cabecero");
+		campoCodigo.setPersistible(true);
+		campoCodigo.setAutogenerado(true);*/
+
+		tipo.setName("tipo");
+		tipo.setFieldName("tipo");
+		tipo.setCss("form-control");
+		tipo.setOrder(1);
+		tipo.setComponentType("texto");
+		tipo.setReadOnly(true);
+		tipo.setHidden(true);
+		tipo.setRequired(false);
+		tipo.setShowInBasket(true);
+		tipo.setId(false);
+		tipo.setLength(20);
+		tipo.setGroup("cabecero");
+		tipo.setPersistible(true);
+		tipo.setValue("presupuesto");
+		tipo.setFormat("");
+		tipo.setLabel("Tipo de documento");
+		tipo.setDecimals(0);
+		tipo.setDbFieldType("varchar");
+
+
+		campoCodigo.setName("codigo");
+		campoCodigo.setFieldName("codigo");
+		campoCodigo.setCss("form-control");
+		campoCodigo.setOrder(2);
+		campoCodigo.setComponentType("texto");
+		campoCodigo.setReadOnly(true);
+		campoCodigo.setHidden(false);
+		campoCodigo.setRequired(false);
+		campoCodigo.setShowInBasket(true);
+		campoCodigo.setId(true);
+		campoCodigo.setLength(20);
+		campoCodigo.setGroup("cabecero");
+		campoCodigo.setPersistible(true);
+		//campoCodigo.setAutogenerado(true);
+		campoCodigo.setFormat("");
+		//campoCodigo.setAutogenerado(false);
+		campoCodigo.setLabel("Codigo (Auto)");
+		campoCodigo.setSuggestion("Codigo asignado automaticamente");
+		campoCodigo.setDecimals(0);
+		campoCodigo.setDbFieldType("varchar");
+		/*
+		 * campoCampo.setNombre("Automatico"); campoCampo.setBd("AUTO");
+		 * campoCampo.setCss("form-control"); campoCampo.setOrden(2);
+		 * campoCampo.setType("checkbox"); campoCampo.setLectura(false);
+		 * campoCampo.setOculto(false); campoCampo.setRequerido(true);
+		 * campoCampo.setLista(true); campoCampo.setId(false);
+		 * campoCampo.setGrupo("cabecero"); campoCampo.setPersistible(false);
+		 */
+
+		aMaterno.setName("emisorcodigo");
+		aMaterno.setFieldName("emisorcodigo");
+		aMaterno.setCss("form-control");
+		aMaterno.setOrder(3);
+		aMaterno.setComponentType("texto");
+		aMaterno.setReadOnly(false);
+		aMaterno.setHidden(false);
+		aMaterno.setRequired(false);
+		aMaterno.setShowInBasket(false);
+		aMaterno.setId(false);
+		aMaterno.setLength(20);
+		aMaterno.setGroup("emisor");
+		aMaterno.setPersistible(true);
+		aMaterno.setValue("${default::username}");
+		aMaterno.setSuggestion("Codigo emisor");
+		aMaterno.setLabel("Codigo emisor");
+		aMaterno.setDecimals(0);
+		aMaterno.setDbFieldType("varchar");
+
+		aPaterno.setName("emisor");
+		aPaterno.setFieldName("emisor");
+		aPaterno.setCss("form-control");
+		aPaterno.setOrder(4);
+		aPaterno.setComponentType("texto");
+		aPaterno.setReadOnly(false);
+		aPaterno.setHidden(false);
+		aPaterno.setRequired(true);
+		aPaterno.setShowInBasket(false);
+		aPaterno.setId(false);
+		aPaterno.setLength(20);
+		aPaterno.setGroup("emisor");
+		aPaterno.setPersistible(true);
+		aPaterno.setValidation("^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$");
+		aPaterno.setSuggestion("RFC emisor");
+		aPaterno.setFormat("");
+		aPaterno.setLabel("RFC emisor");
+		aPaterno.setDecimals(0);
+		aPaterno.setDbFieldType("varchar");
+
+		fNacim.setName("receptorcodigo");
+		fNacim.setFieldName("receptorcodigo");
+		fNacim.setCss("form-control");
+		fNacim.setOrder(5);
+		fNacim.setComponentType("texto");
+		fNacim.setReadOnly(false);
+		fNacim.setHidden(false);
+		fNacim.setRequired(false);
+		fNacim.setShowInBasket(false);
+		fNacim.setId(false);
+		fNacim.setLength(20);
+		fNacim.setGroup("receptor");
+		fNacim.setPersistible(true);
+		fNacim.setValue("");
+		fNacim.setLabel("Codigo receptor");
+		fNacim.setSuggestion("Codigo receptor");
+		fNacim.setDecimals(0);
+		fNacim.setDbFieldType("varchar");
+
+		posicion.setName("receptor");
+		posicion.setFieldName("receptor");
+		posicion.setCss("form-control");
+		posicion.setOrder(6);
+		posicion.setComponentType("texto");
+		posicion.setReadOnly(false);
+		posicion.setHidden(false);
+		posicion.setRequired(true);
+		posicion.setShowInBasket(false);
+		posicion.setId(false);
+		posicion.setLength(20);
+		posicion.setGroup("receptor");
+		posicion.setPersistible(true);
+		posicion.setValidation("^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$");
+		posicion.setFormat("");
+		posicion.setLabel("RFC receptor");
+		posicion.setSuggestion("RFC receptor");
+		posicion.setDecimals(0);
+		posicion.setDbFieldType("varchar");
+
+		puntuacion.setName("uso");
+		puntuacion.setFieldName("uso");
+		puntuacion.setCss("form-control");
+		puntuacion.setOrder(7);
+		puntuacion.setComponentType("uso");
+		puntuacion.setReadOnly(false);
+		puntuacion.setHidden(false);
+		puntuacion.setRequired(true);
+		puntuacion.setShowInBasket(false);
+		puntuacion.setId(false);
+		puntuacion.setLength(5);
+		puntuacion.setGroup("receptor");
+		puntuacion.setPersistible(true);
+		puntuacion.setValidation("");
+		puntuacion.setFormat("");
+		puntuacion.setValue("");
+		puntuacion.setLabel("Uso CFDi");
+		puntuacion.setDecimals(0);
+		puntuacion.setDbFieldType("varchar");
+
+		goles.setName("dirfactura");
+		goles.setFieldName("dirfactura");
+		goles.setCss("form-control");
+		goles.setOrder(8);
+		goles.setComponentType("selectorDireccion");
+		goles.setReadOnly(false);
+		goles.setHidden(false);
+		goles.setRequired(false);
+		goles.setShowInBasket(false);
+		goles.setId(false);
+		goles.setLength(20);
+		goles.setGroup("direccionFiscal");
+		goles.setPersistible(true);
+		goles.setFormat("");
+		goles.setLabel("Direccion de facturación");
+		goles.setDecimals(0);
+		goles.setDbFieldType("varchar");
+
+		categoria.setName("calle");
+		categoria.setFieldName("calle");
+		categoria.setCss("form-control");
+		categoria.setOrder(10);
+		categoria.setComponentType("texto");
+		categoria.setReadOnly(false);
+		categoria.setHidden(false);
+		categoria.setRequired(false);
+		categoria.setShowInBasket(false);
+		categoria.setId(false);
+		categoria.setLength(200);
+		categoria.setGroup("direccionFiscal");
+		categoria.setPersistible(true);
+		categoria.setFormat("Calle");
+		categoria.setLabel("Calle");
+		categoria.setDecimals(0);
+		categoria.setDbFieldType("varchar");
+		
+		usuario.setName("noint");
+		usuario.setFieldName("noint");
+		usuario.setCss("form-control");
+		usuario.setOrder(11);
+		usuario.setComponentType("texto");
+		usuario.setReadOnly(false);
+		usuario.setHidden(false);
+		usuario.setRequired(false);
+		usuario.setShowInBasket(false);
+		usuario.setId(false);
+		usuario.setLength(10);
+		usuario.setGroup("direccionFiscal");
+		usuario.setPersistible(true);
+		usuario.setFormat("");
+		usuario.setLabel("No Int");
+		usuario.setDecimals(0);
+		usuario.setDbFieldType("varchar");
+		
+		fecha.setName("noext");
+		fecha.setFieldName("noext");
+		fecha.setCss("form-control");
+		fecha.setOrder(12);
+		fecha.setComponentType("texto");
+		fecha.setReadOnly(false);
+		fecha.setHidden(false);
+		fecha.setRequired(false);
+		fecha.setShowInBasket(false);
+		fecha.setId(false);
+		fecha.setLength(10);
+		fecha.setGroup("direccionFiscal");
+		fecha.setPersistible(true);	
+		fecha.setFormat("");
+		fecha.setLabel("No Ext");
+		fecha.setDecimals(0);
+		fecha.setDbFieldType("varchar");
+		
+		municipio.setName("municipio");
+		municipio.setFieldName("municipio");
+		municipio.setCss("form-control");
+		municipio.setOrder(13);
+		municipio.setComponentType("texto");
+		municipio.setReadOnly(false);
+		municipio.setHidden(false);
+		municipio.setRequired(false);
+		municipio.setShowInBasket(false);
+		municipio.setId(false);
+		municipio.setLength(200);
+		municipio.setGroup("direccionFiscal");
+		municipio.setPersistible(true);	
+		municipio.setFormat("");
+		municipio.setLabel("Municipio");
+		municipio.setDecimals(0);
+		municipio.setDbFieldType("varchar");
+
+		poblacion.setName("poblacion");
+		poblacion.setFieldName("poblacion");
+		poblacion.setCss("form-control");
+		poblacion.setOrder(14);
+		poblacion.setComponentType("texto");
+		poblacion.setReadOnly(false);
+		poblacion.setHidden(false);
+		poblacion.setRequired(false);
+		poblacion.setShowInBasket(false);
+		poblacion.setId(false);
+		poblacion.setLength(200);
+		poblacion.setGroup("direccionFiscal");
+		poblacion.setPersistible(true);	
+		poblacion.setFormat("Población");
+		poblacion.setLabel("Población");
+		poblacion.setDecimals(0);
+		poblacion.setDbFieldType("varchar");
+		
+		ciudad.setName("ciudad");
+		ciudad.setFieldName("ciudad");
+		ciudad.setCss("form-control");
+		ciudad.setOrder(15);
+		ciudad.setComponentType("texto");
+		ciudad.setReadOnly(false);
+		ciudad.setHidden(false);
+		ciudad.setRequired(false);
+		ciudad.setShowInBasket(false);
+		ciudad.setId(false);
+		ciudad.setLength(200);
+		ciudad.setGroup("direccionFiscal");
+		ciudad.setPersistible(true);	
+		ciudad.setFormat("");
+		ciudad.setLabel("Ciudad");
+		ciudad.setDecimals(0);
+		ciudad.setDbFieldType("varchar");
+		
+		imagen.setName("cp");
+		imagen.setFieldName("cp");
+		imagen.setCss("form-control");
+		imagen.setOrder(16);
+		imagen.setComponentType("texto");
+		imagen.setReadOnly(false);
+		imagen.setHidden(false);
+		imagen.setRequired(false);
+		imagen.setShowInBasket(false);
+		imagen.setId(false);
+		imagen.setLength(20);
+		imagen.setGroup("direccionFiscal");
+		imagen.setPersistible(true);
+		imagen.setFormat("");
+		imagen.setLabel("C. P.");
+		imagen.setDecimals(0);
+		imagen.setDbFieldType("varchar");
+
+		estado.setName("estado");
+		estado.setFieldName("estado");
+		estado.setCss("form-control");
+		estado.setOrder(17);
+		estado.setComponentType("selectorEstado");
+		estado.setReadOnly(false);
+		estado.setHidden(false);
+		estado.setRequired(false);
+		estado.setShowInBasket(false);
+		estado.setId(false);
+		estado.setGroup("direccionFiscal");
+		estado.setPersistible(true);
+		estado.setLength(255);
+		estado.setFormat("Estado");
+		estado.setLabel("Estado");
+		estado.setDecimals(0);
+		estado.setDbFieldType("varchar");
+
+		metodopago.setName("metodopago");
+		metodopago.setFieldName("metodopago");
+		metodopago.setCss("form-control");
+		metodopago.setOrder(18);
+		metodopago.setComponentType("metodopago");
+		metodopago.setReadOnly(false);
+		metodopago.setHidden(false);
+		metodopago.setRequired(false);
+		metodopago.setShowInBasket(false);
+		metodopago.setId(false);
+		metodopago.setGroup("direccionFiscal");
+		metodopago.setPersistible(true);
+		metodopago.setLength(10);
+		metodopago.setFormat("");
+		metodopago.setValue("");
+		metodopago.setLabel("Metodo de pago");
+		metodopago.setDecimals(0);
+		metodopago.setDbFieldType("varchar");
+
+		formapago.setName("formapago");
+		formapago.setFieldName("formapago");
+		formapago.setCss("form-control");
+		formapago.setOrder(19);
+		formapago.setComponentType("formapago");
+		formapago.setReadOnly(false);
+		formapago.setHidden(false);
+		formapago.setRequired(true);
+		formapago.setShowInBasket(false);
+		formapago.setId(false);
+		formapago.setLength(6);
+		formapago.setGroup("pago");
+		formapago.setPersistible(false);
+		formapago.setFormat("");
+		formapago.setValue("");
+		formapago.setLabel("Forma de pago");
+		formapago.setDecimals(0);
+		formapago.setDbFieldType("varchar");
+		
+		cantidad.setName("monto");
+		cantidad.setFieldName("monto");
+		cantidad.setCss("form-control");
+		cantidad.setOrder(20);
+		cantidad.setComponentType("texto");
+		cantidad.setReadOnly(false);
+		cantidad.setHidden(false);
+		cantidad.setRequired(true);
+		cantidad.setShowInBasket(false);
+		cantidad.setId(false);
+		cantidad.setLength(12);
+		cantidad.setGroup("pago");
+		cantidad.setPersistible(false);
+		cantidad.setFormat("00.00");
+		cantidad.setLabel("Monto");
+		cantidad.setDecimals(0);
+		cantidad.setDbFieldType("decimal");
+
+		fechaPago.setName("fecha");
+		fechaPago.setFieldName("fecha");
+		fechaPago.setCss("form-control");
+		fechaPago.setOrder(21);
+		fechaPago.setComponentType("fecha");
+		fechaPago.setReadOnly(true);
+		fechaPago.setHidden(false);
+		fechaPago.setRequired(true);
+		fechaPago.setShowInBasket(false);
+		fechaPago.setId(false);
+		fechaPago.setLength(10);
+		fechaPago.setGroup("pago");
+		fechaPago.setPersistible(true);
+		fechaPago.setFormat("yyyy-MM-dd");
+		fechaPago.setValue("${default::hoyCorto}");
+		fechaPago.setLabel("Fecha");
+		fechaPago.setDecimals(0);
+		fechaPago.setDbFieldType("date");
+
+		obs.setName("obs");
+		obs.setFieldName("obs");
+		obs.setCss("form-control");
+		obs.setOrder(21);
+		obs.setComponentType("texto");
+		obs.setReadOnly(false);
+		obs.setHidden(false);
+		obs.setRequired(true);
+		obs.setShowInBasket(false);
+		obs.setId(false);
+		obs.setLength(200);
+		obs.setGroup("pago");
+		obs.setPersistible(false);
+		obs.setFormat("Observaciones");
+		obs.setLabel("Observaciones");
+		obs.setDecimals(0);
+		obs.setDbFieldType("varchar");
+
+		subtotal.setName("subtotal");
+		subtotal.setFieldName("subtotal");
+		subtotal.setCss("form-control");
+		subtotal.setOrder(22);
+		subtotal.setComponentType("texto");
+		subtotal.setReadOnly(true);
+		subtotal.setHidden(false);
+		subtotal.setRequired(true);
+		subtotal.setShowInBasket(true);
+		subtotal.setId(false);
+		subtotal.setLength(12);
+		subtotal.setGroup("totales");
+		subtotal.setPersistible(false);
+		subtotal.setValue("0");
+		subtotal.setFormat("00.00");
+		subtotal.setLabel("Subtotal");
+		subtotal.setDecimals(2);
+		subtotal.setDbFieldType("decimal");
+		
+		descuento.setName("descuento");
+		descuento.setFieldName("descuento");
+		descuento.setCss("form-control");
+		descuento.setOrder(23);
+		descuento.setComponentType("texto");
+		descuento.setReadOnly(true);
+		descuento.setHidden(false);
+		descuento.setRequired(true);
+		descuento.setShowInBasket(true);
+		descuento.setId(false);
+		descuento.setLength(12);
+		descuento.setGroup("totales");
+		descuento.setPersistible(false);
+		descuento.setValue("0");
+		descuento.setFormat("0");
+		descuento.setLabel("Descuento");
+		descuento.setDecimals(2);
+		descuento.setDbFieldType("decimal");
+
+		impret.setName("impret");
+		impret.setFieldName("impret");
+		impret.setCss("form-control");
+		impret.setOrder(24);
+		impret.setComponentType("texto");
+		impret.setReadOnly(true);
+		impret.setHidden(false);
+		impret.setRequired(true);
+		impret.setShowInBasket(true);
+		impret.setId(false);
+		impret.setLength(12);
+		impret.setGroup("totales");
+		impret.setPersistible(false);
+		impret.setValue("0");
+		impret.setFormat("00.00");
+		impret.setLabel("Impuesto retenido");
+		impret.setDecimals(2);
+		impret.setDbFieldType("decimal");
+
+		imptras.setName("imptras");
+		imptras.setFieldName("imptras");
+		imptras.setCss("form-control");
+		imptras.setOrder(25);
+		imptras.setComponentType("texto");
+		imptras.setReadOnly(true);
+		imptras.setHidden(false);
+		imptras.setRequired(true);
+		imptras.setShowInBasket(true);
+		imptras.setId(false);
+		imptras.setLength(12);
+		imptras.setGroup("totales");
+		imptras.setPersistible(false);
+		imptras.setValue("0");
+		imptras.setFormat("00.00");
+		imptras.setLabel("Impuesto trasladado");
+		imptras.setDecimals(2);
+		imptras.setDbFieldType("decimal");
+
+		total.setName("total");
+		total.setFieldName("total");
+		total.setCss("form-control");
+		total.setOrder(26);
+		total.setComponentType("texto");
+		total.setReadOnly(true);
+		total.setHidden(false);
+		total.setRequired(true);
+		total.setShowInBasket(true);
+		total.setId(false);
+		total.setLength(20);
+		total.setGroup("totales");
+		total.setPersistible(false);
+		total.setValue("0");
+		total.setValidation("[a-zA-Z0-9,.;:_'\\s-]+$");
+		total.setFormat("00.00");
+		total.setLabel("Total");
+		total.setDecimals(2);
+		total.setDbFieldType("decimal");
+
+		status.setName("status");
+		status.setFieldName("status");
+		status.setCss("form-control");
+		status.setOrder(27);
+		status.setComponentType("status");
+		status.setReadOnly(true);
+		status.setHidden(false);
+		status.setRequired(true);
+		status.setShowInBasket(true);
+		status.setId(false);
+		status.setLength(20);
+		status.setGroup("cabecero");
+		status.setPersistible(false);
+		status.setValue("Nueva");
+		status.setValidation("");
+		status.setFormat("");
+		status.setLabel("Status");
+		status.setDecimals(0);
+		status.setDbFieldType("varchar");
+
+
+		campos.add(status);
+		campos.add(total);
+		campos.add(impret);
+		campos.add(imptras);
+		campos.add(descuento);
+		campos.add(subtotal);
+		campos.add(tipo);
+		campos.add(obs);
+		campos.add(fechaPago);
+		campos.add(cantidad);
+		campos.add(formapago);
+		campos.add(metodopago);
+		campos.add(estado);
+		campos.add(ciudad);
+		campos.add(poblacion);
+		campos.add(municipio);
+		campos.add(goles);
+		campos.add(puntuacion);
+		campos.add(aMaterno);
+		//campos.add(campoCampo);
+		campos.add(campoCodigo);
+		campos.add(aPaterno);
+		campos.add(fNacim);
+		campos.add(posicion);
+		campos.add(imagen);
+		campos.add(categoria);
+		campos.add(usuario);
+		campos.add(fecha);
+		forma.setModel(campos);
+		forma.setMethods(acciones);
+		forma.setCommandName("Guardar");
+		forma.setName("presupuesto");
+		forma.setView("presupuesto");
+		forma.setTitle("Solicitud de Presupuesto");
+		forma.setVersion("1.0");
+		forma.setStatus("produccion");
+		forma.setModule("solicitud");
+		forma.setBasket("presupuesto");
+		forma.setCreateable(true);
+		forma.setTable("doctos");
+		forma.setValidate(true);
+		forma.setVersionable(false);
+		forma.setPrefix("PSO");
+		
+		forma.setPersistible(true);
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		forma.setInstruction("Por favor complete la informacion del presupuesto");
+		forma.setUuid(generarToken());
+		forma.setComment("Formulario para registrar presupuestos");
+		forma.setOrigin("ui::case");
+		forma.setDestination("db::mysql");
+		
 		try {
 			generador.put(filePath, forma);
 		} catch (JsonGenerationException e) {
@@ -9065,12 +10342,12 @@ public class GeneradorHtmlTest {
 		guardar.setCommandName("guardar");
 		guardar.setName("guardar");
 		guardar.setLabel("Guardar");
-		guardar.setComponentType("submit");
+		guardar.setComponentType("botonjs");
 		guardar.setCss("btn btn-primary");
 		guardar.setResourceName("comprobante");
 		guardar.setModule("comprobantes");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("3.3");
 		guardar.setEvents("nuevo");
 
@@ -9614,7 +10891,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("documento");
 		guardar.setModule("documentos");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("3.3");
 		guardar.setEvents("nuevo");
 
@@ -10095,6 +11372,659 @@ public class GeneradorHtmlTest {
 	}
 
 	@Test
+	public void testGuardarFormaPlan() throws IOException {
+		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
+
+		Path filePath = fileConfigLocation.resolve("plan_es_MX.json").normalize();
+
+		IGenerador<Resource> generador = new Generador<Resource>(templatesPath);
+		List<Field> campos = new ArrayList<Field>();
+		List<Button> acciones = new ArrayList<Button>();
+		Field campoCodigo = new Field();
+		//Campo campoCampo = new Campo();
+		Field aMaterno = new Field();
+		Field aPaterno = new Field();
+		Field fNacim = new Field();
+		Field posicion = new Field();
+		Field goles = new Field();
+		Field puntuacion = new Field();
+		Field imagen = new Field();
+		Field categoria = new Field();
+		Field usuario = new Field();
+		Field fecha = new Field();
+		Resource forma = new Resource();
+		Field municipio = new Field();
+		Field poblacion = new Field();
+		Field ciudad = new Field();
+		Field estado = new Field();
+		Field metodopago = new Field();
+		Field formapago = new Field();
+		Field cantidad = new Field();
+		Field fechaPago = new Field();
+		Field obs = new Field();
+		Field tipo = new Field();
+		Field subtotal = new Field();
+		Field descuento = new Field();
+		Field imptras = new Field();
+		Field impret = new Field();
+		Field total = new Field();
+		Field status = new Field();
+
+		Button guardar = new Button();
+		guardar.setCommandName("guardar");
+		guardar.setName("guardar");
+		guardar.setLabel("Guardar");
+		guardar.setComponentType("botonjs");
+		guardar.setCss("btn btn-primary");
+		guardar.setResourceName("plan");
+		guardar.setModule("documentos");
+		guardar.setOrder(1);
+		guardar.setResourceType("form");
+		guardar.setVersion("1.0");
+		guardar.setEvents("nuevo");
+
+		Button carrito = new Button();
+		carrito.setCommandName("nuevo");
+		carrito.setName("nuevo");
+		carrito.setLabel("Productos/Servicios");
+		carrito.setComponentType("botonliga");
+		carrito.setCss("btn btn-success");
+		carrito.setResourceName("plan");
+		carrito.setModule("documentos");
+		carrito.setOrder(3);
+		carrito.setResourceType("basket");
+		carrito.setVersion("1.0");
+		carrito.setEvents("guardar,detalle");
+
+		acciones.add(guardar);
+		acciones.add(carrito);
+
+		tipo.setName("tipo");
+		tipo.setFieldName("tipo");
+		tipo.setCss("form-control");
+		tipo.setOrder(1);
+		tipo.setComponentType("texto");
+		tipo.setReadOnly(true);
+		tipo.setHidden(true);
+		tipo.setRequired(false);
+		tipo.setShowInBasket(true);
+		tipo.setId(false);
+		tipo.setLength(20);
+		tipo.setGroup("cabecero");
+		tipo.setPersistible(true);
+		tipo.setValue("plan");
+		tipo.setFormat("");
+		tipo.setLabel("Tipo de documento");
+		tipo.setDecimals(0);
+		tipo.setDbFieldType("varchar");
+
+
+		campoCodigo.setName("codigo");
+		campoCodigo.setFieldName("codigo");
+		campoCodigo.setCss("form-control");
+		campoCodigo.setOrder(2);
+		campoCodigo.setComponentType("texto");
+		campoCodigo.setReadOnly(true);
+		campoCodigo.setHidden(false);
+		campoCodigo.setRequired(false);
+		campoCodigo.setShowInBasket(true);
+		campoCodigo.setId(true);
+		campoCodigo.setLength(20);
+		campoCodigo.setGroup("cabecero");
+		campoCodigo.setPersistible(true);
+		//campoCodigo.setAutogenerado(true);
+		campoCodigo.setFormat("");
+		//campoCodigo.setAutogenerado(false);
+		campoCodigo.setLabel("Codigo (Auto)");
+		campoCodigo.setSuggestion("Codigo asignado automaticamente");
+		campoCodigo.setDecimals(0);
+		campoCodigo.setDbFieldType("varchar");
+		/*
+		 * campoCampo.setNombre("Automatico"); campoCampo.setBd("AUTO");
+		 * campoCampo.setCss("form-control"); campoCampo.setOrden(2);
+		 * campoCampo.setType("checkbox"); campoCampo.setLectura(false);
+		 * campoCampo.setOculto(false); campoCampo.setRequerido(true);
+		 * campoCampo.setLista(true); campoCampo.setId(false);
+		 * campoCampo.setGrupo("cabecero"); campoCampo.setPersistible(false);
+		 */
+
+		aMaterno.setName("emisorcodigo");
+		aMaterno.setFieldName("emisorcodigo");
+		aMaterno.setCss("form-control");
+		aMaterno.setOrder(3);
+		aMaterno.setComponentType("texto");
+		aMaterno.setReadOnly(false);
+		aMaterno.setHidden(false);
+		aMaterno.setRequired(false);
+		aMaterno.setShowInBasket(false);
+		aMaterno.setId(false);
+		aMaterno.setLength(20);
+		aMaterno.setGroup("emisor");
+		aMaterno.setPersistible(true);
+		aMaterno.setFormat("");
+		aMaterno.setSuggestion("Codigo emisor");
+		aMaterno.setLabel("Codigo emisor");
+		aMaterno.setDecimals(0);
+		aMaterno.setDbFieldType("varchar");
+
+		aPaterno.setName("emisor");
+		aPaterno.setFieldName("emisor");
+		aPaterno.setCss("form-control");
+		aPaterno.setOrder(4);
+		aPaterno.setComponentType("texto");
+		aPaterno.setReadOnly(false);
+		aPaterno.setHidden(false);
+		aPaterno.setRequired(true);
+		aPaterno.setShowInBasket(false);
+		aPaterno.setId(false);
+		aPaterno.setLength(20);
+		aPaterno.setGroup("emisor");
+		aPaterno.setPersistible(true);
+		aPaterno.setValidation("^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$");
+		aPaterno.setSuggestion("RFC emisor");
+		aPaterno.setFormat("");
+		aPaterno.setLabel("RFC emisor");
+		aPaterno.setDecimals(0);
+		aPaterno.setDbFieldType("varchar");
+
+		fNacim.setName("receptorcodigo");
+		fNacim.setFieldName("receptorcodigo");
+		fNacim.setCss("form-control");
+		fNacim.setOrder(5);
+		fNacim.setComponentType("texto");
+		fNacim.setReadOnly(false);
+		fNacim.setHidden(false);
+		fNacim.setRequired(false);
+		fNacim.setShowInBasket(false);
+		fNacim.setId(false);
+		fNacim.setLength(20);
+		fNacim.setGroup("receptor");
+		fNacim.setPersistible(true);
+		fNacim.setFormat("");
+		fNacim.setLabel("Codigo receptor");
+		fNacim.setSuggestion("Codigo receptor");
+		fNacim.setDecimals(0);
+		fNacim.setDbFieldType("varchar");
+
+		posicion.setName("receptor");
+		posicion.setFieldName("receptor");
+		posicion.setCss("form-control");
+		posicion.setOrder(6);
+		posicion.setComponentType("texto");
+		posicion.setReadOnly(false);
+		posicion.setHidden(false);
+		posicion.setRequired(true);
+		posicion.setShowInBasket(false);
+		posicion.setId(false);
+		posicion.setLength(20);
+		posicion.setGroup("receptor");
+		posicion.setPersistible(true);
+		posicion.setValidation("^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$");
+		posicion.setFormat("");
+		posicion.setLabel("RFC receptor");
+		posicion.setSuggestion("RFC receptor");
+		posicion.setDecimals(0);
+		posicion.setDbFieldType("varchar");
+
+		puntuacion.setName("uso");
+		puntuacion.setFieldName("uso");
+		puntuacion.setCss("form-control");
+		puntuacion.setOrder(7);
+		puntuacion.setComponentType("uso");
+		puntuacion.setReadOnly(false);
+		puntuacion.setHidden(false);
+		puntuacion.setRequired(true);
+		puntuacion.setShowInBasket(false);
+		puntuacion.setId(false);
+		puntuacion.setLength(5);
+		puntuacion.setGroup("receptor");
+		puntuacion.setPersistible(true);
+		puntuacion.setValidation("");
+		puntuacion.setFormat("");
+		puntuacion.setValue("");
+		puntuacion.setLabel("Uso CFDi");
+		puntuacion.setDecimals(0);
+		puntuacion.setDbFieldType("varchar");
+
+		goles.setName("dirfactura");
+		goles.setFieldName("dirfactura");
+		goles.setCss("form-control");
+		goles.setOrder(8);
+		goles.setComponentType("selectorDireccion");
+		goles.setReadOnly(false);
+		goles.setHidden(false);
+		goles.setRequired(false);
+		goles.setShowInBasket(false);
+		goles.setId(false);
+		goles.setLength(20);
+		goles.setGroup("direccionFiscal");
+		goles.setPersistible(true);
+		goles.setFormat("Direccion de facturación");
+		goles.setLabel("Direccion de facturación");
+		goles.setDecimals(0);
+		goles.setDbFieldType("varchar");
+
+		categoria.setName("calle");
+		categoria.setFieldName("calle");
+		categoria.setCss("form-control");
+		categoria.setOrder(10);
+		categoria.setComponentType("texto");
+		categoria.setReadOnly(false);
+		categoria.setHidden(false);
+		categoria.setRequired(false);
+		categoria.setShowInBasket(false);
+		categoria.setId(false);
+		categoria.setLength(200);
+		categoria.setGroup("direccionFiscal");
+		categoria.setPersistible(true);
+		categoria.setFormat("Calle");
+		categoria.setLabel("Calle");
+		categoria.setDecimals(0);
+		categoria.setDbFieldType("varchar");
+		
+		usuario.setName("noint");
+		usuario.setFieldName("noint");
+		usuario.setCss("form-control");
+		usuario.setOrder(11);
+		usuario.setComponentType("texto");
+		usuario.setReadOnly(false);
+		usuario.setHidden(false);
+		usuario.setRequired(false);
+		usuario.setShowInBasket(false);
+		usuario.setId(false);
+		usuario.setLength(10);
+		usuario.setGroup("direccionFiscal");
+		usuario.setPersistible(true);
+		usuario.setFormat("");
+		usuario.setLabel("No Int");
+		usuario.setDecimals(0);
+		usuario.setDbFieldType("varchar");
+		
+		fecha.setName("noext");
+		fecha.setFieldName("noext");
+		fecha.setCss("form-control");
+		fecha.setOrder(12);
+		fecha.setComponentType("texto");
+		fecha.setReadOnly(false);
+		fecha.setHidden(false);
+		fecha.setRequired(false);
+		fecha.setShowInBasket(false);
+		fecha.setId(false);
+		fecha.setLength(10);
+		fecha.setGroup("direccionFiscal");
+		fecha.setPersistible(true);	
+		fecha.setFormat("");
+		fecha.setLabel("No Ext");
+		fecha.setDecimals(0);
+		fecha.setDbFieldType("varchar");
+		
+		municipio.setName("municipio");
+		municipio.setFieldName("municipio");
+		municipio.setCss("form-control");
+		municipio.setOrder(13);
+		municipio.setComponentType("texto");
+		municipio.setReadOnly(false);
+		municipio.setHidden(false);
+		municipio.setRequired(false);
+		municipio.setShowInBasket(false);
+		municipio.setId(false);
+		municipio.setLength(200);
+		municipio.setGroup("direccionFiscal");
+		municipio.setPersistible(true);	
+		municipio.setFormat("");
+		municipio.setLabel("Municipio");
+		municipio.setDecimals(0);
+		municipio.setDbFieldType("varchar");
+
+		poblacion.setName("poblacion");
+		poblacion.setFieldName("poblacion");
+		poblacion.setCss("form-control");
+		poblacion.setOrder(14);
+		poblacion.setComponentType("texto");
+		poblacion.setReadOnly(false);
+		poblacion.setHidden(false);
+		poblacion.setRequired(false);
+		poblacion.setShowInBasket(false);
+		poblacion.setId(false);
+		poblacion.setLength(200);
+		poblacion.setGroup("direccionFiscal");
+		poblacion.setPersistible(true);	
+		poblacion.setFormat("Población");
+		poblacion.setLabel("Población");
+		poblacion.setDecimals(0);
+		poblacion.setDbFieldType("varchar");
+		
+		ciudad.setName("ciudad");
+		ciudad.setFieldName("ciudad");
+		ciudad.setCss("form-control");
+		ciudad.setOrder(15);
+		ciudad.setComponentType("texto");
+		ciudad.setReadOnly(false);
+		ciudad.setHidden(false);
+		ciudad.setRequired(false);
+		ciudad.setShowInBasket(false);
+		ciudad.setId(false);
+		ciudad.setLength(200);
+		ciudad.setGroup("direccionFiscal");
+		ciudad.setPersistible(true);	
+		ciudad.setFormat("");
+		ciudad.setLabel("Ciudad");
+		ciudad.setDecimals(0);
+		ciudad.setDbFieldType("varchar");
+		
+		imagen.setName("cp");
+		imagen.setFieldName("cp");
+		imagen.setCss("form-control");
+		imagen.setOrder(16);
+		imagen.setComponentType("texto");
+		imagen.setReadOnly(false);
+		imagen.setHidden(false);
+		imagen.setRequired(false);
+		imagen.setShowInBasket(false);
+		imagen.setId(false);
+		imagen.setLength(20);
+		imagen.setGroup("direccionFiscal");
+		imagen.setPersistible(true);
+		imagen.setFormat("");
+		imagen.setLabel("C. P.");
+		imagen.setDecimals(0);
+		imagen.setDbFieldType("varchar");
+
+		estado.setName("estado");
+		estado.setFieldName("estado");
+		estado.setCss("form-control");
+		estado.setOrder(17);
+		estado.setComponentType("selectorEstado");
+		estado.setReadOnly(false);
+		estado.setHidden(false);
+		estado.setRequired(false);
+		estado.setShowInBasket(false);
+		estado.setId(false);
+		estado.setGroup("direccionFiscal");
+		estado.setPersistible(true);
+		estado.setLength(255);
+		estado.setFormat("Estado");
+		estado.setLabel("Estado");
+		estado.setDecimals(0);
+		estado.setDbFieldType("varchar");
+
+		metodopago.setName("metodopago");
+		metodopago.setFieldName("metodopago");
+		metodopago.setCss("form-control");
+		metodopago.setOrder(18);
+		metodopago.setComponentType("metodopago");
+		metodopago.setReadOnly(false);
+		metodopago.setHidden(false);
+		metodopago.setRequired(false);
+		metodopago.setShowInBasket(false);
+		metodopago.setId(false);
+		metodopago.setGroup("direccionFiscal");
+		metodopago.setPersistible(true);
+		metodopago.setLength(10);
+		metodopago.setFormat("");
+		metodopago.setValue("");
+		metodopago.setLabel("Metodo de pago");
+		metodopago.setDecimals(0);
+		metodopago.setDbFieldType("varchar");
+
+		formapago.setName("formapago");
+		formapago.setFieldName("formapago");
+		formapago.setCss("form-control");
+		formapago.setOrder(19);
+		formapago.setComponentType("formapago");
+		formapago.setReadOnly(false);
+		formapago.setHidden(false);
+		formapago.setRequired(true);
+		formapago.setShowInBasket(false);
+		formapago.setId(false);
+		formapago.setLength(6);
+		formapago.setGroup("pago");
+		formapago.setPersistible(false);
+		formapago.setFormat("");
+		formapago.setValue("");
+		formapago.setLabel("Forma de pago");
+		formapago.setDecimals(0);
+		formapago.setDbFieldType("varchar");
+		
+		cantidad.setName("monto");
+		cantidad.setFieldName("monto");
+		cantidad.setCss("form-control");
+		cantidad.setOrder(20);
+		cantidad.setComponentType("texto");
+		cantidad.setReadOnly(false);
+		cantidad.setHidden(false);
+		cantidad.setRequired(true);
+		cantidad.setShowInBasket(false);
+		cantidad.setId(false);
+		cantidad.setLength(12);
+		cantidad.setGroup("pago");
+		cantidad.setPersistible(false);
+		cantidad.setFormat("00.00");
+		cantidad.setLabel("Monto");
+		cantidad.setDecimals(0);
+		cantidad.setDbFieldType("decimal");
+
+		fechaPago.setName("fecha");
+		fechaPago.setFieldName("fecha");
+		fechaPago.setCss("form-control");
+		fechaPago.setOrder(21);
+		fechaPago.setComponentType("fecha");
+		fechaPago.setReadOnly(true);
+		fechaPago.setHidden(false);
+		fechaPago.setRequired(true);
+		fechaPago.setShowInBasket(false);
+		fechaPago.setId(false);
+		fechaPago.setLength(10);
+		fechaPago.setGroup("pago");
+		fechaPago.setPersistible(true);
+		fechaPago.setFormat("yyyy-MM-dd");
+		fechaPago.setValue("${default::hoyCorto}");
+		fechaPago.setLabel("Fecha");
+		fechaPago.setDecimals(0);
+		fechaPago.setDbFieldType("date");
+
+		obs.setName("obs");
+		obs.setFieldName("obs");
+		obs.setCss("form-control");
+		obs.setOrder(21);
+		obs.setComponentType("texto");
+		obs.setReadOnly(false);
+		obs.setHidden(false);
+		obs.setRequired(true);
+		obs.setShowInBasket(false);
+		obs.setId(false);
+		obs.setLength(200);
+		obs.setGroup("pago");
+		obs.setPersistible(false);
+		obs.setFormat("Observaciones");
+		obs.setLabel("Observaciones");
+		obs.setDecimals(0);
+		obs.setDbFieldType("varchar");
+
+		subtotal.setName("subtotal");
+		subtotal.setFieldName("subtotal");
+		subtotal.setCss("form-control");
+		subtotal.setOrder(22);
+		subtotal.setComponentType("texto");
+		subtotal.setReadOnly(true);
+		subtotal.setHidden(false);
+		subtotal.setRequired(true);
+		subtotal.setShowInBasket(true);
+		subtotal.setId(false);
+		subtotal.setLength(12);
+		subtotal.setGroup("totales");
+		subtotal.setPersistible(false);
+		subtotal.setValue("0");
+		subtotal.setFormat("00.00");
+		subtotal.setLabel("Subtotal");
+		subtotal.setDecimals(2);
+		subtotal.setDbFieldType("decimal");
+		
+		descuento.setName("descuento");
+		descuento.setFieldName("descuento");
+		descuento.setCss("form-control");
+		descuento.setOrder(23);
+		descuento.setComponentType("texto");
+		descuento.setReadOnly(true);
+		descuento.setHidden(false);
+		descuento.setRequired(true);
+		descuento.setShowInBasket(true);
+		descuento.setId(false);
+		descuento.setLength(12);
+		descuento.setGroup("totales");
+		descuento.setPersistible(false);
+		descuento.setValue("0");
+		descuento.setFormat("0");
+		descuento.setLabel("Descuento");
+		descuento.setDecimals(2);
+		descuento.setDbFieldType("decimal");
+
+		impret.setName("impret");
+		impret.setFieldName("impret");
+		impret.setCss("form-control");
+		impret.setOrder(24);
+		impret.setComponentType("texto");
+		impret.setReadOnly(true);
+		impret.setHidden(false);
+		impret.setRequired(true);
+		impret.setShowInBasket(true);
+		impret.setId(false);
+		impret.setLength(12);
+		impret.setGroup("totales");
+		impret.setPersistible(false);
+		impret.setValue("0");
+		impret.setFormat("00.00");
+		impret.setLabel("Impuesto retenido");
+		impret.setDecimals(2);
+		impret.setDbFieldType("decimal");
+
+		imptras.setName("imptras");
+		imptras.setFieldName("imptras");
+		imptras.setCss("form-control");
+		imptras.setOrder(25);
+		imptras.setComponentType("texto");
+		imptras.setReadOnly(true);
+		imptras.setHidden(false);
+		imptras.setRequired(true);
+		imptras.setShowInBasket(true);
+		imptras.setId(false);
+		imptras.setLength(12);
+		imptras.setGroup("totales");
+		imptras.setPersistible(false);
+		imptras.setValue("0");
+		imptras.setFormat("00.00");
+		imptras.setLabel("Impuesto trasladado");
+		imptras.setDecimals(2);
+		imptras.setDbFieldType("decimal");
+
+		total.setName("total");
+		total.setFieldName("total");
+		total.setCss("form-control");
+		total.setOrder(26);
+		total.setComponentType("texto");
+		total.setReadOnly(true);
+		total.setHidden(false);
+		total.setRequired(true);
+		total.setShowInBasket(true);
+		total.setId(false);
+		total.setLength(20);
+		total.setGroup("totales");
+		total.setPersistible(false);
+		total.setValue("0");
+		total.setValidation("[a-zA-Z0-9,.;:_'\\s-]+$");
+		total.setFormat("00.00");
+		total.setLabel("Total");
+		total.setDecimals(2);
+		total.setDbFieldType("decimal");
+
+		status.setName("status");
+		status.setFieldName("status");
+		status.setCss("form-control");
+		status.setOrder(27);
+		status.setComponentType("status");
+		status.setReadOnly(true);
+		status.setHidden(false);
+		status.setRequired(true);
+		status.setShowInBasket(true);
+		status.setId(false);
+		status.setLength(20);
+		status.setGroup("cabecero");
+		status.setPersistible(false);
+		status.setValue("Nueva");
+		status.setValidation("");
+		status.setFormat("");
+		status.setLabel("Status");
+		status.setDecimals(0);
+		status.setDbFieldType("varchar");
+
+		campos.add(status);
+		campos.add(total);
+		campos.add(impret);
+		campos.add(imptras);
+		campos.add(descuento);
+		campos.add(subtotal);
+		campos.add(tipo);
+		campos.add(obs);
+		campos.add(fechaPago);
+		campos.add(cantidad);
+		campos.add(formapago);
+		campos.add(metodopago);
+		campos.add(estado);
+		campos.add(ciudad);
+		campos.add(poblacion);
+		campos.add(municipio);
+		campos.add(goles);
+		campos.add(puntuacion);
+		campos.add(aMaterno);
+		//campos.add(campoCampo);
+		campos.add(campoCodigo);
+		campos.add(aPaterno);
+		campos.add(fNacim);
+		campos.add(posicion);
+		campos.add(imagen);
+		campos.add(categoria);
+		campos.add(usuario);
+		campos.add(fecha);
+		
+		forma.setPrefix("PLN");
+		forma.setModel(campos);
+		forma.setMethods(acciones);
+		forma.setCommandName("Guardar");
+		forma.setName("plan");
+		forma.setView("plan");
+		forma.setTitle("Plan de tratamiento");
+		forma.setVersion("1.0");
+		forma.setStatus("produccion");
+		forma.setModule("documentos");
+		forma.setBasket("documento");
+		forma.setCreateable(false);
+		forma.setTable("doctos");
+		forma.setValidate(true);
+		forma.setPersistible(true);
+		
+
+		forma.setInstruction("Por favor complete la informacion del plan");
+		forma.setUuid(generarToken());
+		forma.setComment("Formulario para registrar los planes");
+		forma.setOrigin("ui::case");
+		forma.setDestination("db::mysql");
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		//forma.setPrefix("PLN");)
+		try {
+			generador.put(filePath, forma);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
 	public void testGuardarFormaCatalogoProdServ() throws IOException {
 		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
 
@@ -10137,12 +12067,12 @@ public class GeneradorHtmlTest {
 		guardar.setCommandName("guardar");
 		guardar.setName("guardar");
 		guardar.setLabel("Guardar");
-		guardar.setComponentType("submit");
+		guardar.setComponentType("botonjs");
 		guardar.setCss("btn btn-primary");
 		guardar.setResourceName("documento");
 		guardar.setModule("documentos");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("3.3");
 		guardar.setEvents("nuevo");
 
@@ -11185,7 +13115,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("ingreso");
 		guardar.setModule("comprobantes");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("3.3");
 		guardar.setEvents("nuevo");
 
@@ -11198,7 +13128,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("usuario");
 		cancelar.setModule("directorio");
 		cancelar.setOrder(1);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("detalle");
 
@@ -11211,7 +13141,7 @@ public class GeneradorHtmlTest {
 		eliminar.setResourceName("ingreso");
 		eliminar.setModule("comprobantes");
 		eliminar.setOrder(5);
-		eliminar.setResourceType("forma");
+		eliminar.setResourceType("form");
 		eliminar.setVersion("3.3");
 		eliminar.setEvents("detalle");
 
@@ -11224,7 +13154,7 @@ public class GeneradorHtmlTest {
 		timbrar.setResourceName("ingreso");
 		timbrar.setModule("comprobantes");
 		timbrar.setOrder(6);
-		timbrar.setResourceType("forma");
+		timbrar.setResourceType("form");
 		timbrar.setVersion("3.3");
 		timbrar.setEvents("detalle");
 
@@ -11739,6 +13669,637 @@ public class GeneradorHtmlTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testGuardarFormaCobro() throws IOException {
+		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
+
+		Path filePath = fileConfigLocation.resolve("cobro_es_MX.json").normalize();
+
+		IGenerador<Resource> generador = new Generador<Resource>(templatesPath);
+		List<Field> campos = new ArrayList<Field>();
+		List<Button> acciones = new ArrayList<Button>();
+		Field campoCodigo = new Field();
+		//Campo campoCampo = new Campo();
+		Field aMaterno = new Field();
+		Field aPaterno = new Field();
+		Field fNacim = new Field();
+		Field posicion = new Field();
+		Field goles = new Field();
+		Field puntuacion = new Field();
+		Field imagen = new Field();
+		Field categoria = new Field();
+		Field usuario = new Field();
+		Field fecha = new Field();
+		Resource forma = new Resource();
+		Field municipio = new Field();
+		Field poblacion = new Field();
+		Field ciudad = new Field();
+		Field estado = new Field();
+		Field metodopago = new Field();
+		Field formapago = new Field();
+		Field cantidad = new Field();
+		Field fechaPago = new Field();
+		Field obs = new Field();
+		Field tipo = new Field();
+		Field subtotal = new Field();
+		Field descuento = new Field();
+		Field imptras = new Field();
+		Field impret = new Field();
+		Field total = new Field();
+		Field status = new Field();
+		Field serie = new Field();
+
+		Button carrito = new Button();
+		carrito.setCommandName("nuevo");
+		carrito.setName("nuevo");
+		carrito.setLabel("Productos/Servicios");
+		carrito.setComponentType("location");
+		carrito.setCss("btn btn-info");
+		carrito.setResourceName("prodserv");
+		carrito.setModule("inventario");
+		carrito.setOrder(3);
+		carrito.setResourceType("basket");
+		carrito.setVersion("1.0");
+		carrito.setEvents("nuevo");
+
+
+		Button guardar = new Button();
+		guardar.setCommandName("guardar");
+		guardar.setName("guardar");
+		guardar.setLabel("Guardar");
+		guardar.setComponentType("botonjs");
+		guardar.setCss("btn btn-info");
+		guardar.setResourceName("cobro");
+		guardar.setModule("documentos");
+		guardar.setOrder(1);
+		guardar.setResourceType("form");
+		guardar.setVersion("1.0");
+		guardar.setEvents("nuevo");
+
+		Button cancelar = new Button();
+		cancelar.setCommandName("cancelar");
+		cancelar.setName("cancelar");
+		cancelar.setLabel("Cancelar");
+		cancelar.setComponentType("botonjs");
+		cancelar.setCss("btn btn-info");
+		cancelar.setResourceName("usuario");
+		cancelar.setModule("directorio");
+		cancelar.setOrder(1);
+		cancelar.setResourceType("form");
+		cancelar.setVersion("1.0");
+		cancelar.setEvents("detalle");
+
+		Button eliminar = new Button();
+		eliminar.setCommandName("actualizar");
+		eliminar.setName("actualizar");
+		eliminar.setLabel("Actualizar");
+		eliminar.setComponentType("botonjs");
+		eliminar.setCss("btn btn-info");
+		eliminar.setResourceName("ingreso");
+		eliminar.setModule("comprobantes");
+		eliminar.setOrder(5);
+		eliminar.setResourceType("form");
+		eliminar.setVersion("3.3");
+		eliminar.setEvents("detalle");
+
+		Button nuevo = new Button();
+		nuevo.setCommandName("nuevo");
+		nuevo.setName("nuevo");
+		nuevo.setLabel("Nuevo");
+		nuevo.setComponentType("botonjs");
+		nuevo.setCss("btn btn-info");
+		nuevo.setResourceName("cobro");
+		nuevo.setModule("documentos");
+		nuevo.setOrder(6);
+		nuevo.setResourceType("form");
+		nuevo.setVersion("1.0");
+		nuevo.setEvents("detalle");
+
+		acciones.add(guardar);
+		acciones.add(carrito);
+		acciones.add(cancelar);
+		acciones.add(eliminar);
+		acciones.add(nuevo);
+
+		tipo.setName("Tipo de documento");
+		tipo.setFieldName("tipo");
+		tipo.setCss("form-control");
+		tipo.setOrder(1);
+		tipo.setComponentType("texto");
+		tipo.setReadOnly(true);
+		tipo.setHidden(false);
+		tipo.setRequired(false);
+		tipo.setShowInBasket(true);
+		tipo.setId(false);
+		tipo.setLength(20);
+		tipo.setGroup("cabecero");
+		tipo.setPersistible(true);
+		tipo.setValue("pago");
+		tipo.setFormat("");
+
+
+		campoCodigo.setName("Folio interno");
+		campoCodigo.setFieldName("codigo");
+		campoCodigo.setCss("form-control");
+		campoCodigo.setOrder(2);
+		campoCodigo.setComponentType("texto");
+		campoCodigo.setReadOnly(true);
+		campoCodigo.setHidden(false);
+		campoCodigo.setRequired(false);
+		campoCodigo.setShowInBasket(true);
+		campoCodigo.setId(true);
+		campoCodigo.setLength(20);
+		campoCodigo.setGroup("cabecero");
+		campoCodigo.setPersistible(true);
+		campoCodigo.setFormat("{RFC-TIPO-CONS}");
+
+		/*
+		 * campoCampo.setNombre("Automatico"); campoCampo.setBd("AUTO");
+		 * campoCampo.setCss("form-control"); campoCampo.setOrden(2);
+		 * campoCampo.setType("checkbox"); campoCampo.setLectura(false);
+		 * campoCampo.setOculto(false); campoCampo.setRequerido(true);
+		 * campoCampo.setLista(true); campoCampo.setId(false);
+		 * campoCampo.setGrupo("cabecero"); campoCampo.setPersistible(false);
+		 */
+
+		aMaterno.setName("Codigo emisor");
+		aMaterno.setFieldName("emisorcodigo");
+		aMaterno.setCss("form-control");
+		aMaterno.setOrder(3);
+		aMaterno.setComponentType("texto");
+		aMaterno.setReadOnly(false);
+		aMaterno.setHidden(false);
+		aMaterno.setRequired(false);
+		aMaterno.setShowInBasket(false);
+		aMaterno.setId(false);
+		aMaterno.setLength(20);
+		aMaterno.setGroup("emisor");
+		aMaterno.setPersistible(false);
+		aMaterno.setFormat("Codigo emisor");
+
+		aPaterno.setName("RFC emisor");
+		aPaterno.setFieldName("emisor");
+		aPaterno.setCss("form-control");
+		aPaterno.setOrder(4);
+		aPaterno.setComponentType("texto");
+		aPaterno.setReadOnly(false);
+		aPaterno.setHidden(false);
+		aPaterno.setRequired(true);
+		aPaterno.setShowInBasket(false);
+		aPaterno.setId(false);
+		aPaterno.setLength(20);
+		aPaterno.setGroup("emisor");
+		aPaterno.setPersistible(true);
+		aPaterno.setValidation("^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$");
+		aPaterno.setFormat("RFC emisor");
+
+		fNacim.setName("Codigo receptor");
+		fNacim.setFieldName("receptorcodigo");
+		fNacim.setCss("form-control");
+		fNacim.setOrder(5);
+		fNacim.setComponentType("texto");
+		fNacim.setReadOnly(false);
+		fNacim.setHidden(false);
+		fNacim.setRequired(false);
+		fNacim.setShowInBasket(false);
+		fNacim.setId(false);
+		fNacim.setLength(20);
+		fNacim.setGroup("receptor");
+		fNacim.setPersistible(false);
+		fNacim.setFormat("Codigo receptor");
+
+		posicion.setName("RFC receptor");
+		posicion.setFieldName("receptor");
+		posicion.setCss("form-control");
+		posicion.setOrder(6);
+		posicion.setComponentType("texto");
+		posicion.setReadOnly(false);
+		posicion.setHidden(false);
+		posicion.setRequired(true);
+		posicion.setShowInBasket(false);
+		posicion.setId(false);
+		posicion.setLength(20);
+		posicion.setGroup("receptor");
+		posicion.setPersistible(true);
+		posicion.setValidation("^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$");
+		posicion.setFormat("RFC receptor");
+
+		puntuacion.setName("Uso CFDi");
+		puntuacion.setFieldName("uso");
+		puntuacion.setCss("form-control");
+		puntuacion.setOrder(7);
+		puntuacion.setComponentType("uso");
+		puntuacion.setReadOnly(false);
+		puntuacion.setHidden(false);
+		puntuacion.setRequired(true);
+		puntuacion.setShowInBasket(false);
+		puntuacion.setId(false);
+		puntuacion.setLength(5);
+		puntuacion.setGroup("receptor");
+		puntuacion.setPersistible(true);
+		puntuacion.setValidation("");
+		puntuacion.setFormat("Uso CFDi");
+		puntuacion.setValue("");
+
+		goles.setName("Direccion de facturación");
+		goles.setFieldName("dirfactura");
+		goles.setCss("form-control");
+		goles.setOrder(8);
+		goles.setComponentType("selectorDireccion");
+		goles.setReadOnly(false);
+		goles.setHidden(false);
+		goles.setRequired(false);
+		goles.setShowInBasket(false);
+		goles.setId(false);
+		goles.setLength(20);
+		goles.setGroup("direccionFiscal");
+		goles.setPersistible(false);
+		goles.setFormat("Direccion de facturación");
+
+		categoria.setName("Calle");
+		categoria.setFieldName("calle");
+		categoria.setCss("form-control");
+		categoria.setOrder(10);
+		categoria.setComponentType("texto");
+		categoria.setReadOnly(false);
+		categoria.setHidden(false);
+		categoria.setRequired(false);
+		categoria.setShowInBasket(false);
+		categoria.setId(false);
+		categoria.setLength(20);
+		categoria.setGroup("direccionFiscal");
+		categoria.setPersistible(true);
+		categoria.setFormat("Calle");
+
+		usuario.setName("No Int");
+		usuario.setFieldName("noint");
+		usuario.setCss("form-control");
+		usuario.setOrder(11);
+		usuario.setComponentType("texto");
+		usuario.setReadOnly(false);
+		usuario.setHidden(false);
+		usuario.setRequired(false);
+		usuario.setShowInBasket(false);
+		usuario.setId(false);
+		usuario.setLength(10);
+		usuario.setGroup("direccionFiscal");
+		usuario.setPersistible(true);
+		usuario.setFormat("No Int");
+
+		fecha.setName("No Ext");
+		fecha.setFieldName("noext");
+		fecha.setCss("form-control");
+		fecha.setOrder(12);
+		fecha.setComponentType("texto");
+		fecha.setReadOnly(false);
+		fecha.setHidden(false);
+		fecha.setRequired(false);
+		fecha.setShowInBasket(false);
+		fecha.setId(false);
+		fecha.setLength(10);
+		fecha.setGroup("direccionFiscal");
+		fecha.setPersistible(true);	
+		fecha.setFormat("No Ext");
+
+		municipio.setName("Municipio");
+		municipio.setFieldName("municipio");
+		municipio.setCss("form-control");
+		municipio.setOrder(13);
+		municipio.setComponentType("texto");
+		municipio.setReadOnly(false);
+		municipio.setHidden(false);
+		municipio.setRequired(false);
+		municipio.setShowInBasket(false);
+		municipio.setId(false);
+		municipio.setLength(20);
+		municipio.setGroup("direccionFiscal");
+		municipio.setPersistible(true);	
+		municipio.setFormat("Municipio");
+
+		poblacion.setName("Población");
+		poblacion.setFieldName("poblacion");
+		poblacion.setCss("form-control");
+		poblacion.setOrder(14);
+		poblacion.setComponentType("texto");
+		poblacion.setReadOnly(false);
+		poblacion.setHidden(false);
+		poblacion.setRequired(false);
+		poblacion.setShowInBasket(false);
+		poblacion.setId(false);
+		poblacion.setLength(20);
+		poblacion.setGroup("direccionFiscal");
+		poblacion.setPersistible(true);	
+		poblacion.setFormat("Población");
+
+		ciudad.setName("Ciudad");
+		ciudad.setFieldName("ciudad");
+		ciudad.setCss("form-control");
+		ciudad.setOrder(15);
+		ciudad.setComponentType("texto");
+		ciudad.setReadOnly(false);
+		ciudad.setHidden(false);
+		ciudad.setRequired(false);
+		ciudad.setShowInBasket(false);
+		ciudad.setId(false);
+		ciudad.setLength(20);
+		ciudad.setGroup("direccionFiscal");
+		ciudad.setPersistible(true);	
+		ciudad.setFormat("Ciudad");
+
+		imagen.setName("C. P.");
+		imagen.setFieldName("cp");
+		imagen.setCss("form-control");
+		imagen.setOrder(16);
+		imagen.setComponentType("texto");
+		imagen.setReadOnly(false);
+		imagen.setHidden(false);
+		imagen.setRequired(false);
+		imagen.setShowInBasket(false);
+		imagen.setId(false);
+		imagen.setLength(10);
+		imagen.setGroup("direccionFiscal");
+		imagen.setPersistible(true);
+		imagen.setFormat("C. P.");
+
+
+		estado.setName("Estado");
+		estado.setFieldName("estado");
+		estado.setCss("form-control");
+		estado.setOrder(17);
+		estado.setComponentType("selectorEstado");
+		estado.setReadOnly(false);
+		estado.setHidden(false);
+		estado.setRequired(false);
+		estado.setShowInBasket(false);
+		estado.setId(false);
+		estado.setGroup("direccionFiscal");
+		estado.setPersistible(true);
+		estado.setLength(255);
+		estado.setFormat("Estado");
+
+		metodopago.setName("Metodo de pago");
+		metodopago.setFieldName("metodopago");
+		metodopago.setCss("form-control");
+		metodopago.setOrder(18);
+		metodopago.setComponentType("metodopago");
+		metodopago.setReadOnly(false);
+		metodopago.setHidden(false);
+		metodopago.setRequired(false);
+		metodopago.setShowInBasket(false);
+		metodopago.setId(false);
+		metodopago.setGroup("direccionFiscal");
+		metodopago.setPersistible(true);
+		metodopago.setLength(10);
+		metodopago.setFormat("Metodo de pago");
+		metodopago.setValue("");
+
+		formapago.setName("Forma de pago");
+		formapago.setFieldName("formapago");
+		formapago.setCss("form-control");
+		formapago.setOrder(19);
+		formapago.setComponentType("formapago");
+		formapago.setReadOnly(false);
+		formapago.setHidden(false);
+		formapago.setRequired(true);
+		formapago.setShowInBasket(false);
+		formapago.setId(false);
+		formapago.setLength(6);
+		formapago.setGroup("pago");
+		formapago.setPersistible(false);
+		formapago.setFormat("Forma de pago");
+		formapago.setValue("");
+
+		cantidad.setName("Monto");
+		cantidad.setFieldName("monto");
+		cantidad.setCss("form-control");
+		cantidad.setOrder(20);
+		cantidad.setComponentType("texto");
+		cantidad.setReadOnly(false);
+		cantidad.setHidden(false);
+		cantidad.setRequired(true);
+		cantidad.setShowInBasket(false);
+		cantidad.setId(false);
+		cantidad.setLength(20);
+		cantidad.setGroup("pago");
+		cantidad.setPersistible(false);
+		cantidad.setFormat("00.00");
+
+		fechaPago.setName("Fecha");
+		fechaPago.setFieldName("fecha");
+		fechaPago.setCss("form-control");
+		fechaPago.setOrder(21);
+		fechaPago.setComponentType("fecha");
+		fechaPago.setReadOnly(false);
+		fechaPago.setHidden(false);
+		fechaPago.setRequired(true);
+		fechaPago.setShowInBasket(false);
+		fechaPago.setId(false);
+		fechaPago.setLength(10);
+		fechaPago.setGroup("pago");
+		fechaPago.setPersistible(true);
+		fechaPago.setFormat("yyyy-MM-dd");
+
+		obs.setName("Observaciones");
+		obs.setFieldName("obs");
+		obs.setCss("form-control");
+		obs.setOrder(21);
+		obs.setComponentType("texto");
+		obs.setReadOnly(false);
+		obs.setHidden(false);
+		obs.setRequired(true);
+		obs.setShowInBasket(false);
+		obs.setId(false);
+		obs.setLength(20);
+		obs.setGroup("pago");
+		obs.setPersistible(false);
+		obs.setFormat("Observaciones");
+
+		subtotal.setName("Subtotal");
+		subtotal.setFieldName("subtotal");
+		subtotal.setCss("form-control");
+		subtotal.setOrder(22);
+		subtotal.setComponentType("moneda");
+		subtotal.setReadOnly(true);
+		subtotal.setHidden(false);
+		subtotal.setRequired(true);
+		subtotal.setShowInBasket(true);
+		subtotal.setId(false);
+		subtotal.setLength(20);
+		subtotal.setGroup("totales");
+		subtotal.setPersistible(false);
+		subtotal.setValue("00.00");
+		subtotal.setFormat("00.00");
+
+		descuento.setName("Descuento");
+		descuento.setFieldName("descuento");
+		descuento.setCss("form-control");
+		descuento.setOrder(23);
+		descuento.setComponentType("moneda");
+		descuento.setReadOnly(true);
+		descuento.setHidden(false);
+		descuento.setRequired(true);
+		descuento.setShowInBasket(true);
+		descuento.setId(false);
+		descuento.setLength(20);
+		descuento.setGroup("totales");
+		descuento.setPersistible(false);
+		descuento.setValue("00.00");
+		descuento.setFormat("00.00");
+
+
+		impret.setName("Impuesto retenido");
+		impret.setFieldName("impret");
+		impret.setCss("form-control");
+		impret.setOrder(24);
+		impret.setComponentType("moneda");
+		impret.setReadOnly(true);
+		impret.setHidden(false);
+		impret.setRequired(true);
+		impret.setShowInBasket(true);
+		impret.setId(false);
+		impret.setLength(20);
+		impret.setGroup("totales");
+		impret.setPersistible(false);
+		impret.setValue("00.00");
+		impret.setFormat("00.00");
+
+		imptras.setName("Impuesto trasladado");
+		imptras.setFieldName("imptras");
+		imptras.setCss("form-control");
+		imptras.setOrder(25);
+		imptras.setComponentType("moneda");
+		imptras.setReadOnly(true);
+		imptras.setHidden(false);
+		imptras.setRequired(true);
+		imptras.setShowInBasket(true);
+		imptras.setId(false);
+		imptras.setLength(20);
+		imptras.setGroup("totales");
+		imptras.setPersistible(false);
+		imptras.setValue("00.00");
+		imptras.setFormat("00.00");
+
+		total.setName("Total");
+		total.setFieldName("total");
+		total.setCss("form-control");
+		total.setOrder(26);
+		total.setComponentType("moneda");
+		total.setReadOnly(true);
+		total.setHidden(false);
+		total.setRequired(true);
+		total.setShowInBasket(true);
+		total.setId(false);
+		total.setLength(20);
+		total.setGroup("totales");
+		total.setPersistible(false);
+		total.setValue("00.00");
+		total.setValidation("[a-zA-Z0-9,.;:_'\\s-]+$");
+		total.setFormat("00.00");
+
+		status.setName("Status");
+		status.setFieldName("status");
+		status.setCss("form-control");
+		status.setOrder(27);
+		status.setComponentType("status");
+		status.setReadOnly(true);
+		status.setHidden(false);
+		status.setRequired(true);
+		status.setShowInBasket(true);
+		status.setId(false);
+		status.setLength(20);
+		status.setGroup("cabecero");
+		status.setPersistible(false);
+		status.setValue("Nueva");
+		status.setValidation("");
+		status.setFormat("Status");
+
+		serie.setName("Serie");
+		serie.setFieldName("serie");
+		serie.setCss("form-control");
+		serie.setOrder(28);
+		serie.setComponentType("texto");
+		serie.setReadOnly(true);
+		serie.setHidden(true);
+		serie.setRequired(true);
+		serie.setShowInBasket(true);
+		serie.setId(false);
+		serie.setLength(20);
+		serie.setGroup("cabecero");
+		serie.setPersistible(false);
+		serie.setValue("I");
+		serie.setValidation("");
+		serie.setFormat("Status");
+
+		campos.add(status);
+		campos.add(total);
+		campos.add(impret);
+		campos.add(imptras);
+		campos.add(descuento);
+		campos.add(subtotal);
+		campos.add(tipo);
+		campos.add(obs);
+		campos.add(fechaPago);
+		campos.add(cantidad);
+		campos.add(formapago);
+		campos.add(metodopago);
+		campos.add(estado);
+		campos.add(ciudad);
+		campos.add(poblacion);
+		campos.add(municipio);
+		campos.add(goles);
+		campos.add(puntuacion);
+		campos.add(aMaterno);
+		//campos.add(campoCampo);
+		campos.add(campoCodigo);
+		campos.add(aPaterno);
+		campos.add(fNacim);
+		campos.add(posicion);
+		campos.add(imagen);
+		campos.add(categoria);
+		campos.add(usuario);
+		campos.add(fecha);
+		campos.add(serie);
+		forma.setModel(campos);
+		forma.setMethods(acciones);
+		forma.setCommandName("Guardar");
+		forma.setName("cobro");
+		forma.setView("cobro");
+		forma.setTitle("Cobro");
+		forma.setVersion("1.0");
+		forma.setStatus("produccion");
+		forma.setModule("documentos");
+		forma.setBasket("cobro");
+		forma.setCreateable(false);
+		forma.setTable("doctos");
+		forma.setValidate(true);
+		forma.setVersionable(false);
+
+		
+		forma.setPersistible(true);
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		
+
+		forma.setInstruction("Por favor complete la informacion del cobro");
+		forma.setUuid(generarToken());
+		forma.setComment("Formulario para registrar cobros");
+		forma.setOrigin("ui::case");
+		forma.setDestination("db::mysql");
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		
+		try {
+			generador.put(filePath, forma);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Test
 	public void testGuardarFormaGogoRegistro() throws IOException {
@@ -11814,7 +14375,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("cliente");
 		guardar.setModule("directorio");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -11840,7 +14401,7 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("cliente");
 		editar.setModule("directorio");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
@@ -11853,7 +14414,7 @@ public class GeneradorHtmlTest {
 		firmarse.setResourceName("cliente");
 		firmarse.setModule("directorio");
 		firmarse.setOrder(6);
-		firmarse.setResourceType("forma");
+		firmarse.setResourceType("form");
 		firmarse.setVersion("1.0");
 		firmarse.setEvents("nuevo");
 		firmarse.setView("contactar");
@@ -11970,7 +14531,7 @@ public class GeneradorHtmlTest {
 		fNacim.setGroup("cabecero");
 		fNacim.setPersistible(true);
 		fNacim.setFormat("yyyy-MM-dd");
-		fNacim.setValue("${hoyCorto}");
+		fNacim.setValue("${default::hoyCorto}");
 
 
 		status.setName("Status");
@@ -12339,7 +14900,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("empresa");
 		guardar.setModule("directorio");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -12365,7 +14926,7 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("empresa");
 		editar.setModule("directorio");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
@@ -12378,7 +14939,7 @@ public class GeneradorHtmlTest {
 		firmarse.setResourceName("empresa");
 		firmarse.setModule("directorio");
 		firmarse.setOrder(6);
-		firmarse.setResourceType("forma");
+		firmarse.setResourceType("form");
 		firmarse.setVersion("1.0");
 		firmarse.setEvents("nuevo");
 		firmarse.setView("contactar");
@@ -12493,7 +15054,7 @@ public class GeneradorHtmlTest {
 		fNacim.setGroup("cabecero");
 		fNacim.setPersistible(true);
 		fNacim.setFormat("yyyy-MM-dd");
-		fNacim.setValue("${hoyCorto}");
+		fNacim.setValue("${default::hoyCorto}");
 
 
 		status.setName("Status");
@@ -12819,7 +15380,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("mensaje");
 		guardar.setModule("solicitud");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -12845,7 +15406,7 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("empresa");
 		editar.setModule("directorio");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
@@ -12858,7 +15419,7 @@ public class GeneradorHtmlTest {
 		firmarse.setResourceName("empresa");
 		firmarse.setModule("directorio");
 		firmarse.setOrder(6);
-		firmarse.setResourceType("forma");
+		firmarse.setResourceType("form");
 		firmarse.setVersion("1.0");
 		firmarse.setEvents("nuevo");
 		firmarse.setView("contactar");
@@ -12975,7 +15536,7 @@ public class GeneradorHtmlTest {
 		fNacim.setGroup("cabecero");
 		fNacim.setPersistible(true);
 		fNacim.setFormat("yyyy-MM-dd");
-		fNacim.setValue("${hoyCorto}");
+		fNacim.setValue("${default::hoyCorto}");
 
 
 		status.setName("Status");
@@ -13320,7 +15881,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("configuracion");
 		guardar.setModule("sistema");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -13346,7 +15907,7 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("configuracion");
 		editar.setModule("sistema");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
@@ -13359,7 +15920,7 @@ public class GeneradorHtmlTest {
 		firmarse.setResourceName("empresa");
 		firmarse.setModule("sistema");
 		firmarse.setOrder(6);
-		firmarse.setResourceType("forma");
+		firmarse.setResourceType("form");
 		firmarse.setVersion("1.0");
 		firmarse.setEvents("nuevo");
 		firmarse.setView("contactar");
@@ -13493,7 +16054,7 @@ public class GeneradorHtmlTest {
 		fNacim.setGroup("cabecero");
 		fNacim.setPersistible(true);
 		fNacim.setFormat("yyyy-MM-dd");
-		fNacim.setValue("${hoyCorto}");
+		fNacim.setValue("${default::hoyCorto}");
 
 
 		status.setName("Status");
@@ -13745,7 +16306,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("usuario");
 		guardar.setModule("directorio");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -13771,7 +16332,7 @@ public class GeneradorHtmlTest {
 		eliminar.setResourceName("usuario");
 		eliminar.setModule("directorio");
 		eliminar.setOrder(5);
-		eliminar.setResourceType("forma");
+		eliminar.setResourceType("form");
 		eliminar.setVersion("1.0");
 		eliminar.setEvents("detalle");
 
@@ -13784,7 +16345,7 @@ public class GeneradorHtmlTest {
 		login.setResourceName("usuario");
 		login.setModule("directorio");
 		login.setOrder(6);
-		login.setResourceType("forma");
+		login.setResourceType("form");
 		login.setVersion("1.0");
 		login.setEvents("inicio");
 		login.setView("login");
@@ -13798,7 +16359,7 @@ public class GeneradorHtmlTest {
 		firmarse.setResourceName("usuario");
 		firmarse.setModule("directorio");
 		firmarse.setOrder(6);
-		firmarse.setResourceType("forma");
+		firmarse.setResourceType("form");
 		firmarse.setVersion("1.0");
 		firmarse.setEvents("login");
 		firmarse.setView("bienvenido");
@@ -13812,7 +16373,7 @@ public class GeneradorHtmlTest {
 		logout.setResourceName("usuario");
 		logout.setModule("directorio");
 		logout.setOrder(6);
-		logout.setResourceType("forma");
+		logout.setResourceType("form");
 		logout.setVersion("1.0");
 		//logout.setEvento("detalle");
 		logout.setEvents("admin");
@@ -13827,7 +16388,7 @@ public class GeneradorHtmlTest {
 		bienvenido.setResourceName("usuario");
 		bienvenido.setModule("directorio");
 		bienvenido.setOrder(6);
-		bienvenido.setResourceType("forma");
+		bienvenido.setResourceType("form");
 		bienvenido.setVersion("1.0");
 		bienvenido.setEvents("login");
 		bienvenido.setView("bienvenido");
@@ -13841,7 +16402,7 @@ public class GeneradorHtmlTest {
 		gentoken.setResourceName("usuario");
 		gentoken.setModule("directorio");
 		gentoken.setOrder(6);
-		gentoken.setResourceType("forma");
+		gentoken.setResourceType("form");
 		gentoken.setVersion("1.0");
 		//gentoken.setEvento("detalle");
 		gentoken.setEvents("admin");
@@ -13856,7 +16417,7 @@ public class GeneradorHtmlTest {
 		confirmar.setResourceName("usuario");
 		confirmar.setModule("directorio");
 		confirmar.setOrder(6);
-		confirmar.setResourceType("forma");
+		confirmar.setResourceType("form");
 		confirmar.setVersion("1.0");
 		//confirmar.setEvento("detalle");
 		confirmar.setEvents("admin");
@@ -13991,7 +16552,7 @@ public class GeneradorHtmlTest {
 		fNacim.setPersistible(true);
 		fNacim.setFormat("yyyy-MM-dd");
 		//fNacim.setValor("");
-		fNacim.setValue("${hoyCorto}");
+		fNacim.setValue("${default::hoyCorto}");
 
 		status.setName("Status");
 		status.setFieldName("status");
@@ -14473,7 +17034,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("permiso");
 		guardar.setModule("directorio");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -14486,7 +17047,7 @@ public class GeneradorHtmlTest {
 		eliminar.setResourceName("permiso");
 		eliminar.setModule("directorio");
 		eliminar.setOrder(5);
-		eliminar.setResourceType("forma");
+		eliminar.setResourceType("form");
 		eliminar.setVersion("1.0");
 		eliminar.setEvents("detalle");
 
@@ -14556,7 +17117,7 @@ public class GeneradorHtmlTest {
 		fNacim.setPersistible(true);
 		fNacim.setFormat("yyyy-MM-dd");
 		//fNacim.setValor("");
-		fNacim.setValue("${hoyCorto}");
+		fNacim.setValue("${default::hoyCorto}");
 
 		status.setName("Status");
 		status.setFieldName("status");
@@ -14650,7 +17211,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("directorio");
 		guardar.setModule("directorio");
 		guardar.setOrder(3);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -14676,7 +17237,7 @@ public class GeneradorHtmlTest {
 		eliminar.setResourceName("directorio");
 		eliminar.setModule("directorio");
 		eliminar.setOrder(5);
-		eliminar.setResourceType("forma");
+		eliminar.setResourceType("form");
 		eliminar.setVersion("1.0");
 		eliminar.setEvents("detalle");
 
@@ -15225,7 +17786,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("proveedor");
 		guardar.setModule("directorio");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -15238,7 +17799,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("proveedor");
 		cancelar.setModule("directorio");
 		cancelar.setOrder(2);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
 		cancelar.setEvents("detalle");
 
@@ -15251,7 +17812,7 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("cliente");
 		editar.setModule("directorio");
 		editar.setOrder(3);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
@@ -15363,7 +17924,7 @@ public class GeneradorHtmlTest {
 		fNacim.setGroup("cabecero");
 		fNacim.setPersistible(true);
 		fNacim.setFormat("yyyy-MM-dd");
-		fNacim.setValue("${hoyCorto}");
+		fNacim.setValue("${default::hoyCorto}");
 
 
 		status.setName("Status");
@@ -15665,7 +18226,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("almacen");
 		guardar.setModule("directorio");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -15692,7 +18253,7 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("almacen");
 		editar.setModule("directorio");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
@@ -15818,7 +18379,7 @@ public class GeneradorHtmlTest {
 		fNacim.setGroup("cabecero");
 		fNacim.setPersistible(true);
 		fNacim.setFormat("yyyy-MM-dd");
-		fNacim.setValue("${hoyCorto}");
+		fNacim.setValue("${default::hoyCorto}");
 
 		status.setName("Status");
 		status.setFieldName("status");
@@ -16135,7 +18696,7 @@ public class GeneradorHtmlTest {
 		registrar.setResourceName("ingreso");
 		registrar.setModule("comprobante");
 		registrar.setOrder(1);
-		registrar.setResourceType("forma");
+		registrar.setResourceType("form");
 		registrar.setVersion("3.3");
 		registrar.setEvents("nuevo");
 
@@ -16147,7 +18708,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("ingreso");
 		cancelar.setModule("comprobante");
 		cancelar.setOrder(2);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("3.3");
 		cancelar.setEvents("nuevo");
 
@@ -16159,7 +18720,7 @@ public class GeneradorHtmlTest {
 		agregar.setResourceName("carrito");
 		agregar.setModule("solicitud");
 		agregar.setOrder(3);
-		agregar.setResourceType("forma");
+		agregar.setResourceType("form");
 		agregar.setVersion("3.3");
 		agregar.setEvents("nuevo");
 
@@ -16420,7 +18981,7 @@ public class GeneradorHtmlTest {
 		registrar.setResourceName("ingreso");
 		registrar.setModule("comprobante");
 		registrar.setOrder(1);
-		registrar.setResourceType("forma");
+		registrar.setResourceType("form");
 		registrar.setVersion("3.3");
 		registrar.setEvents("nuevo");
 
@@ -16432,7 +18993,7 @@ public class GeneradorHtmlTest {
 		cancelar.setResourceName("ingreso");
 		cancelar.setModule("comprobante");
 		cancelar.setOrder(2);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("3.3");
 		cancelar.setEvents("nuevo");
 
@@ -16444,7 +19005,7 @@ public class GeneradorHtmlTest {
 		agregar.setResourceName("carrito");
 		agregar.setModule("solicitud");
 		agregar.setOrder(3);
-		agregar.setResourceType("forma");
+		agregar.setResourceType("form");
 		agregar.setVersion("3.3");
 		agregar.setEvents("nuevo");
 
@@ -16624,7 +19185,7 @@ public class GeneradorHtmlTest {
 	public void testGuardarFormaSolicitudProdServ() throws IOException {
 		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
 
-		Path filePath = fileConfigLocation.resolve("prodserv.json").normalize();
+		Path filePath = fileConfigLocation.resolve("prodserv_es_MX.json").normalize();
 
 		IGenerador<Resource> generador = new Generador<Resource>(templatesPath);
 		List<Field> campos = new ArrayList<Field>();
@@ -16666,9 +19227,14 @@ public class GeneradorHtmlTest {
 		Field status = new Field();
 		Field lprecio = new Field();
 
+		Field uuidCampo            = new Field();
+		Field uuideCampo           = new Field();
+		Field uuidpCampo           = new Field();
+		
 		Resource forma = new Resource();
 		List<Field> decoradoresBuscar = new ArrayList<Field>();
 
+		int orden = 1;
 
 		Button guardar = new Button();
 		guardar.setCommandName("guardar");
@@ -16676,10 +19242,10 @@ public class GeneradorHtmlTest {
 		guardar.setLabel("Guardar");
 		guardar.setComponentType("botonjs");
 		guardar.setCss("btn btn-primary");
-		guardar.setResourceName("producto");
+		guardar.setResourceName("prodserv");
 		guardar.setModule("inventario");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -16689,12 +19255,12 @@ public class GeneradorHtmlTest {
 		cancelar.setLabel("Cancelar");
 		cancelar.setComponentType("boton");
 		cancelar.setCss("btn btn-secondary");
-		cancelar.setResourceName("producto");
+		cancelar.setResourceName("prodserv");
 		cancelar.setModule("inventario");
 		cancelar.setOrder(1);
-		cancelar.setResourceType("forma");
+		cancelar.setResourceType("form");
 		cancelar.setVersion("1.0");
-		cancelar.setEvents("nuevo");
+		cancelar.setEvents("detalle,guardar");
 
 
 		Button editar = new Button();
@@ -16703,10 +19269,10 @@ public class GeneradorHtmlTest {
 		editar.setLabel("Actualizar");
 		editar.setComponentType("botonjs");
 		editar.setCss("btn btn-info");
-		editar.setResourceName("producto");
+		editar.setResourceName("prodserv");
 		editar.setModule("inventario");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
@@ -16728,10 +19294,10 @@ public class GeneradorHtmlTest {
 		acciones.add(editar);
 		acciones.add(cancelar);
 
-		tipo.setName("Tipo");
+		tipo.setName("tipo");
 		tipo.setFieldName("tipo");
 		tipo.setCss("form-control");
-		tipo.setOrder(1);
+		tipo.setOrder(orden);
 		tipo.setComponentType("texto");
 		tipo.setReadOnly(true);
 		tipo.setHidden(true);
@@ -16741,19 +19307,19 @@ public class GeneradorHtmlTest {
 		tipo.setLength(20);
 		tipo.setGroup("cabecero");
 		tipo.setPersistible(true);
-		tipo.setValue("producto");
-		tipo.setFormat("{TIPO}");
+		tipo.setValue("prodserv");
+		tipo.setFormat("");
 		tipo.setSearcheable(true);
 		tipo.setDbFieldType("varchar");
 		tipo.setDecimals(0);
-
+		tipo.setLabel("Tipo");
 		//decoradores
 
 		Field decoradorTipo = new Field();
-		decoradorTipo.setName("Tipo");
+		decoradorTipo.setName("tipo");
 		decoradorTipo.setFieldName("tipo");
 		decoradorTipo.setCss("form-control");
-		decoradorTipo.setOrder(1);
+		decoradorTipo.setOrder(orden);
 		decoradorTipo.setComponentType("tipo");
 		decoradorTipo.setReadOnly(true);
 		decoradorTipo.setHidden(false);
@@ -16764,59 +19330,62 @@ public class GeneradorHtmlTest {
 		decoradorTipo.setLength(20);
 		decoradorTipo.setGroup("cabecero");
 		decoradorTipo.setPersistible(true);
-		decoradorTipo.setFormat("{TIPO}");
+		decoradorTipo.setFormat("");
 		decoradorTipo.setSearcheable(true);
 		decoradorTipo.setDbFieldType("varchar");
 		decoradorTipo.setDecimals(0);
-
+		decoradorTipo.setLabel("Tipo");
 		decoradoresBuscar.add(decoradorTipo);
 
-		codigo.setName("Codigo");
+		orden++;
+		codigo.setName("codigo");
 		codigo.setFieldName("codigo");
 		codigo.setCss("form-control");
-		codigo.setOrder(2);
+		codigo.setOrder(orden);
 		codigo.setComponentType("texto");
 		codigo.setReadOnly(true);
 		codigo.setHidden(false);
 		codigo.setRequired(false);
 		codigo.setShowInBasket(true);
-		codigo.setId(true);
+		codigo.setId(false);
 		codigo.setLength(20);
 		codigo.setGroup("cabecero");
 		codigo.setPersistible(true);
 		codigo.setValue("");
-		codigo.setFormat("{TIPO-CONS}");
+		codigo.setFormat("");
 		codigo.setSearcheable(true);
 		codigo.setDbFieldType("varchar");
 		codigo.setDecimals(0);
+		codigo.setLabel("Codigo");
 
 		//decoradores
 		Field decoradorCodigo = new Field();
-		decoradorCodigo.setName("Codigo");
+		decoradorCodigo.setName("codigo");
 		decoradorCodigo.setFieldName("codigo");
 		decoradorCodigo.setCss("form-control");
-		decoradorCodigo.setOrder(2);
+		decoradorCodigo.setOrder(orden);
 		decoradorCodigo.setComponentType("texto");
-		decoradorCodigo.setReadOnly(false);
+		decoradorCodigo.setReadOnly(true);
 		decoradorCodigo.setHidden(false);
 		decoradorCodigo.setRequired(false);
 		decoradorCodigo.setShowInBasket(true);
-		decoradorCodigo.setId(true);
+		decoradorCodigo.setId(false);
 		decoradorCodigo.setLength(20);
 		decoradorCodigo.setGroup("cabecero");
 		decoradorCodigo.setPersistible(true);
 		decoradorCodigo.setValue("");
-		decoradorCodigo.setFormat("Codigo");
+		decoradorCodigo.setFormat("");
 		decoradorCodigo.setSearcheable(true);
 		decoradorCodigo.setDbFieldType("varchar");
 		decoradorCodigo.setDecimals(0);
-
+		decoradorCodigo.setLabel("Codigo");
 		decoradoresBuscar.add(decoradorCodigo);
 
-		sat.setName("Codigo SAT");
+		orden++;
+		sat.setName("codigosat");
 		sat.setFieldName("codigosat");
 		sat.setCss("form-control");
-		sat.setOrder(3);
+		sat.setOrder(orden);
 		sat.setComponentType("texto");
 		sat.setReadOnly(false);
 		sat.setHidden(false);
@@ -16828,15 +19397,17 @@ public class GeneradorHtmlTest {
 		sat.setPersistible(true);
 		sat.setValue("");
 		sat.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		sat.setFormat("Codigo SAT");
+		sat.setFormat("");
 		sat.setSearcheable(true);
 		sat.setDbFieldType("varchar");
 		sat.setDecimals(0);
+		sat.setLabel("Codigo SAT");
 
+		orden++;
 		calterno.setName("Codigo alterno");
 		calterno.setFieldName("calterno");
 		calterno.setCss("form-control");
-		calterno.setOrder(4);
+		calterno.setOrder(orden);
 		calterno.setComponentType("texto");
 		calterno.setReadOnly(false);
 		calterno.setHidden(false);
@@ -16848,15 +19419,17 @@ public class GeneradorHtmlTest {
 		calterno.setPersistible(true);
 		calterno.setValue("");
 		calterno.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		calterno.setFormat("Codigo alterno");
+		calterno.setFormat("");
 		calterno.setSearcheable(true);
 		calterno.setDbFieldType("varchar");
 		calterno.setDecimals(0);
+		calterno.setLabel("Codigo alterno");
 
-		descripcion.setName("Descripcion");
+		orden++;
+		descripcion.setName("descripcion");
 		descripcion.setFieldName("descripcion");
 		descripcion.setCss("form-control");
-		descripcion.setOrder(5);
+		descripcion.setOrder(orden);
 		descripcion.setComponentType("texto");
 		descripcion.setReadOnly(false);
 		descripcion.setHidden(false);
@@ -16868,15 +19441,17 @@ public class GeneradorHtmlTest {
 		descripcion.setPersistible(true);
 		descripcion.setValue("");
 		descripcion.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		descripcion.setFormat("Descripcion");
+		descripcion.setFormat("");
 		descripcion.setSearcheable(true);
 		descripcion.setDbFieldType("varchar");
 		descripcion.setDecimals(0);
+		descripcion.setLabel("Descripcion");
 
-		uentrada.setName("U. Entrada");
+		orden++;
+		uentrada.setName("uentrada");
 		uentrada.setFieldName("uentrada");
 		uentrada.setCss("form-control");
-		uentrada.setOrder(6);
+		uentrada.setOrder(orden);
 		uentrada.setComponentType("umedida");
 		uentrada.setReadOnly(false);
 		uentrada.setHidden(false);
@@ -16888,15 +19463,17 @@ public class GeneradorHtmlTest {
 		uentrada.setPersistible(true);
 		uentrada.setValue("");
 		uentrada.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		uentrada.setFormat("U. Entrada");
+		uentrada.setFormat("");
 		uentrada.setSearcheable(false);
 		uentrada.setDbFieldType("varchar");
 		uentrada.setDecimals(0);
+		uentrada.setLabel("U. Entrada");
 
-		usalida.setName("U. Salida");
+		orden++;
+		usalida.setName("usalida");
 		usalida.setFieldName("usalida");
 		usalida.setCss("form-control");
-		usalida.setOrder(7);
+		usalida.setOrder(orden);
 		usalida.setComponentType("umedida");
 		usalida.setReadOnly(false);
 		usalida.setHidden(false);
@@ -16908,15 +19485,17 @@ public class GeneradorHtmlTest {
 		usalida.setPersistible(true);
 		usalida.setValue("");
 		usalida.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		usalida.setFormat("U. Salida");
+		usalida.setFormat("");
 		usalida.setSearcheable(false);
 		usalida.setDbFieldType("varchar");
 		usalida.setDecimals(0);
+		usalida.setLabel("U. Salida");
 
-		categoria.setName("Categoria");
+		orden++;
+		categoria.setName("categoria");
 		categoria.setFieldName("categoria");
 		categoria.setCss("form-control");
-		categoria.setOrder(8);
+		categoria.setOrder(orden);
 		categoria.setComponentType("texto");
 		categoria.setReadOnly(false);
 		categoria.setHidden(false);
@@ -16932,12 +19511,15 @@ public class GeneradorHtmlTest {
 		categoria.setSearcheable(false);
 		categoria.setDbFieldType("varchar");
 		categoria.setDecimals(0);
+		categoria.setLabel("Categoria");
+		categoria.setUuid(generarToken());
 
-		factor.setName("Factor empaque");
+		orden++;
+		factor.setName("factor");
 		factor.setFieldName("factor");
 		factor.setCss("form-control");
-		factor.setOrder(9);
-		factor.setComponentType("moneda");
+		factor.setOrder(orden);
+		factor.setComponentType("texto");
 		factor.setReadOnly(false);
 		factor.setHidden(false);
 		factor.setRequired(true);
@@ -16948,16 +19530,19 @@ public class GeneradorHtmlTest {
 		factor.setPersistible(true);
 		factor.setValue("0");
 		factor.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		factor.setFormat("Factor empaque");
+		factor.setFormat("");
 		factor.setSearcheable(false);
 		factor.setDbFieldType("varchar");
 		factor.setDecimals(0);
+		factor.setLabel("Factor empaque");
+		factor.setUuid(generarToken());
 
-		uempaque.setName("Unidades Empaque");
+		orden++;
+		uempaque.setName("uempaque");
 		uempaque.setFieldName("uempaque");
 		uempaque.setCss("form-control");
-		uempaque.setOrder(10);
-		uempaque.setComponentType("moneda");
+		uempaque.setOrder(orden);
+		uempaque.setComponentType("texto");
 		uempaque.setReadOnly(false);
 		uempaque.setHidden(false);
 		uempaque.setRequired(false);
@@ -16968,15 +19553,18 @@ public class GeneradorHtmlTest {
 		uempaque.setPersistible(true);
 		uempaque.setValue("0");
 		uempaque.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		uempaque.setFormat("Unidades Empaque");
+		uempaque.setFormat("");
 		uempaque.setSearcheable(false);
 		uempaque.setDbFieldType("decimal");
 		uempaque.setDecimals(2);
+		uempaque.setLabel("Unidades Empaque");
+		uempaque.setUuid(generarToken());
 
-		tsurtido.setName("Tiempo Surtido");
+		orden++;
+		tsurtido.setName("tsurtido");
 		tsurtido.setFieldName("tsurtido");
 		tsurtido.setCss("form-control");
-		tsurtido.setOrder(11);
+		tsurtido.setOrder(orden);
 		tsurtido.setComponentType("texto");
 		tsurtido.setReadOnly(false);
 		tsurtido.setHidden(false);
@@ -16988,15 +19576,18 @@ public class GeneradorHtmlTest {
 		tsurtido.setPersistible(true);
 		tsurtido.setValue("");
 		tsurtido.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		tsurtido.setFormat("Tiempo Surtido");
+		tsurtido.setFormat("");
 		tsurtido.setSearcheable(false);
 		tsurtido.setDbFieldType("varchar");
 		tsurtido.setDecimals(0);
+		tsurtido.setLabel("Tiempo Surtido");
+		tsurtido.setUuid(generarToken());
 
-		imagen.setName("Imagen");
+		orden++;
+		imagen.setName("imagen");
 		imagen.setFieldName("imagen");
 		imagen.setCss("form-control");
-		imagen.setOrder(12);
+		imagen.setOrder(orden);
 		imagen.setComponentType("texto");
 		imagen.setReadOnly(false);
 		imagen.setHidden(false);
@@ -17006,17 +19597,20 @@ public class GeneradorHtmlTest {
 		imagen.setLength(100);
 		imagen.setGroup("cabecero");
 		imagen.setPersistible(true);
-		imagen.setValue("0");
+		imagen.setValue("");
 		imagen.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		imagen.setFormat("Imagen");
+		imagen.setFormat("");
 		imagen.setSearcheable(false);
 		imagen.setDbFieldType("varchar");
 		imagen.setDecimals(0);
+		imagen.setLabel("Imagen");
+		imagen.setUuid(generarToken());
 
-		usuario.setName("Usuario");
+		orden++;
+		usuario.setName("usuario");
 		usuario.setFieldName("usuario");
 		usuario.setCss("form-control");
-		usuario.setOrder(13);
+		usuario.setOrder(orden);
 		usuario.setComponentType("texto");
 		usuario.setReadOnly(false);
 		usuario.setHidden(false);
@@ -17026,17 +19620,20 @@ public class GeneradorHtmlTest {
 		usuario.setLength(100);
 		usuario.setGroup("cabecero");
 		usuario.setPersistible(true);
-		usuario.setValue("0");
+		usuario.setValue("");
 		usuario.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		usuario.setFormat("Usuario");
+		usuario.setFormat("");
 		usuario.setSearcheable(false);
 		usuario.setDbFieldType("varchar");
 		usuario.setDecimals(0);
+		usuario.setLabel("Usuario");
+		usuario.setUuid(generarToken());
 
-		fecha.setName("Fecha");
+		orden++;
+		fecha.setName("fecha");
 		fecha.setFieldName("fecha");
 		fecha.setCss("form-control");
-		fecha.setOrder(14);
+		fecha.setOrder(orden);
 		fecha.setComponentType("fecha");
 		fecha.setReadOnly(false);
 		fecha.setHidden(false);
@@ -17046,18 +19643,21 @@ public class GeneradorHtmlTest {
 		fecha.setLength(20);
 		fecha.setGroup("cabecero");
 		fecha.setPersistible(true);
-		fecha.setValue("");
+		fecha.setValue("${default::hoyCorto}");
 		fecha.setValidation("^\\d{4}-\\d{2}-\\d{2}$");
 		fecha.setFormat("yyyy-MM-dd");
 		fecha.setSearcheable(false);
 		fecha.setDbFieldType("date");
 		fecha.setDecimals(0);
+		fecha.setLabel("Fecha");
+		fecha.setUuid(generarToken());
 
-		longitud.setName("Longitud");
+		orden++;
+		longitud.setName("longitud");
 		longitud.setFieldName("longitud");
 		longitud.setCss("form-control");
-		longitud.setOrder(15);
-		longitud.setComponentType("moneda");
+		longitud.setOrder(orden);
+		longitud.setComponentType("texto");
 		longitud.setReadOnly(false);
 		longitud.setHidden(false);
 		longitud.setRequired(false);
@@ -17072,12 +19672,15 @@ public class GeneradorHtmlTest {
 		longitud.setSearcheable(false);
 		longitud.setDbFieldType("decimal");
 		longitud.setDecimals(2);
+		longitud.setLabel("Longitud");
+		longitud.setUuid(generarToken());
 
-		altura.setName("Altura");
+		orden++;
+		altura.setName("altura");
 		altura.setFieldName("altura");
 		altura.setCss("form-control");
-		altura.setOrder(16);
-		altura.setComponentType("moneda");
+		altura.setOrder(orden);
+		altura.setComponentType("texto");
 		altura.setReadOnly(false);
 		altura.setHidden(false);
 		altura.setRequired(false);
@@ -17092,12 +19695,15 @@ public class GeneradorHtmlTest {
 		altura.setSearcheable(false);
 		altura.setDbFieldType("decimal");
 		altura.setDecimals(2);
+		altura.setLabel("Altura");
+		altura.setUuid(generarToken());
 
-		grosor.setName("Grosor");
+		orden++;
+		grosor.setName("grosor");
 		grosor.setFieldName("grosor");
 		grosor.setCss("form-control");
-		grosor.setOrder(17);
-		grosor.setComponentType("moneda");
+		grosor.setOrder(orden);
+		grosor.setComponentType("texto");
 		grosor.setReadOnly(false);
 		grosor.setHidden(false);
 		grosor.setRequired(false);
@@ -17108,16 +19714,19 @@ public class GeneradorHtmlTest {
 		grosor.setPersistible(true);
 		grosor.setValue("0");
 		grosor.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		grosor.setFormat("Grosor");
+		grosor.setFormat("");
 		grosor.setSearcheable(false);
 		grosor.setDbFieldType("decimal");
 		grosor.setDecimals(2);
+		grosor.setLabel("Grosor");
+		grosor.setUuid(generarToken());
 
-		peso.setName("Peso");
+		orden++;
+		peso.setName("peso");
 		peso.setFieldName("peso");
 		peso.setCss("form-control");
-		peso.setOrder(18);
-		peso.setComponentType("moneda");
+		peso.setOrder(orden);
+		peso.setComponentType("texto");
 		peso.setReadOnly(false);
 		peso.setHidden(false);
 		peso.setRequired(false);
@@ -17128,15 +19737,18 @@ public class GeneradorHtmlTest {
 		peso.setPersistible(true);
 		peso.setValue("0");
 		peso.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		peso.setFormat("Peso");
+		peso.setFormat("");
 		peso.setSearcheable(false);
 		peso.setDbFieldType("decimal");
 		peso.setDecimals(2);
+		peso.setLabel("Peso");
+		peso.setUuid(generarToken());
 
-		ancho.setName("Ancho");
+		orden++;
+		ancho.setName("ancho");
 		ancho.setFieldName("ancho");
 		ancho.setCss("form-control");
-		ancho.setOrder(19);
+		ancho.setOrder(orden);
 		ancho.setComponentType("moneda");
 		ancho.setReadOnly(false);
 		ancho.setHidden(false);
@@ -17148,15 +19760,18 @@ public class GeneradorHtmlTest {
 		ancho.setPersistible(true);
 		ancho.setValue("0");
 		ancho.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		ancho.setFormat("Ancho");
+		ancho.setFormat("");
 		ancho.setSearcheable(false);
 		ancho.setDbFieldType("decimal");
 		ancho.setDecimals(2);
+		ancho.setLabel("Ancho");
+		ancho.setUuid(generarToken());
 
-		noserie.setName("No de series");
+		orden++;
+		noserie.setName("noserie");
 		noserie.setFieldName("noserie");
 		noserie.setCss("form-control");
-		noserie.setOrder(20);
+		noserie.setOrder(orden);
 		noserie.setComponentType("checkbox");
 		noserie.setReadOnly(false);
 		noserie.setHidden(false);
@@ -17169,11 +19784,14 @@ public class GeneradorHtmlTest {
 		noserie.setValue("");
 		noserie.setDbFieldType("boolean");
 		noserie.setDecimals(0);
+		noserie.setLabel("No de series");
+		noserie.setUuid(generarToken());
 
-		lote.setName("Lote");
+		orden++;
+		lote.setName("lote");
 		lote.setFieldName("lote");
 		lote.setCss("form-control");
-		lote.setOrder(21);
+		lote.setOrder(orden);
 		lote.setComponentType("checkbox");
 		lote.setReadOnly(false);
 		lote.setHidden(false);
@@ -17186,11 +19804,14 @@ public class GeneradorHtmlTest {
 		lote.setValue("");
 		lote.setDbFieldType("boolean");
 		lote.setDecimals(0);
+		lote.setLabel("Lote");
+		lote.setUuid(generarToken());
 
-		pedimento.setName("Predimento aduanal");
+		orden++;
+		pedimento.setName("pedimento");
 		pedimento.setFieldName("pedimento");
 		pedimento.setCss("form-control");
-		pedimento.setOrder(22);
+		pedimento.setOrder(orden);
 		pedimento.setComponentType("checkbox");
 		pedimento.setReadOnly(false);
 		pedimento.setHidden(false);
@@ -17203,11 +19824,14 @@ public class GeneradorHtmlTest {
 		pedimento.setValue("");
 		pedimento.setDbFieldType("boolean");
 		pedimento.setDecimals(0);
+		pedimento.setLabel("Pedimento aduanal");
+		pedimento.setUuid(generarToken());
 
-		cmoneda.setName("Moneda");
+		orden++;
+		cmoneda.setName("moneda");
 		cmoneda.setFieldName("moneda");
 		cmoneda.setCss("form-control");
-		cmoneda.setOrder(23);
+		cmoneda.setOrder(orden);
 		cmoneda.setComponentType("cmoneda");
 		cmoneda.setReadOnly(false);
 		cmoneda.setHidden(false);
@@ -17220,11 +19844,14 @@ public class GeneradorHtmlTest {
 		cmoneda.setValue("");
 		cmoneda.setDbFieldType("varchar");
 		cmoneda.setDecimals(0);
+		cmoneda.setLabel("Moneda");
+		cmoneda.setUuid(generarToken());
 
-		ccontable.setName("Cuenta C.");
+		orden++;
+		ccontable.setName("ccontable");
 		ccontable.setFieldName("ccontable");
 		ccontable.setCss("form-control");
-		ccontable.setOrder(24);
+		ccontable.setOrder(orden);
 		ccontable.setComponentType("texto");
 		ccontable.setReadOnly(false);
 		ccontable.setHidden(false);
@@ -17236,15 +19863,17 @@ public class GeneradorHtmlTest {
 		ccontable.setPersistible(true);
 		ccontable.setValue("");
 		ccontable.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		ccontable.setFormat("Cuenta C.");
+		ccontable.setFormat("");
 		ccontable.setDbFieldType("varchar");
 		ccontable.setDecimals(0);
+		ccontable.setLabel("Cuenta C.");
+		ccontable.setUuid(generarToken());
 
-
-		costeo.setName("Costeo");
+		orden++;
+		costeo.setName("costeo");
 		costeo.setFieldName("costeo");
 		costeo.setCss("form-control");
-		costeo.setOrder(25);
+		costeo.setOrder(orden);
 		costeo.setComponentType("costeo");
 		costeo.setReadOnly(false);
 		costeo.setHidden(false);
@@ -17258,11 +19887,14 @@ public class GeneradorHtmlTest {
 		costeo.setValue("");
 		costeo.setDbFieldType("varchar");
 		costeo.setDecimals(0);
+		costeo.setLabel("Costeo");
+		costeo.setUuid(generarToken());
 
-		existencias.setName("Existencias");
+		orden++;
+		existencias.setName("existencias");
 		existencias.setFieldName("existencias");
 		existencias.setCss("form-control");
-		existencias.setOrder(26);
+		existencias.setOrder(orden);
 		existencias.setComponentType("moneda");
 		existencias.setReadOnly(true);
 		existencias.setHidden(false);
@@ -17274,14 +19906,17 @@ public class GeneradorHtmlTest {
 		existencias.setPersistible(true);
 		existencias.setValue("0");
 		existencias.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		existencias.setFormat("Existencias");
+		existencias.setFormat("");
 		existencias.setDbFieldType("decimal");
 		existencias.setDecimals(2);
+		existencias.setLabel("Existencias");
+		existencias.setUuid(generarToken());
 
-		sminimo.setName("Stock minimo");
+		orden++;
+		sminimo.setName("sminimo");
 		sminimo.setFieldName("sminimo");
 		sminimo.setCss("form-control");
-		sminimo.setOrder(27);
+		sminimo.setOrder(orden);
 		sminimo.setComponentType("moneda");
 		sminimo.setReadOnly(false);
 		sminimo.setHidden(false);
@@ -17296,12 +19931,15 @@ public class GeneradorHtmlTest {
 		sminimo.setFormat("Stock minimo");
 		sminimo.setDbFieldType("decimal");
 		sminimo.setDecimals(2);
+		sminimo.setLabel("Stock minimo");
+		sminimo.setUuid(generarToken());
 
-		smaximo.setName("Stock maximo");
+		orden++;
+		smaximo.setName("smaximo");
 		smaximo.setFieldName("smaximo");
 		smaximo.setCss("form-control");
-		smaximo.setOrder(28);
-		smaximo.setComponentType("moneda");
+		smaximo.setOrder(orden);
+		smaximo.setComponentType("texto");
 		smaximo.setReadOnly(false);
 		smaximo.setHidden(false);
 		smaximo.setRequired(false);
@@ -17312,14 +19950,17 @@ public class GeneradorHtmlTest {
 		smaximo.setPersistible(true);
 		smaximo.setValue("0");
 		smaximo.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		smaximo.setFormat("Stock maximo");
+		smaximo.setFormat("");
 		smaximo.setDbFieldType("decimal");
 		smaximo.setDecimals(2);
+		smaximo.setLabel("Stock maximo");
+		smaximo.setUuid(generarToken());
 
-		comprometido.setName("Comprometido");
+		orden++;
+		comprometido.setName("comprometido");
 		comprometido.setFieldName("comprometido");
 		comprometido.setCss("form-control");
-		comprometido.setOrder(29);
+		comprometido.setOrder(orden);
 		comprometido.setComponentType("moneda");
 		comprometido.setReadOnly(true);
 		comprometido.setHidden(false);
@@ -17334,12 +19975,15 @@ public class GeneradorHtmlTest {
 		comprometido.setFormat("Comprometido");
 		comprometido.setDbFieldType("decimal");
 		comprometido.setDecimals(2);
+		comprometido.setLabel("Comprometido");
+		comprometido.setUuid(generarToken());
 
-		porrecibir.setName("Por recibir");
+		orden++;
+		porrecibir.setName("porrecibir");
 		porrecibir.setFieldName("porrecibir");
 		porrecibir.setCss("form-control");
-		porrecibir.setOrder(30);
-		porrecibir.setComponentType("moneda");
+		porrecibir.setOrder(orden);
+		porrecibir.setComponentType("texto");
 		porrecibir.setReadOnly(true);
 		porrecibir.setHidden(false);
 		porrecibir.setRequired(false);
@@ -17353,12 +19997,15 @@ public class GeneradorHtmlTest {
 		porrecibir.setFormat("Por recibir");
 		porrecibir.setDbFieldType("decimal");
 		porrecibir.setDecimals(2);
+		porrecibir.setLabel("Por recibir");
+		porrecibir.setUuid(generarToken());
 
-		porsurtir.setName("Por surtir");
+		orden++;
+		porsurtir.setName("porsurtir");
 		porsurtir.setFieldName("porsurtir");
 		porsurtir.setCss("form-control");
-		porsurtir.setOrder(31);
-		porsurtir.setComponentType("moneda");
+		porsurtir.setOrder(orden);
+		porsurtir.setComponentType("texto");
 		porsurtir.setReadOnly(true);
 		porsurtir.setHidden(false);
 		porsurtir.setRequired(false);
@@ -17369,14 +20016,17 @@ public class GeneradorHtmlTest {
 		porsurtir.setPersistible(true);
 		porsurtir.setValue("0");
 		porsurtir.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		porsurtir.setFormat("Por surtir");
+		porsurtir.setFormat("");
 		porsurtir.setDbFieldType("decimal");
 		porsurtir.setDecimals(2);
+		porsurtir.setLabel("Por surtir");
+		porsurtir.setUuid(generarToken());
 
-		obs.setName("Observaciones");
+		orden++;
+		obs.setName("obs");
 		obs.setFieldName("obs");
 		obs.setCss("form-control");
-		obs.setOrder(32);
+		obs.setOrder(orden);
 		obs.setComponentType("textoarea");
 		obs.setReadOnly(false);
 		obs.setHidden(false);
@@ -17388,47 +20038,140 @@ public class GeneradorHtmlTest {
 		obs.setPersistible(true);
 		obs.setValue("");
 		obs.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		obs.setFormat("Observaciones");
+		obs.setFormat("");
 		obs.setDbFieldType("varchar");
 		obs.setDecimals(0);
+		obs.setLabel("Observaciones");
+		obs.setUuid(generarToken());
 
-		status.setName("Status");
+		orden++;
+		status.setName("status");
 		status.setFieldName("status");
 		status.setCss("form-control");
-		status.setOrder(33);
+		status.setOrder(orden);
 		status.setComponentType("texto");
 		status.setReadOnly(true);
 		status.setHidden(false);
 		status.setRequired(true);
 		status.setShowInBasket(true);
 		status.setId(false);
-		status.setLength(20);
+		status.setLength(50);
 		status.setGroup("cabecero");
-		status.setPersistible(false);
+		status.setPersistible(true);
 		status.setValue("nuevo");
 		status.setValidation("");
 		status.setFormat("Status");
 		status.setDbFieldType("varchar");
-		status.setDecimals(2);
+		status.setDecimals(0);
+		status.setLabel("Status");
+		status.setUuid(generarToken());
 
-		lprecio.setName("Precios");
+		orden++;
+		lprecio.setName("lprecio");
 		lprecio.setFieldName("lprecio");
-		lprecio.setCss("form-control");
-		lprecio.setOrder(34);
-		lprecio.setComponentType("texto");
+		lprecio.setCss("form-select");
+		lprecio.setOrder(orden);
+		lprecio.setComponentType("lista");
 		lprecio.setReadOnly(false);
 		lprecio.setHidden(false);
 		lprecio.setRequired(true);
 		lprecio.setShowInBasket(true);
 		lprecio.setId(false);
-		lprecio.setLength(20);
+		lprecio.setLength(60);
 		lprecio.setGroup("cabecero");
-		lprecio.setPersistible(false);
-		lprecio.setValue("CAT-01");
+		lprecio.setPersistible(true);
+		lprecio.setValue("");
 		lprecio.setValidation("");
-		lprecio.setFormat("Lista de precios");
+		lprecio.setFormat("");
 		lprecio.setDbFieldType("varchar");
 		lprecio.setDecimals(0);
+		lprecio.setLabel("Lista de precios");
+		lprecio.setUuid(generarToken());
+		lprecio.setOrigin("{\"origin\":\"tabla\",\"resource\":\"lprecio\",\"fields\":[{\"name\":\"uuid\"},{\"name\":\"nombre\"}]}");
+		
+		orden++;
+		uuidCampo.setName("uuid");
+		uuidCampo.setFieldName("uuid");
+		uuidCampo.setCss("form-control");
+		uuidCampo.setOrder(orden);
+		uuidCampo.setComponentType("texto");
+		uuidCampo.setReadOnly(true);
+		uuidCampo.setHidden(true);
+		uuidCampo.setRequired(true);
+		uuidCampo.setShowInBasket(true);
+		uuidCampo.setId(true);
+		uuidCampo.setSearcheable(false);
+		uuidCampo.setValidation(null);
+		uuidCampo.setFormat(null);
+		uuidCampo.setGroup("header");
+		uuidCampo.setLength(60);
+		uuidCampo.setDbFieldType("varchar");
+		uuidCampo.setDecimals(0);
+		uuidCampo.setPersistible(true);
+		uuidCampo.setLabel("uuid");
+		uuidCampo.setUuid(generarToken());
+		uuidCampo.setComment("uuid");
+		uuidCampo.setAffects(null);
+		uuidCampo.setFilter(null);
+		uuidCampo.setEvents("*");
+		uuidCampo.setOrigin(null);
+		uuidCampo.setValue("${default::uuid}");
+
+		orden++;
+		uuideCampo.setName("uuide");
+		uuideCampo.setFieldName("uuide");
+		uuideCampo.setCss("form-control");
+		uuideCampo.setOrder(orden);
+		uuideCampo.setComponentType("texto");
+		uuideCampo.setReadOnly(false);
+		uuideCampo.setHidden(true);
+		uuideCampo.setRequired(false);
+		uuideCampo.setShowInBasket(false);
+		uuideCampo.setId(false);
+		uuideCampo.setSearcheable(false);
+		uuideCampo.setValidation(null);
+		uuideCampo.setFormat(null);
+		uuideCampo.setGroup("header");
+		uuideCampo.setLength(60);
+		uuideCampo.setDbFieldType("varchar");
+		uuideCampo.setDecimals(0);
+		uuideCampo.setPersistible(true);
+		uuideCampo.setLabel("uuide");
+		uuideCampo.setUuid(generarToken());
+		uuideCampo.setComment("uuide");
+		uuideCampo.setAffects(null);
+		uuideCampo.setFilter(null);
+		uuideCampo.setEvents("*");
+		uuideCampo.setOrigin(null);
+		uuideCampo.setValue("");
+
+		orden++;
+		uuidpCampo.setName("uuidp");
+		uuidpCampo.setFieldName("uuidp");
+		uuidpCampo.setCss("form-control");
+		uuidpCampo.setOrder(orden);
+		uuidpCampo.setComponentType("texto");
+		uuidpCampo.setReadOnly(false);
+		uuidpCampo.setHidden(true);
+		uuidpCampo.setRequired(false);
+		uuidpCampo.setShowInBasket(false);
+		uuidpCampo.setId(false);
+		uuidpCampo.setSearcheable(false);
+		uuidpCampo.setValidation(null);
+		uuidpCampo.setFormat(null);
+		uuidpCampo.setGroup("header");
+		uuidpCampo.setLength(60);
+		uuidpCampo.setDbFieldType("varchar");
+		uuidpCampo.setDecimals(0);
+		uuidpCampo.setPersistible(true);
+		uuidpCampo.setLabel("uuidp");
+		uuidpCampo.setUuid(generarToken());
+		uuidpCampo.setComment("uuidp");
+		uuidpCampo.setAffects(null);
+		uuidpCampo.setFilter(null);
+		uuidpCampo.setEvents("*");
+		uuidpCampo.setOrigin(null);
+		uuidpCampo.setValue("");
 		
 		campos.add(tipo);
 		campos.add(codigo);
@@ -17465,6 +20208,11 @@ public class GeneradorHtmlTest {
 		campos.add(peso);
 		campos.add(ancho);
 		campos.add(noserie);
+		
+		campos.add(uuidCampo);
+		campos.add(uuideCampo);
+		campos.add(uuidpCampo);
+		
 
 		forma.setModel(campos);
 		forma.setMethods(acciones);
@@ -17479,6 +20227,15 @@ public class GeneradorHtmlTest {
 		forma.setCreateable(false);
 		forma.setTable("prodserv");
 		forma.setValidate(true);
+		
+		forma.setPersistible(true);
+		forma.setInstruction("Por favor complete la informacion del producto/servicio");
+		forma.setUuid(generarToken());
+		forma.setComment("Formulario para registrar los productos/servicios");
+		forma.setOrigin("ui::case");
+		forma.setDestination("db::mysql");
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		forma.setClean(true);
 		forma.getDecorators().put("nuevo", decoradoresBuscar);
 		forma.getDecorators().put("buscar", decoradoresBuscar);
 		try {
@@ -17618,8 +20375,8 @@ public class GeneradorHtmlTest {
 	public void testGuardarFormaPrecio() throws IOException {
 		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
 
-		Path filePath = fileConfigLocation.resolve("precio.json").normalize();
-
+		Path filePath = fileConfigLocation.resolve("precio_es_MX.json").normalize();
+		int orden = 1;
 		IGenerador<Resource> generador = new Generador<Resource>(templatesPath);
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -17630,6 +20387,10 @@ public class GeneradorHtmlTest {
 		Field factor = new Field();
 		Field campoStatus = new Field();
 
+		Field uuidCampo            = new Field();
+		Field uuideCampo           = new Field();
+		Field uuidpCampo           = new Field();
+		
 		Resource forma = new Resource();
 
 		Button guardar = new Button();
@@ -17641,10 +20402,11 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("precio");
 		guardar.setModule("inventario");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
-
+		guardar.setUi(generarToken());
+		
 		Button editar = new Button();
 		editar.setCommandName("actualizar");
 		editar.setName("actualizar");
@@ -17654,9 +20416,10 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("precio");
 		editar.setModule("inventario");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
+		editar.setUi(generarToken());
 
 		Button buscar = new Button();
 		buscar.setCommandName("buscar");
@@ -17670,6 +20433,7 @@ public class GeneradorHtmlTest {
 		buscar.setResourceType("basket");
 		buscar.setVersion("1.0");
 		buscar.setEvents("buscar");
+		buscar.setUi(generarToken());
 
 		acciones.add(guardar);
 		acciones.add(editar);
@@ -17687,26 +20451,31 @@ public class GeneradorHtmlTest {
 		campoCodigo.setId(true);
 		campoCodigo.setLongitud(20);*/
 
-		campoCodigo.setName("Codigo");
+		campoCodigo.setName("codigo");
 		campoCodigo.setFieldName("codigo");
 		campoCodigo.setCss("form-control");
-		campoCodigo.setOrder(1);
+		campoCodigo.setOrder(orden);
 		campoCodigo.setComponentType("texto");
 		campoCodigo.setReadOnly(true);
 		campoCodigo.setHidden(false);
 		campoCodigo.setRequired(false);
 		campoCodigo.setShowInBasket(true);
-		campoCodigo.setId(true);
+		campoCodigo.setId(false);
 		campoCodigo.setLength(20);
 		campoCodigo.setGroup("cabecero");
 		campoCodigo.setPersistible(true);
-		campoCodigo.setFormat("{TIPO-CONS}");
+		campoCodigo.setFormat("");
 		campoCodigo.setValue("");
-
-		campoNombre.setName("Nombre");
+		campoCodigo.setUi(generarToken());
+		campoCodigo.setLabel("Codigo (Auto)");
+		campoCodigo.setDbFieldType("varchar");
+		campoCodigo.setDecimals(0);
+		
+		orden++;
+		campoNombre.setName("nombre");
 		campoNombre.setFieldName("nombre");
 		campoNombre.setCss("form-control");
-		campoNombre.setOrder(2);
+		campoNombre.setOrder(orden);
 		campoNombre.setComponentType("texto");
 		campoNombre.setReadOnly(false);
 		campoNombre.setHidden(false);
@@ -17714,13 +20483,18 @@ public class GeneradorHtmlTest {
 		campoNombre.setShowInBasket(true);
 		campoNombre.setId(false);
 		campoNombre.setLength(100);
-		campoNombre.setFormat("Nombre");
+		campoNombre.setFormat("");
 		campoNombre.setValue("");
-
-		base.setName("Base");
+		campoNombre.setUi(generarToken());
+		campoNombre.setLabel("Nombre");
+		campoNombre.setDbFieldType("varchar");
+		campoNombre.setDecimals(0);
+		
+		orden++;
+		base.setName("base");
 		base.setFieldName("base");
 		base.setCss("form-control");
-		base.setOrder(3);
+		base.setOrder(orden);
 		base.setComponentType("lprecio");
 		base.setReadOnly(false);
 		base.setHidden(false);
@@ -17728,14 +20502,19 @@ public class GeneradorHtmlTest {
 		base.setShowInBasket(false);
 		base.setId(false);
 		base.setLength(20);
-		base.setOrigin("{\"origen\":\"tabla\",\"objeto\":\"lprecio\",\"campos\":[{\"nombre\":\"codigo\"},{\"nombre\":\"nombre\"}]}");
-		base.setFormat("Base");
+		base.setOrigin("{\"origin\":\"tabla\",\"resource\":\"lprecio\",\"fields\":[{\"name\":\"uuid\"},{\"name\":\"nombre\"}]}");
+		base.setFormat("");
 		base.setValue("");
+		base.setUi(generarToken());
+		base.setLabel("Lista de precios base");
+		base.setDbFieldType("varchar");
+		base.setDecimals(0);
 
-		factor.setName("Factor");
+		orden++;
+		factor.setName("factor");
 		factor.setFieldName("factor");
 		factor.setCss("form-control");
-		factor.setOrder(3);
+		factor.setOrder(orden);
 		factor.setComponentType("texto");
 		factor.setReadOnly(false);
 		factor.setHidden(false);
@@ -17745,13 +20524,18 @@ public class GeneradorHtmlTest {
 		factor.setLength(3);
 		factor.setFormat("Factor");
 		factor.setValue("");
+		factor.setUi(generarToken());
+		factor.setLabel("Factor");
+		factor.setDbFieldType("varchar");
+		factor.setDecimals(0);
 
+		orden++;
 		campoStatus.setName("Status");
 		campoStatus.setFieldName("status");
 		campoStatus.setCss("form-control");
-		campoStatus.setOrder(7);
+		campoStatus.setOrder(orden);
 		campoStatus.setComponentType("texto");
-		campoStatus.setReadOnly(false);
+		campoStatus.setReadOnly(true);
 		campoStatus.setHidden(false);
 		campoStatus.setRequired(true);
 		campoStatus.setShowInBasket(true);
@@ -17759,13 +20543,104 @@ public class GeneradorHtmlTest {
 		campoStatus.setId(false);
 		campoStatus.setLength(20);
 		campoStatus.setFormat("Status");
+		campoStatus.setUi(generarToken());
+		campoStatus.setLabel("Status");
+		campoStatus.setDbFieldType("varchar");
+		campoStatus.setDecimals(0);
 
+		orden++;
+		uuidCampo.setName("uuid");
+		uuidCampo.setFieldName("uuid");
+		uuidCampo.setCss("form-control");
+		uuidCampo.setOrder(orden);
+		uuidCampo.setComponentType("texto");
+		uuidCampo.setReadOnly(true);
+		uuidCampo.setHidden(true);
+		uuidCampo.setRequired(true);
+		uuidCampo.setShowInBasket(true);
+		uuidCampo.setId(true);
+		uuidCampo.setSearcheable(false);
+		uuidCampo.setValidation(null);
+		uuidCampo.setFormat(null);
+		uuidCampo.setGroup("header");
+		uuidCampo.setLength(60);
+		uuidCampo.setDbFieldType("varchar");
+		uuidCampo.setDecimals(0);
+		uuidCampo.setPersistible(true);
+		uuidCampo.setLabel("uuid");
+		uuidCampo.setUuid(generarToken());
+		uuidCampo.setComment("uuid");
+		uuidCampo.setAffects(null);
+		uuidCampo.setFilter(null);
+		uuidCampo.setEvents("*");
+		uuidCampo.setOrigin(null);
+		uuidCampo.setValue("${default::uuid}");
+
+		orden++;
+		uuideCampo.setName("uuide");
+		uuideCampo.setFieldName("uuide");
+		uuideCampo.setCss("form-control");
+		uuideCampo.setOrder(orden);
+		uuideCampo.setComponentType("texto");
+		uuideCampo.setReadOnly(false);
+		uuideCampo.setHidden(true);
+		uuideCampo.setRequired(false);
+		uuideCampo.setShowInBasket(false);
+		uuideCampo.setId(false);
+		uuideCampo.setSearcheable(false);
+		uuideCampo.setValidation(null);
+		uuideCampo.setFormat(null);
+		uuideCampo.setGroup("header");
+		uuideCampo.setLength(60);
+		uuideCampo.setDbFieldType("varchar");
+		uuideCampo.setDecimals(0);
+		uuideCampo.setPersistible(true);
+		uuideCampo.setLabel("uuide");
+		uuideCampo.setUuid(generarToken());
+		uuideCampo.setComment("uuide");
+		uuideCampo.setAffects(null);
+		uuideCampo.setFilter(null);
+		uuideCampo.setEvents("*");
+		uuideCampo.setOrigin(null);
+		uuideCampo.setValue("");
+
+		orden++;
+		uuidpCampo.setName("uuidp");
+		uuidpCampo.setFieldName("uuidp");
+		uuidpCampo.setCss("form-control");
+		uuidpCampo.setOrder(orden);
+		uuidpCampo.setComponentType("texto");
+		uuidpCampo.setReadOnly(false);
+		uuidpCampo.setHidden(true);
+		uuidpCampo.setRequired(false);
+		uuidpCampo.setShowInBasket(false);
+		uuidpCampo.setId(false);
+		uuidpCampo.setSearcheable(false);
+		uuidpCampo.setValidation(null);
+		uuidpCampo.setFormat(null);
+		uuidpCampo.setGroup("header");
+		uuidpCampo.setLength(60);
+		uuidpCampo.setDbFieldType("varchar");
+		uuidpCampo.setDecimals(0);
+		uuidpCampo.setPersistible(true);
+		uuidpCampo.setLabel("uuidp");
+		uuidpCampo.setUuid(generarToken());
+		uuidpCampo.setComment("uuidp");
+		uuidpCampo.setAffects(null);
+		uuidpCampo.setFilter(null);
+		uuidpCampo.setEvents("*");
+		uuidpCampo.setOrigin(null);
+		uuidpCampo.setValue("");
+		
 		campos.add(campoNombre);
 		campos.add(campoCodigo);
 		campos.add(base);
 		campos.add(factor);
 		campos.add(campoStatus);
-
+		campos.add(uuidCampo);
+		campos.add(uuideCampo);
+		campos.add(uuidpCampo);
+		
 		forma.setModel(campos);
 		forma.setMethods(acciones);
 		forma.setCommandName("guardar");
@@ -17775,10 +20650,19 @@ public class GeneradorHtmlTest {
 		forma.setVersion("1.0");
 		forma.setStatus("produccion");
 		forma.setModule("inventario");
-		forma.setBasket("precios");
+		forma.setBasket("precio");
 		forma.setCreateable(true);
 		forma.setTable("lprecio");
 		forma.setValidate(true);
+		forma.setInstruction("Por favor complete la informacion de la lista de precios");
+		forma.setUuid(generarToken());
+		forma.setComment("Formulario para registrar las listas de precios");
+		forma.setOrigin("ui::case");
+		forma.setDestination("db::mysql");
+		forma.setPersistible(true);
+		forma.setValidate(true);
+		forma.setLastModificationDate(new java.util.Date().getTime());
+		
 		try {
 			generador.put(filePath, forma);
 		} catch (JsonGenerationException e) {
@@ -17797,8 +20681,8 @@ public class GeneradorHtmlTest {
 	public void testGuardarFormaPrecios() throws IOException {
 		Path fileConfigLocation = Paths.get("./config").toAbsolutePath().normalize();
 
-		//precios -> precio
-		Path filePath = fileConfigLocation.resolve("precios.json").normalize();
+		//precios(precios) -> precio(lprecio)
+		Path filePath = fileConfigLocation.resolve("precios_es_MX.json").normalize();
 
 		IGenerador<Resource> generador = new Generador<Resource>(templatesPath);
 		List<Field> campos = new ArrayList<Field>();
@@ -17825,7 +20709,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("precios");
 		guardar.setModule("inventario");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 
@@ -17838,7 +20722,7 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("precios");
 		editar.setModule("inventario");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 
@@ -17859,7 +20743,7 @@ public class GeneradorHtmlTest {
 		acciones.add(editar);
 		acciones.add(buscar);
 
-		campoCodigo.setName("Lista de precios");
+		campoCodigo.setName("codigo");
 		campoCodigo.setFieldName("codigo");
 		campoCodigo.setCss("form-control");
 		campoCodigo.setOrder(1);
@@ -17876,28 +20760,33 @@ public class GeneradorHtmlTest {
 		campoCodigo.setPersistible(true);
 		campoCodigo.setValue("");
 		campoCodigo.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		campoCodigo.setFormat("Codigo");
+		campoCodigo.setFormat("");
+		campoCodigo.setLabel("Codigo");
+		campoCodigo.setDecimals(0);
+		campoCodigo.setDbFieldType("varchar");
 
-		campoNombre.setName("Producto/Servicio");
+		campoNombre.setName("prodserv");
 		campoNombre.setFieldName("prodserv");
 		campoNombre.setCss("form-control");
 		campoNombre.setOrder(2);
-		campoNombre.setComponentType("texto");
+		campoNombre.setComponentType("lista");
 		campoNombre.setReadOnly(false);
 		campoNombre.setHidden(false);
 		campoNombre.setRequired(true);
 		campoNombre.setShowInBasket(true);
 		campoNombre.setId(false);
-		campoNombre.setLength(100);
-		//campoNombre.setOrigen("{\"origen\":\"tabla\",\"objeto\":\"prodserv\",\"campos\":[{\"nombre\":\"codigo\"},{\"nombre\":\"descripcion\"}]}");
+		campoNombre.setLength(150);
+		campoNombre.setOrigin("{\"origin\":\"tabla\",\"resource\":\"prodserv\",\"fields\":[{\"name\":\"uuid\", \"filter\":\"\"},{\"name\":\"descripcion\"}]}");
 		campoNombre.setGroup("cabecero");
 		campoNombre.setPersistible(true);
 		campoNombre.setValue("");
 		campoNombre.setValidation("^[a-zA-Z0-9,.;:_'\\s-]+$");
-		campoNombre.setFormat("Producto/Servicio");
+		campoNombre.setFormat("");
+		campoNombre.setLabel("Producto/Servicio/Kit");
+		campoNombre.setDecimals(0);
+		campoNombre.setDbFieldType("varchar");
 
-
-		factor.setName("Factor");
+		factor.setName("factor");
 		factor.setFieldName("factor");
 		factor.setCss("form-control");
 		factor.setOrder(3);
@@ -17912,26 +20801,32 @@ public class GeneradorHtmlTest {
 		factor.setPersistible(true);
 		factor.setValue("");
 		factor.setValidation("^([0-9]*|\\d*\\.\\d{1}?\\d*)$");
-		factor.setFormat("Factor");
+		factor.setFormat("");
+		factor.setLabel("Factor");
+		factor.setDecimals(0);
+		factor.setDbFieldType("varchar");
 
-		precio.setName("Precio");
+		precio.setName("precio");
 		precio.setFieldName("precio");
 		precio.setCss("form-control");
 		precio.setOrder(4);
-		precio.setComponentType("moneda");
+		precio.setComponentType("texto");
 		precio.setReadOnly(false);
 		precio.setHidden(false);
 		precio.setRequired(true);
 		precio.setShowInBasket(false);
 		precio.setId(false);
-		precio.setLength(20);
+		precio.setLength(12);
 		precio.setGroup("cabecero");
 		precio.setPersistible(true);
-		precio.setValue("");
+		precio.setValue("0");
 		precio.setValidation("^[0-9]+(\\.[0-9]{1,2})?$");
-		precio.setFormat("Precio");
+		precio.setFormat("");
+		precio.setLabel("Precio");
+		precio.setDecimals(2);
+		precio.setDbFieldType("decimal");
 
-		campoStatus.setName("Status");
+		campoStatus.setName("status");
 		campoStatus.setFieldName("status");
 		campoStatus.setCss("form-control");
 		campoStatus.setOrder(7);
@@ -17940,16 +20835,19 @@ public class GeneradorHtmlTest {
 		campoStatus.setHidden(false);
 		campoStatus.setRequired(true);
 		campoStatus.setShowInBasket(true);
-		campoStatus.setValue("");
+		campoStatus.setValue("activo");
 		campoStatus.setId(false);
 		campoStatus.setLength(20);
-		campoStatus.setFormat("Status");
+		campoStatus.setFormat("");
+		campoStatus.setLabel("Status");
+		campoStatus.setDecimals(0);
+		campoStatus.setDbFieldType("varchar");
 
-		lprecios.setName("Lista de precios");
+		lprecios.setName("lprecio");
 		lprecios.setFieldName("lprecio");
 		lprecios.setCss("form-control");
 		lprecios.setOrder(8);
-		lprecios.setComponentType("texto");
+		lprecios.setComponentType("lprecio");
 		lprecios.setReadOnly(false);
 		lprecios.setHidden(true);
 		lprecios.setRequired(true);
@@ -17958,10 +20856,15 @@ public class GeneradorHtmlTest {
 		lprecios.setLength(20);
 		lprecios.setGroup("cabecero");
 		lprecios.setPersistible(true);
-		lprecios.setFormat("Lista de precios");
-		lprecios.setValue("${lprecio}");
+		lprecios.setFormat("");
+		lprecios.setValue("");
+		lprecios.setLabel("Lista de precios");
+		lprecios.setDecimals(0);
+		lprecios.setDbFieldType("varchar");
+		lprecios.setOrigin("{\"origin\":\"tabla\",\"resource\":\"lprecio\",\"fields\":[{\"name\":\"uuid\"},{\"name\":\"nombre\"}]}");
+		
 
-		campoDescripcion.setName("Descripcion");
+		campoDescripcion.setName("descripcion");
 		campoDescripcion.setFieldName("descripcion");
 		campoDescripcion.setCss("form-control");
 		campoDescripcion.setOrder(9);
@@ -17974,14 +20877,17 @@ public class GeneradorHtmlTest {
 		campoDescripcion.setLength(150);
 		campoDescripcion.setGroup("cabecero");
 		campoDescripcion.setPersistible(true);
-		campoDescripcion.setFormat("Descripcion");
+		campoDescripcion.setFormat("");
 		campoDescripcion.setValue("");
+		campoDescripcion.setLabel("Descripcion");
+		campoDescripcion.setDecimals(0);
+		campoDescripcion.setDbFieldType("varchar");
 		
-		campoLenguage.setName("Lenguage");
+		campoLenguage.setName("lenguage");
 		campoLenguage.setFieldName("lenguage");
 		campoLenguage.setCss("form-control");
 		campoLenguage.setOrder(10);
-		campoLenguage.setComponentType("texto");
+		campoLenguage.setComponentType("idioma");
 		campoLenguage.setReadOnly(false);
 		campoLenguage.setHidden(false);
 		campoLenguage.setRequired(true);
@@ -17990,14 +20896,17 @@ public class GeneradorHtmlTest {
 		campoLenguage.setLength(20);
 		campoLenguage.setGroup("cabecero");
 		campoLenguage.setPersistible(true);
-		campoLenguage.setFormat("Descripcion");
+		campoLenguage.setFormat("");
 		campoLenguage.setValue("");
+		campoLenguage.setLabel("Lenguage");
+		campoLenguage.setDecimals(0);
+		campoLenguage.setDbFieldType("varchar");
 		
-		campoMoneda.setName("Moneda");
+		campoMoneda.setName("moneda");
 		campoMoneda.setFieldName("moneda");
 		campoMoneda.setCss("form-control");
 		campoMoneda.setOrder(11);
-		campoMoneda.setComponentType("texto");
+		campoMoneda.setComponentType("moneda");
 		campoMoneda.setReadOnly(false);
 		campoMoneda.setHidden(false);
 		campoMoneda.setRequired(true);
@@ -18006,8 +20915,11 @@ public class GeneradorHtmlTest {
 		campoMoneda.setLength(20);
 		campoMoneda.setGroup("cabecero");
 		campoMoneda.setPersistible(true);
-		campoMoneda.setFormat("Descripcion");
+		campoMoneda.setFormat("");
 		campoMoneda.setValue("");
+		campoMoneda.setLabel("Moneda");
+		campoMoneda.setDecimals(0);
+		campoMoneda.setDbFieldType("varchar");
 		
 		campos.add(campoNombre);
 		campos.add(campoCodigo);
@@ -18032,6 +20944,13 @@ public class GeneradorHtmlTest {
 		forma.setCreateable(false);
 		forma.setTable("precios");
 		forma.setValidate(true);
+		
+		forma.setInstruction("Por favor complete la informacion de Precio de producto y seleccione la lista de precios al que le corresponda.");
+		forma.setUuid(generarToken());
+		forma.setComment("Formulario para registrar los Precio de producto. La forma precio es el cabecero y precios el detalle, revise el modelo para mayor informacion");
+		forma.setOrigin("ui::case");
+		forma.setDestination("db::mysql");
+		forma.setLastModificationDate(new java.util.Date().getTime());
 		try {
 			generador.put(filePath, forma);
 		} catch (JsonGenerationException e) {
@@ -18087,7 +21006,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("masiva");
 		guardar.setModule("solicitud");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 		guardar.setStatus("nuevo");
@@ -18101,7 +21020,7 @@ public class GeneradorHtmlTest {
 		editar.setResourceName("masiva");
 		editar.setModule("solicitud");
 		editar.setOrder(2);
-		editar.setResourceType("forma");
+		editar.setResourceType("form");
 		editar.setVersion("1.0");
 		editar.setEvents("detalle");
 		editar.setStatus("nuevo");
@@ -18115,7 +21034,7 @@ public class GeneradorHtmlTest {
 		buscar.setResourceName("masiva");
 		buscar.setModule("solicitud");
 		buscar.setOrder(3);
-		buscar.setResourceType("forma");
+		buscar.setResourceType("form");
 		buscar.setVersion("1.0");
 		buscar.setEvents("detalle");
 		buscar.setStatus("validar");
@@ -18373,7 +21292,7 @@ public class GeneradorHtmlTest {
 		guardar.setResourceName("informacion");
 		guardar.setModule("solicitud");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 guardar.setInstruction("Registro guardado satisfactoriamente");
@@ -18533,7 +21452,7 @@ guardar.setInstruction("Registro guardado satisfactoriamente");
 		fNacim.setPersistible(true);
 		fNacim.setFormat("yyyy-MM-dd");
 		//fNacim.setValor("");
-		fNacim.setValue("${hoyCorto}");
+		fNacim.setValue("${default::hoyCorto}");
 
 
 		status.setName("Status"); 
@@ -18862,7 +21781,7 @@ guardar.setInstruction("Registro guardado satisfactoriamente");
 		guardar.setResourceName("registrarse");
 		guardar.setModule("solicitud");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 		guardar.setInstruction("Registro guardado satisfactoriamente, le estaremos enviando un correo de confirmacion para finalizar la activacion de su registro.");
@@ -19034,7 +21953,7 @@ guardar.setInstruction("Registro guardado satisfactoriamente");
 		fNacim.setPersistible(true);
 		fNacim.setFormat("yyyy-MM-dd");
 		//fNacim.setValor("");
-		fNacim.setValue("${hoyCorto}");
+		fNacim.setValue("${default::hoyCorto}");
 
 
 		status.setName("Status"); 
@@ -19495,7 +22414,7 @@ guardar.setInstruction("Registro guardado satisfactoriamente");
 		guardar.setResourceName("traza");
 		guardar.setModule("sistema");
 		guardar.setOrder(1);
-		guardar.setResourceType("forma");
+		guardar.setResourceType("form");
 		guardar.setVersion("1.0");
 		guardar.setEvents("nuevo");
 		guardar.setInstruction("Registro guardado satisfactoriamente");
