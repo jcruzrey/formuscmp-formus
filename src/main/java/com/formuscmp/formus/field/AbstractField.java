@@ -5,6 +5,9 @@ package com.formuscmp.formus.field;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Field to hold data and be shown as component on UI
@@ -63,6 +66,14 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 	private String resourcePath;
 	private String level;
 	private String suggestion;
+	// Not every field type uses these (e.g. only numero cares about min/max, only
+	// textoarea about rows, only list-like types about options) - null when the
+	// component type doesn't apply, and left out of serialized JSON in that case
+	// (see @JsonInclude below) rather than sent as an always-present null/empty value.
+	private String min;
+	private String max;
+	private List<String> options;
+	private Integer rows;
 	/**
 	 * @return the alias
 	 */
@@ -681,6 +692,66 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 		this.suggestion = suggestion;
 	}
 
+	/**
+	 * @return the min, or null if this field has no minimum
+	 */
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	public String getMin() {
+		return min;
+	}
+
+	/**
+	 * @param min the min to set
+	 */
+	public void setMin(String min) {
+		this.min = min;
+	}
+
+	/**
+	 * @return the max, or null if this field has no maximum
+	 */
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	public String getMax() {
+		return max;
+	}
+
+	/**
+	 * @param max the max to set
+	 */
+	public void setMax(String max) {
+		this.max = max;
+	}
+
+	/**
+	 * @return the options, or null if this field has no fixed list of choices
+	 */
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	public List<String> getOptions() {
+		return options;
+	}
+
+	/**
+	 * @param options the options to set
+	 */
+	public void setOptions(List<String> options) {
+		this.options = options;
+	}
+
+	/**
+	 * @return the rows, or null if this field has no configured row count
+	 */
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	public Integer getRows() {
+		return rows;
+	}
+
+	/**
+	 * @param rows the rows to set
+	 */
+	public void setRows(Integer rows) {
+		this.rows = rows;
+	}
+
 	@Override
 	public String toString() {
 		return "AbstractField [name=" + name + ", componentType=" + componentType + ", css=" + css + ", order=" + order
@@ -694,7 +765,8 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 				+ ", alias=" + alias + ", param1=" + param1 + ", param2=" + param2 + ", param3=" + param3 + ", param4="
 				+ param4 + ", param5=" + param5 + ", param6=" + param6 + ", param7=" + param7 + ", param8=" + param8
 				+ ", param9=" + param9 + ", param10=" + param10 + ", clean=" + clean + ", ui=" + ui + ", resourcePath="
-				+ resourcePath + ", level=" + level + ", suggestion=" + suggestion + "]";
+				+ resourcePath + ", level=" + level + ", suggestion=" + suggestion + ", min=" + min + ", max=" + max
+				+ ", options=" + options + ", rows=" + rows + "]";
 	}
 	
 	
