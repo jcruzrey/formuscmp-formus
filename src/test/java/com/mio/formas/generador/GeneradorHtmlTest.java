@@ -1176,7 +1176,6 @@ public class GeneradorHtmlTest extends GenerateCode{
 		//Campo campoVersion = new Campo();
 		Field campoEvento = new Field();
 		Field campoVista = new Field();
-		Field campoForma = new Field();
 		Field campoStatus = new Field();
 
 		Button guardar = new Button();
@@ -1370,19 +1369,6 @@ public class GeneradorHtmlTest extends GenerateCode{
 		campoVista.setFormat("Vista");
 		campoVista.setGroup("cabecero");
 
-		campoForma.setName("Forma");
-		campoForma.setFieldName("dis-forma");
-		campoForma.setCss("form-control");
-		campoForma.setOrder(14);
-		campoForma.setComponentType("texto");
-		campoForma.setReadOnly(false);
-		campoForma.setHidden(true);
-		campoForma.setRequired(true);
-		campoForma.setShowInBasket(true);
-		campoForma.setId(false);
-		campoForma.setFormat("Forma");
-		campoForma.setGroup("cabecero");
-		campoForma.setPersistible(false);
 		
 		campoStatus.setName("Status");
 		campoStatus.setFieldName("status");
@@ -1411,7 +1397,6 @@ public class GeneradorHtmlTest extends GenerateCode{
 		campos.add(campoEvento);
 		//campos.add(campoVersion);
 		campos.add(campoVista);
-		campos.add(campoForma);
 		campos.add(campoStatus);
 		
 		forma.setModel(campos);
@@ -1465,7 +1450,6 @@ public class GeneradorHtmlTest extends GenerateCode{
 		
 		Field campoFormato = new Field();
 		Field campoGrupo = new Field();
-		Field campoForma = new Field();
 		
 		Field campoOculto = new Field();
 		Field campoRequerido = new Field();
@@ -1724,20 +1708,6 @@ public class GeneradorHtmlTest extends GenerateCode{
 		campoGrupo.setFormat("Grupo");
 		campoGrupo.setGroup("cabecero");
 		
-		campoForma.setName("Forma");
-		campoForma.setLabel("Fomra");
-		campoForma.setFieldName("dis-forma");
-		campoForma.setCss("form-control");
-		campoForma.setOrder(16);
-		campoForma.setComponentType("texto");
-		campoForma.setReadOnly(false);
-		campoForma.setHidden(true);
-		campoForma.setRequired(true);
-		campoForma.setShowInBasket(true);
-		campoForma.setId(false);
-		campoForma.setFormat("Forma");
-		campoForma.setGroup("cabecero");
-		campoForma.setPersistible(false);
 		
 		campoDbtype.setName("Tipo BD");
 		campoDbtype.setLabel("Tipo Campo en BD");
@@ -1818,7 +1788,6 @@ public class GeneradorHtmlTest extends GenerateCode{
 		campos.add(campoValidacion);
 		campos.add(campoFormato);
 		campos.add(campoGrupo);
-		campos.add(campoForma);
 		campos.add(campoBuscable);
 		campos.add(campoDecimales);
 		campos.add(campoPersistible);
