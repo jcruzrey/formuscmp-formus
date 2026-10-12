@@ -21,7 +21,7 @@ import com.formuscmp.formus.generator.IGenerador;
  */
 public class UseCaseTest extends GenerateCode{
 
-	private String[] templatesPath = new String[] { "/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config" };
+	private String[] templatesPath = new String[] { "../formuscmp-formus-api/config" };
 
 	/**
 	 * Test method for {@link com.formuscmp.formus.resource.UseCase#getSteps()}.

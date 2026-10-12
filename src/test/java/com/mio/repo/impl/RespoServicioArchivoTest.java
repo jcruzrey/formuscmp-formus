@@ -23,6 +23,7 @@ public class RespoServicioArchivoTest {
 	@Test
 	public void testDameRutaJson() {
 		Properties properties = new Properties();
+		properties.put("redis.active", "false");
 		properties.put("redis.ip", "192.168.1.203");
 		properties.put("redis.port", 6379);
 		IRepository repoServicio = new ComponentRepository(properties);
@@ -57,6 +58,7 @@ public class RespoServicioArchivoTest {
 	@Test
 	public void testDameRutaCampoBxml() {
 		Properties properties = new Properties();
+		properties.put("redis.active", "false");
 		properties.put("redis.ip", "192.168.1.203");
 		properties.put("redis.port", 6379);
 		IRepository repoServicio = new ComponentRepository(properties);
@@ -74,6 +76,7 @@ public class RespoServicioArchivoTest {
 	@Test
 	public void testDameRutaCampoHtml() {
 		Properties properties = new Properties();
+		properties.put("redis.active", "false");
 		properties.put("redis.ip", "192.168.1.203");
 		properties.put("redis.port", 6379);
 		IRepository repoServicio = new ComponentRepository(properties);
@@ -91,6 +94,7 @@ public class RespoServicioArchivoTest {
 	@Test
 	public void testDameRutaCampoAndroid() {
 		Properties properties = new Properties();
+		properties.put("redis.active", "false");
 		properties.put("redis.ip", "192.168.1.203");
 		properties.put("redis.port", 6379);
 		IRepository repoServicio = new ComponentRepository(properties);
@@ -108,6 +112,7 @@ public class RespoServicioArchivoTest {
 	@Test
 	public void testDameRutaFormaAccion() {
 		Properties properties = new Properties();
+		properties.put("redis.active", "false");
 		properties.put("redis.ip", "192.168.1.203");
 		properties.put("redis.port", 6379);
 		IRepository repoServicio = new ComponentRepository(properties);
@@ -124,7 +129,9 @@ public class RespoServicioArchivoTest {
 	 */
 	@Test
 	public void testDameRutaColumnaBxml() {
-		IRepository repoServicio = new ComponentRepository(new Properties());
+		Properties properties = new Properties();
+		properties.put("redis.active", "false");
+		IRepository repoServicio = new ComponentRepository(properties);
 		Path rutaColumna = repoServicio.dameRutaRecurso("./config", "base", "comprobante", "3.3", "comprobante", "1", "texto" , "bxml", "basket", "campo", "en_US");
 		if (!rutaColumna.toFile().exists()) {
 			System.out.println("No existe:" + rutaColumna);
