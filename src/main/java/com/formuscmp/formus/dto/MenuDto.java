@@ -43,6 +43,16 @@ public class MenuDto implements Comparable<MenuDto>{
 		this.createable = createable;
 	}
 	
+	/**
+	 * A record of a document type (an adapter or a template) listed in the basket list key: its resourceName is {@code <type>.<name>} (a
+	 * resource name never has a dot). It is a listing entry, not a basket resource: lists of resources skip it.
+	 */
+	public static final String SEPARADOR_REGISTRO = ".";
+
+	public boolean esRegistro() {
+		return resourceName != null && resourceName.contains(SEPARADOR_REGISTRO);
+	}
+
 	//base or company asset
 	private String assetLibrary;
 	//Form/Use Case title, Field label, Button label
