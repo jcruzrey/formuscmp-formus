@@ -3,12 +3,12 @@ package com.mio.formas.generador;
 import java.io.IOException;
 import org.junit.Test;
 
-/** case/pago: Pago de un plan (PayPal); solo lo escriben los comandos de pago. Generated JSON goes to formuscmp-formus/config (see CaseGenerador); deploy per formus/sql README. */
+/** case/pago: Pago de un plan (Stripe); solo lo escriben los comandos de pago. Generated JSON goes to formuscmp-formus/config (see CaseGenerador); deploy per formus/sql README. */
 public class Case_pago extends CaseGenerador {
 
 	@Test
 	public void testNuevo() throws IOException {
-		generar("pago", "Pago", "PAG", "Pago de un plan (PayPal); solo lo escriben los comandos de pago",
+		generar("pago", "Pago", "PAG", "Pago de un plan (Stripe); solo lo escriben los comandos de pago",
 			campos(
 				uuid(),
 				email("usuario", "Usuario").required().readOnly().basket().search(),
@@ -23,9 +23,9 @@ public class Case_pago extends CaseGenerador {
 				decimal("impuesto", "Impuesto").readOnly(),
 				decimal("total", "Total").readOnly().basket(),
 				lista("moneda", "Moneda", "MXN,USD").readOnly().basket(),
-				texto("proveedor", "Proveedor", 20).readOnly().value("PayPal"),
-				texto("referencia", "Orden PayPal", 80).readOnly().search(),
-				texto("captura", "Captura PayPal", 80).readOnly(),
+				texto("proveedor", "Proveedor", 20).readOnly().value("Stripe"),
+				texto("referencia", "Sesión de pago Stripe", 80).readOnly().search(),
+				texto("captura", "Pago Stripe", 80).readOnly(),
 				email("pagador", "Correo del pagador").readOnly(),
 				texto("eventoid", "Ultimo evento procesado", 80).readOnly().hidden(),
 				lista("status", "Estatus", "pendiente,pagado,fallido,cancelado,reembolsado").readOnly().basket().value("pendiente"),
