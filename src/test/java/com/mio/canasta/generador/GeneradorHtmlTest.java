@@ -29,7 +29,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_documento.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -293,7 +293,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_comprobante.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -481,7 +481,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_ingreso.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -544,7 +544,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_remision.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -723,7 +723,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_reservacion.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -902,7 +902,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_cancelacion.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -965,7 +965,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_ocompra.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -1120,7 +1120,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_producto.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -1284,7 +1284,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_kit.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -1448,7 +1448,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_caracteristica.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -1568,7 +1568,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_prodserv.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -1790,7 +1790,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_carrito.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -2031,7 +2031,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_traza.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -2188,7 +2188,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_forma.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -2416,7 +2416,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_canasta.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -2644,7 +2644,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_masiva.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -2793,7 +2793,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_servicio.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -3020,7 +3020,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_actividad.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -3261,7 +3261,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_pago.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -3338,7 +3338,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_jugador.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -3400,7 +3400,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_directorio.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -3645,7 +3645,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_cliente.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -3708,7 +3708,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_empresa.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -3771,7 +3771,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_mensaje.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -3834,7 +3834,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_usuario.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -3931,7 +3931,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_proveedor.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -3994,7 +3994,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_almacen.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -4057,7 +4057,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_precio.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -4204,7 +4204,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_precios.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -4380,7 +4380,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_incluye.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -4532,7 +4532,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_activity_en_US.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -4687,7 +4687,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_prices_en_US.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();
@@ -4832,7 +4832,7 @@ public class GeneradorHtmlTest {
 
 		Path filePath = fileConfigLocation.resolve("canasta_includes_en_US.json").normalize();
 
-		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config"});
+		IGenerador<Resource> generador = new Generador<Resource>(new String[] {"../formuscmp-formus-api/config"});
 
 		List<Field> campos = new ArrayList<Field>();
 		List<Button> acciones = new ArrayList<Button>();

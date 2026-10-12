@@ -261,6 +261,9 @@ public class ComponentRepository implements IRepository, Closeable{
 		String ruta = "";
 		ObjectMapper objectMapper =  new ObjectMapper();
 		List<MenuDto> lista = listaAgregar;
+		if (!new File(rutaEmpresaConfig).isDirectory()) {
+			return lista;   // nothing of this type in the folder: an empty list, not an error (and no folder is created for it)
+		}
 		IGenerador<Resource> generador = new Generador<Resource>(new String[] {rutaEmpresaConfig});
 		IGenerador<UseCase> generadorUseCase = new Generador<UseCase>(new String[] {rutaEmpresaConfig});
 		createIfNotPresent(rutaEmpresaConfig);
@@ -279,7 +282,21 @@ public class ComponentRepository implements IRepository, Closeable{
 					if (LOGGER.isLoggable(Level.INFO)) LOGGER.info("No esta correctamente configurado:"+filePath.toString());
 				}else {
 					//String llaveCacheForma = IRepoServicio.FORMA_PREFIX + splittedFileName[splittedFileName.length - 6] + "." + splittedFileName[splittedFileName.length - 5] + "." + splittedFileName[splittedFileName.length - 4] + "." + splittedFileName[splittedFileName.length - 3] + "." + splittedFileName[splittedFileName.length - 2] + "-" + localeStr;
-					if (resourceType.equals("usecase")) {
+					if (resourceType.equals("adapter") || resourceType.equals("template")) {
+						// plain JSON documents (not Resources): <library>/<type>/<module>/<resourceName>/<version>/<model>_<locale>.json.
+						// The resource list entry and the document itself (under its uuid) go to Redis, the file stays the source of truth.
+						@SuppressWarnings("unchecked")
+						java.util.Map<String, Object> doc = objectMapper.readValue(filePath.toFile(), java.util.LinkedHashMap.class);
+						Object uuid = doc.get("uuid");
+						if (uuid != null && !uuid.toString().isBlank()) {
+							doc.putIfAbsent("lastModificationDate", Files.getLastModifiedTime(filePath).toMillis());
+							String nombre = doc.get("nombre") == null ? splittedFileName[splittedFileName.length - 3] : doc.get("nombre").toString();
+							MenuDto menu = new MenuDto(splittedFileName[splittedFileName.length - 6], nombre, null, splittedFileName[splittedFileName.length - 2],
+									uuid.toString(), splittedFileName[splittedFileName.length - 4], resourceType, splittedFileName[splittedFileName.length - 3], true);
+							jedisSet(uuid.toString(), objectMapper.writeValueAsString(doc));
+							lista.add(menu);
+						}
+					}else if (resourceType.equals("usecase")) {
 						UseCase useCase = generadorUseCase.get(filePath, UseCase.class);
 						String llaveCacheForma = useCase.getUuid();
 						MenuDto menu = new MenuDto(splittedFileName[splittedFileName.length - 6], useCase.getTitle(), null, useCase.getVersion(), useCase.getUuid(),
@@ -343,7 +360,7 @@ public class ComponentRepository implements IRepository, Closeable{
 		if (null!=menuCompany) {
 			List<MenuDto> formas = objectMapper.readValue(menuCompany, objectMapper.getTypeFactory().constructCollectionType(List.class, MenuDto.class));
 			for (MenuDto menu : formas) {
-				if (menu.getUuid()!=null) {
+				if (menu.getUuid()!=null && !menu.esRegistro()) {
 					String resourceStr = jedisGet(menu.getUuid());
 					if (resourceStr!=null) {
 						Resource resource = objectMapper.readValue(resourceStr, Resource.class);

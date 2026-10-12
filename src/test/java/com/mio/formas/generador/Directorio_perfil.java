@@ -24,7 +24,7 @@ import com.formuscmp.formus.resource.Resource;
  */
 public class Directorio_perfil extends GenerateCode{
 	private final String CREADO_POR="formuscmp";
-	private String[] templatesPath = new String[] { "/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config" };
+	private String[] templatesPath = new String[] { "../formuscmp-formus-api/config" };
 	/**
 	 * Test method for
 	 * {@link com.formuscmp.formus.generator.Generador#guatdarForma(java.util.List, java.lang.String)}.

@@ -38,7 +38,7 @@ public class DentalOdontograma {
 		return tokenSupplier.get();
 	}
 	
-	private String[] templatesPath = new String[] { "/Users/macbook/Documents/formuscmp/formuscmp-formus-api/config" };
+	private String[] templatesPath = new String[] { "../formuscmp-formus-api/config" };
 
 	/**
 	 * Test method for

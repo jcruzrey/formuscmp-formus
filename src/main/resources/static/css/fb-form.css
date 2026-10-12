@@ -1,0 +1,28 @@
+/* Neutral form stylesheet shared by the builder canvas, the fill page and the exported HTML (spec §5).
+   Self-contained: only --fb-* fallbacks, no site chrome. */
+.fb-form{--fb-ink:#3A3A3A;--fb-muted:#6B6B6B;--fb-line:#BDBDBD;--fb-accent:#0F766E;color:var(--fb-ink);font:500 16px/1.5 "Plus Jakarta Sans","Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.fb-form h1{margin:0 0 .25rem;font-size:1.75rem;line-height:1.2;font-weight:800}
+.fb-form .fb-desc{margin:0 0 1.5rem;color:var(--fb-muted)}
+.fb-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1.1rem 1rem}
+.fb-field{grid-column:1/-1;min-width:0}
+.fb-field.fb-half{grid-column:span 6}
+.fb-field.fb-third{grid-column:span 4}
+.fb-field.fb-fourth{grid-column:span 3}
+.fb-field label,.fb-field legend{display:block;margin:0 0 .35rem;padding:0;font-weight:700;font-size:.9rem}
+.fb-field fieldset{min-width:0;margin:0;padding:0;border:0}
+.fb-field input:not([type=checkbox]):not([type=radio]),.fb-field select,.fb-field textarea{display:block;width:100%;box-sizing:border-box;padding:.65rem .8rem;font:inherit;color:inherit;background:#fff;border:1px solid var(--fb-line);border-radius:12px}
+.fb-field textarea{resize:vertical}
+.fb-field input:focus-visible,.fb-field select:focus-visible,.fb-field textarea:focus-visible{outline:2px solid var(--fb-ink);outline-offset:1px;border-color:var(--fb-ink)}
+.fb-field .fb-opt{display:flex;align-items:center;gap:.55rem;margin:.3rem 0;font-weight:500}
+.fb-field .fb-opt input{width:1.05rem;height:1.05rem;margin:0;accent-color:var(--fb-accent)}
+.fb-help{margin:.3rem 0 0;font-size:.875rem;color:var(--fb-muted)}
+.fb-req{margin-left:.2rem;color:#B91C1C}
+.fb-field h2,.fb-field h3,.fb-field h4{margin:.5rem 0 0;line-height:1.25}
+.fb-field h2{font-size:1.35rem}.fb-field h3{font-size:1.15rem}.fb-field h4{font-size:1rem}
+.fb-field p.fb-text{margin:0;white-space:pre-line}
+.fb-field hr{margin:.4rem 0;border:0;border-top:1px solid #E6E6E6}
+.fb-btn,.fb-submit{padding:.7rem 1.5rem;font:inherit;font-weight:700;color:#fff;background:var(--fb-accent);border:0;border-radius:999px;cursor:pointer}
+.fb-btn.fb-secondary{background:#fff;color:var(--fb-ink);border:1px solid var(--fb-ink)}
+.fb-btn:hover,.fb-submit:hover{filter:brightness(.92)}
+.fb-field .fb-error{color:#B91C1C;font-size:.85rem;margin-top:.25rem}
+@media (max-width:560px){.fb-field.fb-half,.fb-field.fb-third,.fb-field.fb-fourth{grid-column:1/-1}}

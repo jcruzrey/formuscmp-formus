@@ -4,19 +4,19 @@ import java.io.IOException;
 import org.junit.Test;
 
 /**
- * case/adaptador: definition of an HTTP call (an "adaptador") laid out like the RESTer Firefox add-on request editor: Method + URL (+ SEND),
+ * case/adapter: definition of an HTTP call (an "adapter") laid out like the RESTer Firefox add-on request editor: Method + URL (+ SEND),
  * then the tabs ENCABEZADOS / CUERPO / AUTORIZACION / VARIABLES (the field `group` is the tab). Headers and variables are JSON arrays
- * [{"nombre","valor","activo"}]. Field names and labels are exactly those of templates/form/html/adaptador.ftl, whose "Guardar JSON" button
+ * [{"nombre","valor","activo"}]. Field names and labels are exactly those of templates/form/html/adapter.ftl, whose "Guardar JSON" button
  * writes these fields to a .json file (authsecreto is never written). No table: the model is never persisted (persistible=false).
  * Labels use unicode escapes because the build does not compile sources as UTF-8. Generated JSON goes to formuscmp-formus/config (see
  * CaseGenerador); deploy per tools/deploy_case_models.py.
  */
-public class Case_adaptador extends CaseGenerador {
+public class Case_adapter extends CaseGenerador {
 
 	@Test
 	public void testNuevo() throws IOException {
 		persistible = false;
-		generar("adaptador", "Adaptador", "ADP", "Adaptador de llamadas HTTP (editor tipo RESTer)",
+		generar("adapter", "Adaptador", "ADP", "Adaptador de llamadas HTTP (editor tipo RESTer)",
 			campos(
 				uuid(),
 				texto("nombre", "Nombre", 100).required().basket().search(),
@@ -35,6 +35,6 @@ public class Case_adaptador extends CaseGenerador {
 				texto("authsecreto", "Contrase\u00f1a o token", 500).group("autorizacion"),
 				texto("conexion", "Conexi\u00f3n", 60).group("autorizacion"),
 				largo("variables", "Variables (JSON)").group("variables")),
-			metodosComunes(MODULO, "adaptador", VERSION));
+			metodosComunes(MODULO, "adapter", VERSION));
 	}
 }
