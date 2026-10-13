@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class UserIdentifier {
 
-    public record Identity(String id, String role, String library, String plan) { }
+    public record Identity(String id, String role, String library, String plan, String permisos) { }
 
     public static class IdentifyException extends Exception {
         public IdentifyException(String message, Throwable cause) {
@@ -55,6 +55,7 @@ public class UserIdentifier {
         }
         String library = data == null || data.get("library") == null ? null : String.valueOf(data.get("library")).trim();
         String plan = data == null || data.get("planNombre") == null ? null : String.valueOf(data.get("planNombre")).trim();
-        return new Identity(id, role, library, plan);
+        String permisos = data == null || data.get("permisos") == null ? null : String.valueOf(data.get("permisos")).trim();
+        return new Identity(id, role, library, plan, permisos);
     }
 }

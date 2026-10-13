@@ -10,12 +10,12 @@ import java.util.function.Function;
  * The signed-in person, kept as plain session attributes so both the core Handler (jetty Session) and the
  * servlets (HttpSession) can read/write it. Nothing else about the user is stored in the frontend.
  */
-public record SessionUser(String sub, String email, String name, String provider, String picture, String id, String role, String library, String plan) {
+public record SessionUser(String sub, String email, String name, String provider, String picture, String id, String role, String library, String plan, String permisos) {
 
     public static final String STAFF = "staff";
     public static final String SOLICITANTE = "solicitante";
 
-    private static final String[] KEYS = {"sub", "email", "name", "provider", "picture", "id", "role", "library", "plan"};
+    private static final String[] KEYS = {"sub", "email", "name", "provider", "picture", "id", "role", "library", "plan", "permisos"};
 
     public boolean isStaff() {
         return STAFF.equals(role);
@@ -57,11 +57,11 @@ public record SessionUser(String sub, String email, String name, String provider
         }
         return new SessionUser(str(get.apply("user.sub")), email.toString(), str(get.apply("user.name")),
                 str(get.apply("user.provider")), str(get.apply("user.picture")), str(get.apply("user.id")),
-                str(get.apply("user.role")), str(get.apply("user.library")), str(get.apply("user.plan")));
+                str(get.apply("user.role")), str(get.apply("user.library")), str(get.apply("user.plan")), str(get.apply("user.permisos")));
     }
 
     public void store(BiConsumer<String, Object> set) {
-        String[] values = {sub, email, name, provider, picture, id, role, library, plan};
+        String[] values = {sub, email, name, provider, picture, id, role, library, plan, permisos};
         for (int i = 0; i < KEYS.length; i++) {
             set.accept("user." + KEYS[i], values[i]);
         }

@@ -55,7 +55,7 @@ public class LoginFlow {
 
         request.changeSessionId(); // session fixation protection
         new SessionUser(profile.sub(), profile.email(), profile.name(), profile.provider(), profile.picture(),
-                identity.id(), identity.role(), identity.library(), identity.plan()).store(session::setAttribute);
+                identity.id(), identity.role(), identity.library(), identity.plan(), identity.permisos()).store(session::setAttribute);
         session.removeAttribute(NEXT_ATTR);
         session.removeAttribute(Csrf.ATTR); // new token for the new authenticated session
         for (String p : new String[]{"google", "facebook"}) {

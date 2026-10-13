@@ -11,13 +11,17 @@ public interface AccessPolicy {
     /**
      * The default, driven by configuration: resource names ({@code fb.client.deniedResources}) and commands
      * ({@code fb.client.deniedCommands}) nobody runs; staff run anything else; other users only the modules listed in
-     * {@code fb.client.userModules} (blank = every module).
+     * {@code fb.client.userModules} (blank = every module). With {@code fb.client.authorization=permisos} the modules list is replaced by
+     * the user's own authorization list ({@link cloud.sin0.wc.auth.Permisos}: module / resource / CRUD action, with denials).
      */
     static AccessPolicy standard(AppConfig cfg) {
         return (c, k) -> {
             if (!java.util.Set.of("form", "basket", "api").contains(k.type())
                     || cfg.deniedResources().contains(k.name()) || cfg.deniedCommands().contains(k.command())) {
                 return false;
+            }
+            if (cfg.authorizationByPermisos()) {
+                return c.user != null && (c.user.isStaff() || cloud.sin0.wc.auth.Permisos.of(c.user.permisos()).allows(k));
             }
             return c.user != null && (c.user.isStaff() || cfg.userModules().isEmpty() || cfg.userModules().contains(k.module()));
         };
