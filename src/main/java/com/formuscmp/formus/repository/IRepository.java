@@ -52,6 +52,15 @@ public interface IRepository {
 	public String jedisGet(String llave);
 	public void jedisSet(String llave, String jsonValue);
 	public void jedisDel(String llave);
+	/** Redis INCR (atomic across every process sharing the Redis): the new value, or -1 when Redis is off or the call failed. */
+	public long jedisIncr(String llave);
+	/** Redis SETNX: stores {@code valor} only when {@code llave} does not exist; true when this call created it. */
+	public boolean jedisSetNx(String llave, String valor);
+	/**
+	 * Replaces {@code llave} by {@code nuevo} only if it still holds {@code esperado} at that moment (WATCH / MULTI / EXEC); false when it changed in
+	 * between, does not exist, or Redis is off. The caller reads, changes and retries: no update made by another process is overwritten.
+	 */
+	public boolean jedisCompareAndSet(String llave, String esperado, String nuevo);
 	/**
 	 * 
 	 * @param raiz

@@ -478,6 +478,53 @@ public class ComponentRepository implements IRepository, Closeable{
 		}
 	}
 
+	private boolean redisActivo() {
+		return null != jedisPool && "true".equals(String.valueOf(this.properties.getProperty("redis.active")));
+	}
+
+	public long jedisIncr(String llave) {
+		if (!redisActivo()) {
+			return -1;
+		}
+		try (Jedis jedis = jedisPool.getResource()) {
+			return jedis.incr(llave);
+		} catch (Exception e) {
+			LOGGER.warning("REDIS INCR " + llave + " fallo: " + e.getMessage());
+			return -1;
+		}
+	}
+
+	public boolean jedisSetNx(String llave, String valor) {
+		if (!redisActivo()) {
+			return false;
+		}
+		try (Jedis jedis = jedisPool.getResource()) {
+			return jedis.setnx(llave, valor) == 1L;
+		} catch (Exception e) {
+			LOGGER.warning("REDIS SETNX " + llave + " fallo: " + e.getMessage());
+			return false;
+		}
+	}
+
+	public boolean jedisCompareAndSet(String llave, String esperado, String nuevo) {
+		if (!redisActivo() || esperado == null) {
+			return false;
+		}
+		try (Jedis jedis = jedisPool.getResource()) {
+			jedis.watch(llave);
+			if (!esperado.equals(jedis.get(llave))) {
+				jedis.unwatch();
+				return false;
+			}
+			redis.clients.jedis.Transaction tx = jedis.multi();
+			tx.set(llave, nuevo);
+			return tx.exec() != null;   // null: the key changed after WATCH, nothing was written
+		} catch (Exception e) {
+			LOGGER.warning("REDIS CAS " + llave + " fallo: " + e.getMessage());
+			return false;
+		}
+	}
+
 	public Path dameRutaResourceBundle(String raiz, String empresa, String modulo, String version, String forma,
 			String tipo, String tipofragmento, final String localeStr) {
 		String ruta = raiz
