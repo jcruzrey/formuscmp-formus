@@ -97,7 +97,7 @@ public class FormusClient {
         rr.setOrigin(config.origin());
         rr.setResourceType(c.command.resourceType());
         rr.setResourceName(c.command.resourceName());
-        rr.setCommandName(c.command.name());
+        rr.setCommandName(Locales.command(c.command.name(), c.ctx == null ? null : c.ctx.locale()));
         rr.setFormat("html");
         rr.setParameters(new HashMap<>(c.params));
         rr.setUuid(c.uuid);
