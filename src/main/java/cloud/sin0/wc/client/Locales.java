@@ -51,7 +51,10 @@ public final class Locales {
             Map.entry("padecimiento", "condition"),
             Map.entry("tratamiento", "treatment"),
             Map.entry("subir", "upload"),
-            Map.entry("vaciar", "empty"));
+            Map.entry("vaciar", "empty"),
+            Map.entry("ejecutar", "run"),
+            Map.entry("paso", "step"),
+            Map.entry("reiniciar", "restart"));
 
     /** English -> Spanish, for a Spanish session that follows a link built from an English resource. {@code new} stays as it is: it is also a Spanish launcher name. */
     private static final Map<String, String> TO_SPANISH = reverse();

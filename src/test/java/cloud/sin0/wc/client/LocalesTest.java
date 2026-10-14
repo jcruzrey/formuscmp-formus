@@ -20,6 +20,10 @@ class LocalesTest {
         assertEquals("importasset", Locales.command("importarasset", "en_US"));
         assertEquals("reverse", Locales.command("reversa", "en_US"));
         assertEquals("flush", Locales.command("vertir", "en_US"));
+        assertEquals("run", Locales.command("ejecutar", "en_US"));
+        assertEquals("step", Locales.command("paso", "en_US"));
+        assertEquals("restart", Locales.command("reiniciar", "en_US"));
+        assertEquals("paso", Locales.command("step", "es_MX"));
     }
 
     @Test
