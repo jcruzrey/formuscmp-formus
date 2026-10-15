@@ -28,7 +28,7 @@
   <a class="brand" href="${user???then(home!"/", "/")}"><img src="${brandLogo!"/static/img/logo-cmp.png"}" alt="${brand!""}"><small>${brand!"Formus Web Client"}</small></a>
   <#if chrome == "app" && user??>
   <nav class="nav-pills" aria-label="${tr("Principal", "Main")}">
-    <#list (navItems![]) as n><#if (n.href!"")?has_content && (!(n.staffOnly!false) || (user.role)! == "staff")><a href="${n.href}"<#if nav == n.key> aria-current="page"</#if>>${n.label}</a></#if></#list>
+    <#list (navItems![]) as n><#if (n.href!"")?has_content && (!(n.staffOnly!false) || (isStaff!false))><a href="${n.href}"<#if nav == n.key> aria-current="page"</#if>>${n.label}</a></#if></#list>
   </nav>
   </#if>
   <div class="topbar-right">
@@ -40,8 +40,8 @@
     <#if user??>
     <details class="menu-wrap"><summary class="avatar-btn"><span class="avatar">${user.initials}</span></summary>
       <div class="menu open" role="menu">
-        <div class="who"><#if (user.library)!?has_content><span class="lib" title="${tr("Biblioteca de recursos", "Resource library")}"><i class="bi bi-collection" aria-hidden="true"></i> ${user.library}</span><br></#if>${user.name!""}<br>${user.email}<br><span class="chip">${(user.role == "staff")?then("Staff", tr("Usuario", "User"))}</span></div><hr>
-        <#list (menuItems![]) as n><#if !(n.staffOnly!false) || (user.role)! == "staff"><#if (n.href!"")?has_content><a href="${n.href}" role="menuitem"<#if (n.key)?has_content && nav == n.key> aria-current="page"</#if>>${n.label}</a><#elseif (n.children![])?has_content><#assign grpOpen = false><#assign grpShown = 0><#list n.children as ch><#if !(ch.staffOnly!false) || (user.role)! == "staff"><#assign grpShown = grpShown + 1><#if (ch.key)?has_content && nav == ch.key><#assign grpOpen = true></#if></#if></#list><#if grpShown gt 0><details class="menu-group"<#if grpOpen> open</#if>><summary>${n.label}<i class="bi bi-chevron-down" aria-hidden="true"></i></summary><div class="menu-sub"><#list n.children as ch><#if !(ch.staffOnly!false) || (user.role)! == "staff"><a href="${ch.href}" role="menuitem"<#if (ch.key)?has_content && nav == ch.key> aria-current="page"</#if>>${ch.label}</a></#if></#list></div></details></#if><#else><div class="menu-head" role="presentation">${n.label}</div></#if></#if></#list><#if (menuItems![])?has_content><hr></#if>
+        <div class="who"><#if (user.library)!?has_content><span class="lib" title="${tr("Biblioteca de recursos", "Resource library")}"><i class="bi bi-collection" aria-hidden="true"></i> ${user.library}</span><br></#if>${user.name!""}<br>${user.email}<br><span class="chip">${((user.role)! == "admin")?then("Admin", (isStaff!false)?then("Staff", tr("Usuario", "User")))}</span></div><hr>
+        <#list (menuItems![]) as n><#if !(n.staffOnly!false) || (isStaff!false)><#if (n.href!"")?has_content><a href="${n.href}" role="menuitem"<#if (n.key)?has_content && nav == n.key> aria-current="page"</#if>>${n.label}</a><#elseif (n.children![])?has_content><#assign grpOpen = false><#assign grpShown = 0><#list n.children as ch><#if !(ch.staffOnly!false) || (isStaff!false)><#assign grpShown = grpShown + 1><#if (ch.key)?has_content && nav == ch.key><#assign grpOpen = true></#if></#if></#list><#if grpShown gt 0><details class="menu-group"<#if grpOpen> open</#if>><summary>${n.label}<i class="bi bi-chevron-down" aria-hidden="true"></i></summary><div class="menu-sub"><#list n.children as ch><#if !(ch.staffOnly!false) || (isStaff!false)><a href="${ch.href}" role="menuitem"<#if (ch.key)?has_content && nav == ch.key> aria-current="page"</#if>>${ch.label}</a></#if></#list></div></details></#if><#else><div class="menu-head" role="presentation">${n.label}</div></#if></#if></#list><#if (menuItems![])?has_content><hr></#if>
         <form method="post" action="/auth/logout"><input type="hidden" name="_csrf" value="${csrfToken}"><button type="submit">${tr("Cerrar sesión", "Log out")}</button></form>
       </div></details>
     <#else>

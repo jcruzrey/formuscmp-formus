@@ -101,7 +101,32 @@ public class AppConfig {
 
     public String version() { return get(null, "fb.microservice.version", "1.0"); }
 
-    public String origin() { return get(null, "fb.microservice.origin", "ui::case"); }
+    /**
+     * Who this client application is: {@code ui::<app>} ({@code client.app.origin}, or the environment variable {@code CLIENT_APP_ORIGIN}). It is
+     * sent as the {@code origin} of every request, stored on the user row at registration ({@code clientapp}) and required to match when a person
+     * signs in. Blank = an application that has not adopted the rule yet: it keeps sending {@code fb.microservice.origin} and no match is required.
+     */
+    public String clientApp() { return get("CLIENT_APP_ORIGIN", "client.app.origin", "").trim().toLowerCase(java.util.Locale.ROOT); }
+
+    /** The origin sent to formus-ws: the application's own {@link #clientApp()}, else the configured {@code fb.microservice.origin} (default ui::case). */
+    public String origin() {
+        String app = clientApp();
+        return app.isEmpty() ? get(null, "fb.microservice.origin", "ui::case") : app;
+    }
+
+    /** E-mails this application proposes as {@code staff} for a user whose role is still empty (env {@code STAFF_EMAILS} or {@code client.app.staffEmails}, comma separated). */
+    public java.util.Set<String> staffEmails() { return emails(get("STAFF_EMAILS", "client.app.staffEmails", "")); }
+
+    /** E-mails this application proposes as {@code admin} (env {@code ADMIN_EMAILS} or {@code client.app.adminEmails}); an administrator is also staff. */
+    public java.util.Set<String> adminEmails() { return emails(get("ADMIN_EMAILS", "client.app.adminEmails", "")); }
+
+    private static java.util.Set<String> emails(String csv) {
+        java.util.Set<String> out = new java.util.LinkedHashSet<>();
+        for (String s : csv.split("[,;\s]+")) {
+            if (!s.isBlank()) out.add(s.trim().toLowerCase(java.util.Locale.ROOT));
+        }
+        return out;
+    }
 
     public int backendTimeoutMs() { return Integer.parseInt(get("BACKEND_TIMEOUT_MS", "fb.microservice.timeoutMs", "8000")); }
 

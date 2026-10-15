@@ -13,12 +13,18 @@ import java.util.function.Function;
 public record SessionUser(String sub, String email, String name, String provider, String picture, String id, String role, String library, String plan, String permisos) {
 
     public static final String STAFF = "staff";
+    public static final String ADMIN = "admin";
     public static final String SOLICITANTE = "solicitante";
 
     private static final String[] KEYS = {"sub", "email", "name", "provider", "picture", "id", "role", "library", "plan", "permisos"};
 
+    /** Staff or administrator: an administrator can do everything staff can. */
     public boolean isStaff() {
-        return STAFF.equals(role);
+        return STAFF.equals(role) || ADMIN.equals(role);
+    }
+
+    public boolean isAdmin() {
+        return ADMIN.equals(role);
     }
 
     public String initials() {

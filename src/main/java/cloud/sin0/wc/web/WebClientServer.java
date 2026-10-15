@@ -70,7 +70,7 @@ public final class WebClientServer {
         sessions.setSecureRequestOnly(cfg.cookieSecure());
         sessions.setMaxInactiveInterval(cfg.sessionTimeoutMinutes() * 60);
 
-        LoginFlow flow = new LoginFlow(new UserIdentifier(client), app.home());
+        LoginFlow flow = new LoginFlow(new UserIdentifier(client, cfg), app.home());
         OAuthProvider google = new GoogleProvider(cfg.google());
         OAuthProvider facebook = new FacebookProvider(cfg.facebook());
         register(servlets, google, flow);
