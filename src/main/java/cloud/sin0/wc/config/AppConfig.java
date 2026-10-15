@@ -114,11 +114,11 @@ public class AppConfig {
         return app.isEmpty() ? get(null, "fb.microservice.origin", "ui::case") : app;
     }
 
-    /** E-mails this application proposes as {@code staff} for a user whose role is still empty (env {@code STAFF_EMAILS} or {@code client.app.staffEmails}, comma separated). */
-    public java.util.Set<String> staffEmails() { return emails(get("STAFF_EMAILS", "client.app.staffEmails", "")); }
+    /** E-mails this application proposes as {@code staff} for a user whose role is still empty (the property or env var {@code STAFF_EMAILS}, comma separated). */
+    public java.util.Set<String> staffEmails() { return emails(get("STAFF_EMAILS", "STAFF_EMAILS", "")); }
 
-    /** E-mails this application proposes as {@code admin} (env {@code ADMIN_EMAILS} or {@code client.app.adminEmails}); an administrator is also staff. */
-    public java.util.Set<String> adminEmails() { return emails(get("ADMIN_EMAILS", "client.app.adminEmails", "")); }
+    /** E-mails this application proposes as {@code admin} (the property or env var {@code ADMIN_EMAILS}); an administrator is also staff. */
+    public java.util.Set<String> adminEmails() { return emails(get("ADMIN_EMAILS", "ADMIN_EMAILS", "")); }
 
     private static java.util.Set<String> emails(String csv) {
         java.util.Set<String> out = new java.util.LinkedHashSet<>();

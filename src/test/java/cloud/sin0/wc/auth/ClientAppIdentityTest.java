@@ -53,10 +53,10 @@ class ClientAppIdentityTest {
 
     @Test
     void theStaffAndAdminListsComeFromTheApplication() {
-        AppConfig c = cfg(Map.of("client.app.staffEmails", "a@x.com"), Map.of("STAFF_EMAILS", " B@x.com, c@x.com;d@x.com  e@x.com ", "ADMIN_EMAILS", "Boss@x.com"));
+        AppConfig c = cfg(Map.of("STAFF_EMAILS", "a@x.com"), Map.of("STAFF_EMAILS", " B@x.com, c@x.com;d@x.com  e@x.com ", "ADMIN_EMAILS", "Boss@x.com"));
         assertEquals(java.util.Set.of("b@x.com", "c@x.com", "d@x.com", "e@x.com"), c.staffEmails());
         assertEquals(java.util.Set.of("boss@x.com"), c.adminEmails());
-        assertEquals(java.util.Set.of("a@x.com"), cfg(Map.of("client.app.staffEmails", "A@x.com"), Map.of()).staffEmails());
+        assertEquals(java.util.Set.of("a@x.com"), cfg(Map.of("STAFF_EMAILS", "A@x.com"), Map.of()).staffEmails());
         assertTrue(cfg(Map.of(), Map.of()).staffEmails().isEmpty());
     }
 
