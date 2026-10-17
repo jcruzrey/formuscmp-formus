@@ -277,3 +277,7 @@ body.embedded{--fb-topbar:0px}
 /* ---------- public fill ---------- */
 .fill-wrap{max-width:720px;margin:0 auto;padding:40px 16px}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+/* dark theme for pages shown inside Formus Studio (it sets data-theme on their <html>): invert the page, keep pictures and previews as they are */
+html[data-theme=dark]{background:#fff;filter:invert(.91) hue-rotate(180deg)}
+html[data-theme=dark] img,html[data-theme=dark] video,html[data-theme=dark] iframe,html[data-theme=dark] .bi-keep{filter:invert(.91) hue-rotate(180deg)}
