@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
@@ -57,6 +58,7 @@ public abstract class AbstractResource implements Serializable {
 	private List<Button> methods = new ArrayList<Button>();
 	private List<Field> model = new ArrayList<Field>();
 	private Map<String, List<Field>> decorators = new HashMap<String,List<Field>>();
+	private Map<String, Object> basketOptions;
 	private String resourcePath;
 	private String instruction;
 	private String destination="db::mysql"; //jms, bd, cassandra
@@ -440,6 +442,17 @@ public abstract class AbstractResource implements Serializable {
 	 */
 	public void setDecorators(Map<String, List<Field>> decorators) {
 		this.decorators = decorators;
+	}
+	/**
+	 * The settings of a basket (list of records): {@code pageSize}, {@code sortBy}, {@code sortDir}, {@code exportCsv}. Written only when there are any;
+	 * they are not decorators (a decorator is a list of fields).
+	 */
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	public Map<String, Object> getBasketOptions() {
+		return basketOptions;
+	}
+	public void setBasketOptions(Map<String, Object> basketOptions) {
+		this.basketOptions = basketOptions;
 	}
 	/**
 	 * 

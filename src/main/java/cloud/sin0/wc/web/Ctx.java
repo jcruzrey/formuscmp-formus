@@ -388,6 +388,14 @@ public final class Ctx {
         write(status, "application/json; charset=UTF-8", JSON.writeValueAsString(body));
     }
 
+    /** Sends {@code body} as a downloaded CSV file called {@code fileName} (UTF-8). */
+    public void csv(String fileName, String body) {
+        response.getHeaders().put(HttpHeader.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName.replaceAll("[^A-Za-z0-9._-]", "_") + "\"");
+        response.getHeaders().put("X-Content-Type-Options", "nosniff");
+        response.getHeaders().put(HttpHeader.CACHE_CONTROL, "private, no-store");
+        write(200, "text/csv; charset=UTF-8", body);
+    }
+
     public void write(int status, String contentType, String body) {
         response.setStatus(status);
         response.getHeaders().put(HttpHeader.CONTENT_TYPE, contentType);

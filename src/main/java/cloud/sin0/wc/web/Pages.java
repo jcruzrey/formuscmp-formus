@@ -81,8 +81,9 @@ public final class Pages {
             Resource form = r.getResources() == null ? null : r.getResources().get("form." + k.module() + "." + k.name());
             Resource of = form != null ? form : res;
             if (of != null) {
-                List<Map<String, Object>> columns = BasketView.columnsOf(of);
+                List<Map<String, Object>> columns = BasketView.columnsOf(res, form);   // the saved basket's columns, else the form's own
                 m.put("columns", columns);
+                m.put("basketOptions", res != null && res.getBasketOptions() != null ? res.getBasketOptions() : Map.of());
                 Map<String, Object> page = BasketView.pageOf(r, k.module(), k.name());
                 m.put("rows", page.get("rows"));
                 m.put("pageInfo", page);

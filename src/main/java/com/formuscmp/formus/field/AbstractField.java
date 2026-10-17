@@ -47,6 +47,8 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 	private String uuid;
 	private String comment;
 	private String blockUuid;
+	private String align;
+	private Integer width;
 	private String template;
 	private String affects;
 	private String filter;
@@ -490,6 +492,26 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 
 	public void setBlockUuid(String blockUuid) {
 		this.blockUuid = blockUuid;
+	}
+
+	/** In a basket (list of records): how the column's cells are aligned, {@code left}, {@code center} or {@code right}; written only when set. */
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	public String getAlign() {
+		return align;
+	}
+
+	public void setAlign(String align) {
+		this.align = align;
+	}
+
+	/** In a basket: the column's width in pixels; written only when set. */
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	public Integer getWidth() {
+		return width;
+	}
+
+	public void setWidth(Integer width) {
+		this.width = width;
 	}
 
 	public String getComment() {

@@ -36,9 +36,62 @@ public final class BasketView {
             col.put("name", name);
             col.put("label", f.getLabel() == null || f.getLabel().isBlank() ? name : f.getLabel());
             col.put("show", f.isShowInBasket());
+            if (f.getFormat() != null && !f.getFormat().isBlank()) {
+                col.put("format", f.getFormat());
+            }
+            String align = f.getAlign() == null ? "" : f.getAlign().trim().toLowerCase();
+            if (align.equals("left") || align.equals("center") || align.equals("right")) {
+                col.put("align", align);
+            }
+            if (f.getWidth() != null && f.getWidth() >= 40 && f.getWidth() <= 800) {
+                col.put("width", f.getWidth());
+            }
             out.add(col);
         }
         return out;
+    }
+
+    /** The columns of the list: those of the saved basket when it has any, else the form's own. */
+    public static List<Map<String, Object>> columnsOf(Resource basket, Resource form) {
+        List<Map<String, Object>> fromBasket = basket == null || basket.getModel() == null || basket.getModel().isEmpty() ? List.of() : columnsOf(basket);
+        return fromBasket.isEmpty() ? columnsOf(form != null ? form : basket) : fromBasket;
+    }
+
+    /**
+     * The rows as CSV (UTF-8, comma separated, CRLF): a header with the labels of the shown columns, then one line per row. A cell that could be read as a formula
+     * by a spreadsheet ({@code =}, {@code +}, {@code -}, {@code @}, tab, CR first) is prefixed with an apostrophe.
+     */
+    public static String csv(List<Map<String, Object>> columns, List<Map<String, Object>> rows) {
+        List<Map<String, Object>> shown = new ArrayList<>();
+        for (Map<String, Object> c : columns) {
+            if (Boolean.TRUE.equals(c.get("show"))) {
+                shown.add(c);
+            }
+        }
+        if (shown.isEmpty()) {
+            shown = columns.subList(0, Math.min(4, columns.size()));
+        }
+        StringBuilder sb = new StringBuilder("\uFEFF");
+        for (int i = 0; i < shown.size(); i++) {
+            sb.append(i == 0 ? "" : ",").append(cell(String.valueOf(shown.get(i).get("label"))));
+        }
+        sb.append("\r\n");
+        for (Map<String, Object> r : rows) {
+            for (int i = 0; i < shown.size(); i++) {
+                Object v = r.get(String.valueOf(shown.get(i).get("name")));
+                sb.append(i == 0 ? "" : ",").append(cell(v == null ? "" : v instanceof List<?> l ? String.join("; ", l.stream().map(String::valueOf).toList()) : String.valueOf(v)));
+            }
+            sb.append("\r\n");
+        }
+        return sb.toString();
+    }
+
+    private static String cell(String v) {
+        String s = v;
+        if (!s.isEmpty() && "=+-@\t\r".indexOf(s.charAt(0)) >= 0) {
+            s = "'" + s;
+        }
+        return s.contains(",") || s.contains("\"") || s.contains("\n") || s.contains("\r") ? "\"" + s.replace("\"", "\"\"") + "\"" : s;
     }
 
     /** {@code rows} (maps of column -> value), {@code total}, {@code pages}, {@code page}, {@code size}. */
