@@ -374,13 +374,22 @@ public abstract class AbstractResource implements Serializable {
 		return grupo;
 	}
 
+	/** An event of a button matches by name, and {@code *} matches every event. */
+	private static boolean eventoCoincide(final String evento, final String event) {
+		final String e = evento.trim();
+		return e.equals("*") || e.equals(event);
+	}
+
 	public List<Button> getMethodsByEvent(final String event) {
 		List<Button> accionesEvento = new ArrayList<Button>();
 		for (Button temp : methods) {
+			if (temp.getEvents() == null) continue;   // a button saved without events is shown in none, it must not break the others
 			String[] eventos = temp.getEvents().split(",");
 			for(int i = 0; i < eventos.length; i++) {
-				if (eventos[i].equals(event)) 
+				if (eventoCoincide(eventos[i], event)) {
 					accionesEvento.add(temp);
+					break;
+				}
 			}
 		}
 		return accionesEvento;
@@ -407,12 +416,13 @@ public abstract class AbstractResource implements Serializable {
 	public List<Button> getMethodsByEventAndStatus(final String event, final String status) {
 		List<Button> accionesEvento = new ArrayList<Button>();
 		for (Button accion : methods) {
+			if (accion.getEvents() == null) continue;
 			String[] eventos = accion.getEvents().split(",");
 			for(int i = 0; i < eventos.length; i++) {
 				if (null==accion.getStatus() || accion.getStatus().equals("")) {
-					if (eventos[i].equals(event)) accionesEvento.add(accion);
+					if (eventoCoincide(eventos[i], event)) { accionesEvento.add(accion); break; }
 				}else {
-					if (eventos[i].equals(event) && accion.getStatus().equals(status)) accionesEvento.add(accion);
+					if (eventoCoincide(eventos[i], event) && accion.getStatus().equals(status)) { accionesEvento.add(accion); break; }
 				}
 			}
 		}
