@@ -22,6 +22,7 @@
   var text = {};
   Object.keys(errors).forEach(function (k) { text[k] = String(errors[k]); });
   body.innerHTML = window.FBRender.formBody(model, { errors: text, idPrefix: 'fc_' });
+  if (form.querySelector('input[type=file]')) form.enctype = 'multipart/form-data';   // a file field makes the post multipart; everything else stays urlencoded
   var submit = form.querySelector('.fb-submit');
   if (submit && form.dataset.buttons === 'true') submit.remove();   // the command buttons of the resource replace the renderer's own
   else if (submit) submit.textContent = en ? 'Save' : 'Guardar';

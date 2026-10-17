@@ -34,6 +34,12 @@ public class TestHttp {
         return http.send(HttpRequest.newBuilder(URI.create(base + path)).GET().build(), HttpResponse.BodyHandlers.ofString());
     }
 
+    public HttpResponse<byte[]> getBytes(String path, Map<String, String> headers) throws Exception {
+        HttpRequest.Builder b = HttpRequest.newBuilder(URI.create(base + path)).GET();
+        headers.forEach(b::header);
+        return http.send(b.build(), HttpResponse.BodyHandlers.ofByteArray());
+    }
+
     public HttpResponse<String> getWithLanguage(String path, String acceptLanguage) throws Exception {
         return http.send(HttpRequest.newBuilder(URI.create(base + path)).header("Accept-Language", acceptLanguage).GET().build(), HttpResponse.BodyHandlers.ofString());
     }

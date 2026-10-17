@@ -142,6 +142,16 @@ public class AppConfig {
     /** Largest body the generic pipeline reads from a form post. */
     public int maxBodyBytes() { return getInt(null, "fb.limit.bodyBytes", 64 * 1024); }
 
+    // ---- file uploads (multipart posts of the generic pipeline, relayed to formus-ws)
+    /** Largest single file of an upload (bytes). formus-ws applies its own limit too; the smaller one wins. */
+    public long maxUploadBytes() { return Long.parseLong(get(null, "fb.limit.uploadBytes", String.valueOf(25L * 1024 * 1024))); }
+
+    /** Largest whole multipart post (bytes). */
+    public long maxUploadRequestBytes() { return Long.parseLong(get(null, "fb.limit.uploadRequestBytes", String.valueOf(100L * 1024 * 1024))); }
+
+    /** Shared token sent to formus-ws as {@code X-Upload-Token} (must equal its {@code formus.upload.token}); blank = none. */
+    public String uploadToken() { return get("FB_UPLOAD_TOKEN", "fb.upload.token", ""); }
+
     /** Modules a non-staff user may run through the generic pipeline (comma separated); blank = every module. */
     public java.util.Set<String> userModules() { return csv(get(null, "fb.client.userModules", "")); }
 

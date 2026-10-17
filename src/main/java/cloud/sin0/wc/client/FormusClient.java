@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -40,6 +42,12 @@ public class FormusClient {
 
     private final AppConfig config;
     private final HttpClient http;
+    /** Last answers of {@link Call#cacheable()} calls: operation + parameters -> ETag and body text. Small and bounded. */
+    private final Map<String, CachedAnswer> cache = java.util.Collections.synchronizedMap(new java.util.LinkedHashMap<>(16, 0.75f, true) {
+        @Override protected boolean removeEldestEntry(Map.Entry<String, CachedAnswer> e) { return size() > 32; }
+    });
+
+    private record CachedAnswer(String etag, String body) { }
     private final ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     public FormusClient(AppConfig config) {
@@ -58,6 +66,9 @@ public class FormusClient {
         private final Map<String, Object> params = new HashMap<>();
         private String uuid, puuid, module, version;
         private Integer page;
+        private final java.util.List<Upload> uploads = new java.util.ArrayList<>();
+        private String range;
+        private boolean cacheable;
 
         private Call(Command command, CallContext ctx) {
             this.command = command;
@@ -81,10 +92,38 @@ public class FormusClient {
         /** Overrides the configured module/version (generic /{module}/.../{version}/{command}.do route). */
         public Call target(String module, String version) { this.module = module; this.version = version; return this; }
 
-        public ResponseResource execute() { return FormusClient.this.execute(this); }
+        /** Sends this file with the call (the request becomes multipart/form-data). */
+        public Call attach(Upload u) { if (u != null) uploads.add(u); return this; }
+
+        public Call attach(java.util.Collection<Upload> all) { if (all != null) all.forEach(this::attach); return this; }
+
+        /** Forwards a {@code Range} header, for a command that answers with a file. */
+        public Call range(String v) { this.range = v == null || v.isBlank() ? null : v; return this; }
+
+        /**
+         * Keeps the answer and revalidates it next time: the call sends the last ETag as {@code If-None-Match} and formus-ws answers 304 when
+         * nothing changed, so the (large) body is not sent again. Only for reads (lists, catalogs); a call with uploads is never cached.
+         */
+        public Call cacheable() { this.cacheable = true; return this; }
+
+        /** The JSON answer. A file answer is a {@link BackendException} here: use {@link #executeAny()} where a command may send one. */
+        public ResponseResource execute() {
+            Answer a = FormusClient.this.send(this);
+            if (a.file() != null) {
+                try { a.file().close(); } catch (Exception ignored) { /* nothing to do */ }
+                throw new BackendException("El servicio devolvió un archivo; use executeAny()", null, null);
+            }
+            return a.json();
+        }
+
+        /** The JSON answer or, when the command sent one, the file. */
+        public Answer executeAny() { return FormusClient.this.send(this); }
     }
 
-    private ResponseResource execute(Call c) {
+    /** What formus-ws answered: the JSON envelope, or a file (exactly one is non-null). */
+    public record Answer(ResponseResource json, FileAnswer file) { }
+
+    private Answer send(Call c) {
         String url = config.backendUrl();
         if (url == null || url.isBlank()) {
             throw new BackendException("formus-ws URL is not configured (fb.microservice.url)", null, null);
@@ -120,16 +159,33 @@ public class FormusClient {
 
         String operation = endpoint(url, rr);
         LOG.info("[{}] formus-ws {}", correlationId, operation);   // the exact operation of openapi.yaml this page call maps to
-        HttpRequest req = HttpRequest.newBuilder(URI.create(operation))
+        HttpRequest.Builder rb = HttpRequest.newBuilder(URI.create(operation))
                 .timeout(Duration.ofMillis(config.backendTimeoutMs()))
-                .header("Content-Type", "application/json")
-                .header("X-Request-Id", correlationId)
-                .POST(HttpRequest.BodyPublishers.ofString(body))
-                .build();
+                .header("Accept-Encoding", "gzip")   // formus-ws compresses its JSON when asked; files and old servers are unaffected
+                .header("X-Request-Id", correlationId);
+        if (c.uploads.isEmpty()) {
+            rb.header("Content-Type", "application/json").POST(HttpRequest.BodyPublishers.ofString(body));
+        } else {
+            String boundary = "----fwc" + UUID.randomUUID().toString().replace("-", "");
+            rb.header("Content-Type", "multipart/form-data; boundary=" + boundary).POST(multipart(boundary, body, c.uploads, correlationId));
+            String token = config.uploadToken();
+            if (token != null && !token.isBlank()) rb.header("X-Upload-Token", token);
+            LOG.info("[{}] formus-ws upload of {} file(s)", correlationId, c.uploads.size());
+        }
+        if (c.range != null) rb.header("Range", c.range);
+        String cacheKey = null;
+        CachedAnswer cached = null;
+        if (c.cacheable && c.uploads.isEmpty()) {
+            cacheKey = operation + "|" + rr.getAssetLibrary() + "|" + rr.getLocale() + "|" + rr.getUuid() + "|" + rr.getPuuid() + "|" + rr.getPageNumber() + "|"
+                    + new java.util.TreeMap<>(rr.getParameters());
+            cached = cache.get(cacheKey);
+            if (cached != null) rb.header("If-None-Match", cached.etag());
+        }
+        HttpRequest req = rb.build();
 
-        HttpResponse<String> res;
+        HttpResponse<InputStream> raw;
         try {
-            res = http.send(req, HttpResponse.BodyHandlers.ofString());
+            raw = http.send(req, HttpResponse.BodyHandlers.ofInputStream());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new BackendException("Petición interrumpida", correlationId, e);
@@ -137,7 +193,26 @@ public class FormusClient {
             LOG.error("[{}] formus-ws unreachable at {} for {}/{}/{}", correlationId, url, c.command.resourceType(), c.command.resourceName(), c.command.name(), e);
             throw new BackendException("No se pudo comunicar con el servicio", correlationId, e);
         }
+        String disposition = raw.headers().firstValue("Content-Disposition").orElse("");
+        if (raw.statusCode() / 100 == 2 && disposition.toLowerCase(java.util.Locale.ROOT).startsWith("attachment")) {
+            return new Answer(null, new FileAnswer(raw.statusCode(), raw.headers().firstValue("Content-Type").orElse("application/octet-stream"), disposition,
+                    raw.headers().firstValue("Content-Range").orElse(null), raw.headers().firstValueAsLong("Content-Length").orElse(-1), raw.body()));
+        }
+        HttpResponse<String> res;
+        try (InputStream in = "gzip".equalsIgnoreCase(raw.headers().firstValue("Content-Encoding").orElse("")) ? new java.util.zip.GZIPInputStream(raw.body()) : raw.body()) {
+            res = new SimpleResponse(raw.statusCode(), new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            LOG.error("[{}] formus-ws answer could not be read from {}", correlationId, url, e);
+            throw new BackendException("No se pudo comunicar con el servicio", correlationId, e);
+        }
 
+        if (res.statusCode() == 304 && cached != null) {
+            LOG.info("[{}] formus-ws 304: using the answer kept from the last call", correlationId);
+            res = new SimpleResponse(200, cached.body());
+        } else if (cacheKey != null && res.statusCode() == 200) {
+            String etag = raw.headers().firstValue("ETag").orElse(null);
+            if (etag != null) cache.put(cacheKey, new CachedAnswer(etag, res.body()));
+        }
         boolean ok = res.statusCode() / 100 == 2;
         ResponseResource parsed;
         try {
@@ -153,7 +228,42 @@ public class FormusClient {
         if (!ok) {
             LOG.warn("[{}] {}/{} -> {} {}", correlationId, c.command.resourceName(), c.command.name(), res.statusCode(), parsed.getErrorMessages());
         }
-        return parsed;
+        return new Answer(parsed, null);
+    }
+
+    /** The status and text of an answer already read (the part of HttpResponse the rest of {@link #send} uses). */
+    private record SimpleResponse(int statusCode, String body) implements HttpResponse<String> {
+        public HttpRequest request() { return null; }
+        public java.util.Optional<HttpResponse<String>> previousResponse() { return java.util.Optional.empty(); }
+        public java.net.http.HttpHeaders headers() { return java.net.http.HttpHeaders.of(Map.of(), (a, b) -> true); }
+        public java.util.Optional<javax.net.ssl.SSLSession> sslSession() { return java.util.Optional.empty(); }
+        public URI uri() { return null; }
+        public HttpClient.Version version() { return HttpClient.Version.HTTP_1_1; }
+    }
+
+    /** {@code multipart/form-data}: part "request" is the JSON, then one part per file, streamed from their temporary files. */
+    private static HttpRequest.BodyPublisher multipart(String boundary, String json, List<Upload> uploads, String correlationId) {
+        List<HttpRequest.BodyPublisher> parts = new java.util.ArrayList<>();
+        parts.add(HttpRequest.BodyPublishers.ofString("--" + boundary + "\r\nContent-Disposition: form-data; name=\"request\"\r\n"
+                + "Content-Type: application/json; charset=UTF-8\r\n\r\n" + json + "\r\n"));
+        for (Upload u : uploads) {
+            String type = u.contentType() == null || u.contentType().isBlank() || u.contentType().matches(".*[\\r\\n].*") ? "application/octet-stream" : u.contentType();
+            parts.add(HttpRequest.BodyPublishers.ofString("--" + boundary + "\r\nContent-Disposition: form-data; name=\"" + headerValue(u.field())
+                    + "\"; filename=\"" + headerValue(u.filename()) + "\"\r\nContent-Type: " + type + "\r\n\r\n"));
+            try {
+                parts.add(HttpRequest.BodyPublishers.ofFile(u.path()));
+            } catch (FileNotFoundException e) {
+                throw new BackendException("No se pudo leer el archivo recibido", correlationId, e);
+            }
+            parts.add(HttpRequest.BodyPublishers.ofString("\r\n"));
+        }
+        parts.add(HttpRequest.BodyPublishers.ofString("--" + boundary + "--\r\n"));
+        return HttpRequest.BodyPublishers.concat(parts.toArray(new HttpRequest.BodyPublisher[0]));
+    }
+
+    /** A value inside a quoted multipart header: no quote, CR or LF. */
+    private static String headerValue(String v) {
+        return v == null ? "" : v.replaceAll("[\"\\r\\n]", "_");
     }
 
     private static final String API_ROOT = "/api/v1/formus";
