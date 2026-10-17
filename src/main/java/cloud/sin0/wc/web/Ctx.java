@@ -111,6 +111,14 @@ public final class Ctx {
         return ClientInfo.ip(request, cfg.trustProxy());
     }
 
+    /**
+     * True when the browser is loading this page into a frame ({@code Sec-Fetch-Dest: iframe}, sent by the browser itself on every navigation of
+     * the frame, redirects included): the layout then leaves out its own top bar and footer, because the page lives inside a shell that has them.
+     */
+    public boolean embedded() {
+        return "iframe".equalsIgnoreCase(header("Sec-Fetch-Dest"));
+    }
+
     public boolean wantsJson() {
         String accept = header("Accept");
         String type = header("Content-Type");
@@ -333,6 +341,7 @@ public final class Ctx {
         m.put("brand", cfg.brand());
         m.put("brandLogo", cfg.brandLogo());
         m.put("assetV", ASSET_VERSION);
+        m.put("embedded", embedded());
         if (user != null) {
             m.put("user", user.toModel());
             m.put("isStaff", user.isStaff());

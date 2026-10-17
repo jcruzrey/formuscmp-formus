@@ -90,7 +90,7 @@ public final class WebClientServer {
         staticFiles.setDirAllowed(false);
         ContextHandler staticContext = new ContextHandler(staticFiles, "/static");
 
-        server.setHandler(new SecurityHeadersHandler(new Handler.Sequence(staticContext, servlets), cfg.cookieSecure()));
+        server.setHandler(new SecurityHeadersHandler(new Handler.Sequence(staticContext, servlets), cfg.cookieSecure(), app.allowSameOriginFrames()));
         return server;
     }
 

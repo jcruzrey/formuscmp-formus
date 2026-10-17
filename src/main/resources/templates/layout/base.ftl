@@ -5,6 +5,9 @@
      render form fields. JSON embedded in <script type="application/json"> must come from the handler already escaped
      (Ctx.scriptJson) and be printed with ?no_esc. -->
 <#macro page title="" nav="" chrome="app" css=[] js=[] bodyClass="">
+<#-- a page framed by a shell (model flag "embedded", from the browser's Sec-Fetch-Dest: iframe) drops the site's top bar and footer -->
+<#local emb = (embedded!false)>
+<#if emb><#local chrome = "none"></#if>
 <!doctype html>
 <html lang="${((lang!"es") == "en")?then("en-US", "es-MX")}">
 <head>
@@ -22,7 +25,7 @@
 <meta name="fb-urls" content="${urlsJson!"{}"}">
 <#if user??><meta name="fb-user" content="${user.email}" data-name="${user.name!""}" data-role="${user.role!"solicitante"}" data-id="${user.id!""}"></#if>
 </head>
-<body<#if bodyClass?has_content> class="${bodyClass}"</#if>>
+<body<#if (bodyClass + (emb?then(" embedded", "")))?trim?has_content> class="${(bodyClass + (emb?then(" embedded", "")))?trim}"</#if>>
 <#if chrome != "none">
 <header class="topbar"><div class="container topbar-in">
   <a class="brand" href="${user???then(home!"/", "/")}"><img src="${brandLogo!"/static/img/logo-cmp.png"}" alt="${brand!""}"><small>${brand!"Formus Web Client"}</small></a>
@@ -57,7 +60,7 @@
 </#if>
 <#nested>
 </main>
-<#if footerText?? || footerLogo??>
+<#if !emb && (footerText?? || footerLogo??)>
 <footer class="footer"><div class="container row"><div class="by"><#if footerText??>${footerText} </#if><#if footerLogo??><img src="${footerLogo}" alt="${footerAlt!""}"></#if></div>
 <#if footerNote??><div class="muted">${footerNote}</div></#if></div></footer>
 </#if>
