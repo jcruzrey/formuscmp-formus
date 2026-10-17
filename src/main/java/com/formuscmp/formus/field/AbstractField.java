@@ -46,6 +46,7 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 	private String label;
 	private String uuid;
 	private String comment;
+	private String blockUuid;
 	private String template;
 	private String affects;
 	private String filter;
@@ -481,6 +482,16 @@ public class AbstractField implements Comparable<AbstractField>, Serializable{
 	/**
 	 * @return the comment
 	 */
+	/** The shared block this was copied from (see case/form/block), or null: what "Used by" and "update from the library" are built on. */
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	public String getBlockUuid() {
+		return blockUuid;
+	}
+
+	public void setBlockUuid(String blockUuid) {
+		this.blockUuid = blockUuid;
+	}
+
 	public String getComment() {
 		return comment;
 	}

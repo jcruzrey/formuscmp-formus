@@ -4,6 +4,8 @@
 package com.formuscmp.formus.button;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -33,6 +35,7 @@ public abstract class AbstractButton implements Comparable<AbstractButton>, Seri
 	private String instruction;
 	private String uuid;
 	private String comment;
+	private String blockUuid;
 	private String template;
 	private String icon;
 	private String alias;
@@ -311,6 +314,16 @@ public abstract class AbstractButton implements Comparable<AbstractButton>, Seri
 	/**
 	 * @return the comment
 	 */
+	/** The shared block this was copied from (see case/form/block), or null: what "Used by" and "update from the library" are built on. */
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	public String getBlockUuid() {
+		return blockUuid;
+	}
+
+	public void setBlockUuid(String blockUuid) {
+		this.blockUuid = blockUuid;
+	}
+
 	public String getComment() {
 		return comment;
 	}
