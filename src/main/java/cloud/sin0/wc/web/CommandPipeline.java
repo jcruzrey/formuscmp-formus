@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,6 +70,7 @@ public final class CommandPipeline {
             }
         }
         params.remove(Csrf.FIELD);
+        boolean wantsCsv = "csv".equalsIgnoreCase(Pages.str(params.get("format")));
         params.remove("format");
         params.remove("lang");
         String uuid = Pages.str(params.get("uuid")), puuid = Pages.str(params.get("puuid"));
@@ -108,6 +110,14 @@ public final class CommandPipeline {
             return;
         }
         String fallback = failed ? "generic.ftl" : "basket".equals(k.type()) ? "default/basket.ftl" : "form".equals(k.type()) ? "default/form.ftl" : "generic.ftl";
-        pages.page(c, failed ? 422 : 200, r, fallback, pages.resultModel(c, r, k));
+        Map<String, Object> model = pages.resultModel(c, r, k);
+        if (wantsCsv && !failed && "basket".equals(k.type()) && model.get("basketOptions") instanceof Map<?, ?> o && Boolean.TRUE.equals(o.get("exportCsv"))
+                && model.get("columns") instanceof List<?> && model.get("rows") instanceof List<?>) {
+            @SuppressWarnings("unchecked")
+            String csv = BasketView.csv((List<Map<String, Object>>) model.get("columns"), (List<Map<String, Object>>) model.get("rows"));
+            c.csv(k.name() + ".csv", csv);   // the rows of this page, with the filters of the request; only where the basket allows it
+            return;
+        }
+        pages.page(c, failed ? 422 : 200, r, fallback, model);
     }
 }

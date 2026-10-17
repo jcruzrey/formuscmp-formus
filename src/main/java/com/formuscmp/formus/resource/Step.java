@@ -4,7 +4,10 @@
 package com.formuscmp.formus.resource;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
@@ -28,6 +31,27 @@ public class Step {
 	private String prefix;
 	private String alias;
 	private String uuid;
+	/** What the step does when the run enters it / leaves it: adapter or template calls, {@code {type, uuid, variables?, data?, to?, subject?}}. Written only when there are some. */
+	private List<Map<String, Object>> onEnter;
+	private List<Map<String, Object>> onLeave;
+
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	public List<Map<String, Object>> getOnEnter() {
+		return onEnter;
+	}
+
+	public void setOnEnter(List<Map<String, Object>> onEnter) {
+		this.onEnter = onEnter;
+	}
+
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	public List<Map<String, Object>> getOnLeave() {
+		return onLeave;
+	}
+
+	public void setOnLeave(List<Map<String, Object>> onLeave) {
+		this.onLeave = onLeave;
+	}
 	/**
 	 * @return the name
 	 */

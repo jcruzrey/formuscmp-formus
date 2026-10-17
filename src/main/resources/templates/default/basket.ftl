@@ -24,11 +24,14 @@
     <div class="search"><label class="visually-hidden" for="f_${c?index}">${c.label}</label><input class="input" id="f_${c?index}" name="${c.name}" type="search" value="${qv(c.name)}" placeholder="${c.label}"></div>
     </#list>
     <button class="btn" type="submit">${l.tr("Filtrar", "Filter")}</button>
+    <#if (basketOptions.exportCsv)!false>
+    <a class="btn" href="${coords.path}?${keep}page=${pg}&format=csv" download><i class="bi bi-download" aria-hidden="true"></i> ${l.tr("Exportar CSV", "Export CSV")}</a>
+    </#if>
   </form>
   <div class="table-wrap"><table class="table"><caption class="visually-hidden">${pageTitle}</caption>
-    <thead><tr><#list shown as c><th scope="col">${c.label}</th></#list></tr></thead>
+    <thead><tr><#list shown as c><th scope="col"<#if c.align?? || c.width??> style="<#if c.align??>text-align:${c.align};</#if><#if c.width??>width:${c.width?c}px;</#if>"</#if>>${c.label}</th></#list></tr></thead>
     <tbody>
-    <#list (rows![]) as r><tr><#list shown as c><td><@val (r[c.name])!"" /></td></#list></tr></#list>
+    <#list (rows![]) as r><tr><#list shown as c><td<#if c.align??> style="text-align:${c.align}"</#if>><@val (r[c.name])!"" /></td></#list></tr></#list>
     </tbody></table></div>
   <#if !(rows![])?has_content><div class="empty"><i class="bi bi-inbox" aria-hidden="true"></i><p>${l.tr("Sin registros.", "No records.")}</p></div></#if>
   <#if (pages > 1)>

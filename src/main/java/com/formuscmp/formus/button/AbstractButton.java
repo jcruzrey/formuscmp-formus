@@ -4,7 +4,11 @@
 package com.formuscmp.formus.button;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -33,6 +37,18 @@ public abstract class AbstractButton implements Comparable<AbstractButton>, Seri
 	private String instruction;
 	private String uuid;
 	private String comment;
+	private String blockUuid;
+	/** What the server does after this button's command succeeds: adapter or template calls, {@code {type, uuid, variables?, to?, subject?}}. Written only when there are some. */
+	private List<Map<String, Object>> actions;
+
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	public List<Map<String, Object>> getActions() {
+		return actions;
+	}
+
+	public void setActions(List<Map<String, Object>> actions) {
+		this.actions = actions;
+	}
 	private String template;
 	private String icon;
 	private String alias;
@@ -311,6 +327,16 @@ public abstract class AbstractButton implements Comparable<AbstractButton>, Seri
 	/**
 	 * @return the comment
 	 */
+	/** The shared block this was copied from (see case/form/block), or null: what "Used by" and "update from the library" are built on. */
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	public String getBlockUuid() {
+		return blockUuid;
+	}
+
+	public void setBlockUuid(String blockUuid) {
+		this.blockUuid = blockUuid;
+	}
+
 	public String getComment() {
 		return comment;
 	}

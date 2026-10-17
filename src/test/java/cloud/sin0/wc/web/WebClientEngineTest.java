@@ -247,6 +247,68 @@ class WebClientEngineTest {
         assertFalse(call.getParameters().containsKey("page"));
     }
 
+    /** The list as the saved basket says it: its columns in its order with label, align and width, and a CSV download when the basket allows it. */
+    private ResponseResource savedBasket(boolean exportCsv) {
+        ResponseResource out = producto(null);
+        Resource basket = new Resource();
+        basket.setName("producto");
+        basket.setModule("inventario");
+        Field precio = new Field();
+        precio.setName("precio");
+        precio.setFieldName("precio");
+        precio.setComponentType("numero");
+        precio.setLabel("Importe");
+        precio.setShowInBasket(true);
+        precio.setAlign("right");
+        precio.setWidth(90);
+        Field nombre = new Field();
+        nombre.setName("nombre");
+        nombre.setFieldName("nombre");
+        nombre.setComponentType("texto");
+        nombre.setLabel("Producto");
+        nombre.setShowInBasket(true);
+        basket.setModel(new ArrayList<>(List.of(precio, nombre)));
+        if (exportCsv) basket.setBasketOptions(new HashMap<>(Map.of("exportCsv", true, "pageSize", 10)));
+        out.setResource(basket);
+        Map<String, Object> page = new HashMap<>();
+        page.put("number", 1);
+        page.put("pages", 1);
+        page.put("totalRows", 2);
+        page.put("pageData", List.of(Map.of("nombre", "Mesa, grande", "precio", 99), Map.of("nombre", "=Silla", "precio", 10)));
+        out.setData(new HashMap<>(Map.of("basket.inventario.producto", List.of(), "PAGE.basket.inventario.producto", page)));
+        return out;
+    }
+
+    @Test
+    void aSavedBasketSetsTheColumnsTheirAlignmentAndTheCsvLink() throws Exception {
+        backend.on("basket:producto/nuevo", rr -> savedBasket(true));
+        String html = signIn("ana@example.com").get("/inventario/basket/producto/1.0/nuevo").body();
+        assertTrue(html.indexOf("Importe") > 0 && html.indexOf("Importe") < html.indexOf("Producto"), "the basket's own order and labels: " + html);
+        assertTrue(html.contains("text-align:right;width:90px;"), "align and width reach the header");
+        assertTrue(html.contains("format=csv"), "the export link, because the basket allows it");
+
+        backend.on("basket:producto/nuevo", rr -> savedBasket(false));
+        assertFalse(signIn("luis@example.com").get("/inventario/basket/producto/1.0/nuevo").body().contains("format=csv"), "no link when the basket does not allow it");
+    }
+
+    @Test
+    void theCsvIsADownloadOfTheRowsOnlyWhereTheBasketAllowsIt() throws Exception {
+        backend.on("basket:producto/nuevo", rr -> savedBasket(true));
+        HttpResponse<String> r = signIn("ana@example.com").get("/inventario/basket/producto/1.0/nuevo?format=csv");
+        assertEquals(200, r.statusCode(), r.body());
+        assertTrue(r.headers().firstValue("Content-Type").orElse("").startsWith("text/csv"));
+        assertTrue(r.headers().firstValue("Content-Disposition").orElse("").contains("producto.csv"));
+        String[] lines = r.body().split("\\R");
+        assertEquals("\uFEFFImporte,Producto", lines[0]);
+        assertEquals("99,\"Mesa, grande\"", lines[1]);
+        assertEquals("10,'=Silla", lines[2], "a cell that looks like a formula is neutralised");
+        assertFalse(backend.calls("basket:producto/nuevo").get(0).getParameters().containsKey("format"), "format is not sent to the backend");
+
+        backend.on("basket:producto/nuevo", rr -> savedBasket(false));
+        HttpResponse<String> no = signIn("marta@example.com").get("/inventario/basket/producto/1.0/nuevo?format=csv");
+        assertTrue(no.headers().firstValue("Content-Type").orElse("").startsWith("text/html"), "not allowed: the normal page, not a file");
+    }
+
     @Test
     void jsonCallersGetTheAnswerAsData() throws Exception {
         backend.on("form:producto/guardar", rr -> {

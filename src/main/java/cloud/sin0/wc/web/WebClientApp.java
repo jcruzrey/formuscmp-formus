@@ -40,6 +40,12 @@ public interface WebClientApp {
     /** Footer: {@code text}, {@code logo}, {@code alt}, {@code note}; all optional. */
     default Map<String, String> footer(boolean en) { return Map.of(); }
 
+    /**
+     * True when this application shows its own pages inside its own pages (for example editors in the tabs of an IDE): responses then allow framing by the
+     * same origin only. The default is false: no page of the application can be framed at all.
+     */
+    default boolean allowSameOriginFrames() { return false; }
+
     /** Extra shared variables for every template (for example {@code urls}). */
     default Map<String, Object> templateVariables() { return Map.of(); }
 }
