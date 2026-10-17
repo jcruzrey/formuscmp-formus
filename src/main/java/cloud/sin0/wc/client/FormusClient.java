@@ -195,8 +195,16 @@ public class FormusClient {
         }
         String disposition = raw.headers().firstValue("Content-Disposition").orElse("");
         if (raw.statusCode() / 100 == 2 && disposition.toLowerCase(java.util.Locale.ROOT).startsWith("attachment")) {
+            // formus-ws sends files as stored; if some server in between compressed one anyway, the browser must still get the file itself
+            boolean zipped = "gzip".equalsIgnoreCase(raw.headers().firstValue("Content-Encoding").orElse(""));
+            InputStream bytes;
+            try {
+                bytes = zipped ? new java.util.zip.GZIPInputStream(raw.body()) : raw.body();
+            } catch (Exception e) {
+                throw new BackendException("No se pudo leer el archivo recibido", correlationId, e);
+            }
             return new Answer(null, new FileAnswer(raw.statusCode(), raw.headers().firstValue("Content-Type").orElse("application/octet-stream"), disposition,
-                    raw.headers().firstValue("Content-Range").orElse(null), raw.headers().firstValueAsLong("Content-Length").orElse(-1), raw.body()));
+                    raw.headers().firstValue("Content-Range").orElse(null), zipped ? -1 : raw.headers().firstValueAsLong("Content-Length").orElse(-1), bytes));
         }
         HttpResponse<String> res;
         try (InputStream in = "gzip".equalsIgnoreCase(raw.headers().firstValue("Content-Encoding").orElse("")) ? new java.util.zip.GZIPInputStream(raw.body()) : raw.body()) {

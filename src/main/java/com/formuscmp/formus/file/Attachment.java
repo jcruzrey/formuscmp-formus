@@ -17,6 +17,11 @@ public class Attachment {
 	private String sha256;
 	/** Opaque id in the file store. */
 	private String storageId;
+	/** In a download: true when the file was made only to be sent, so the server deletes it from the store once it has been sent. */
+	private Boolean temporary;
+
+	public Boolean getTemporary() { return temporary; }
+	public void setTemporary(Boolean temporary) { this.temporary = temporary; }
 
 	public Attachment() {
 		super();

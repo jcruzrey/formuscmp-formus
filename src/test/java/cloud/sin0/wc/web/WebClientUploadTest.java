@@ -209,6 +209,24 @@ class WebClientUploadTest {
     }
 
     @Test
+    void aFileThatArrivesCompressedIsDecodedBeforeItReachesTheBrowser() throws Exception {
+        String id = "00000000-0000-0000-0000-000000000002";
+        byte[] json = ("{\"name\":\"producto\",\"pad\":\"" + "x".repeat(2000) + "\"}").getBytes(StandardCharsets.UTF_8);
+        backend.fileGzipped(id, "application/json", "producto_es_MX.json", json);
+        backend.on("form:documento/modelo", rr -> {
+            ResponseResource r = new ResponseResource();
+            Attachment a = new Attachment();
+            a.setStorageId(id);
+            r.setAttachment(a);
+            return r;
+        });
+        HttpResponse<byte[]> r = signIn().getBytes("/inventario/form/documento/1.0/modelo", Map.of());
+        assertEquals(200, r.statusCode());
+        assertArrayEquals(json, r.body(), "the browser gets the file, not a gzip blob");
+        assertTrue(r.headers().firstValue("Content-Encoding").isEmpty(), "and no Content-Encoding it would have to undo");
+    }
+
+    @Test
     void aCommandThatAnswersWithAFileIsSentToTheBrowserWithRangeSupport() throws Exception {
         String id = "00000000-0000-0000-0000-000000000001";
         backend.file(id, "application/pdf", "contrato.pdf", PDF);

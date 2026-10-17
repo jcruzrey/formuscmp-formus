@@ -42,7 +42,9 @@ public class StubFormusWs {
     public record Upload(String field, String filename, String contentType, byte[] bytes) { }
 
     /** A file the stub sends back when a route answers with {@code ResponseResource.attachment}. */
-    public record StoredFile(String contentType, String filename, byte[] bytes) { }
+    public record StoredFile(String contentType, String filename, byte[] bytes, boolean gzip) {
+        public StoredFile(String contentType, String filename, byte[] bytes) { this(contentType, filename, bytes, false); }
+    }
 
     public StubFormusWs() throws Exception {
         server.setHandler(new Handler.Abstract() {
@@ -100,6 +102,12 @@ public class StubFormusWs {
                     }
                     response.getHeaders().put(HttpHeader.CONTENT_TYPE, f.contentType());
                     response.getHeaders().put(HttpHeader.CONTENT_DISPOSITION, "attachment; filename=\"" + f.filename() + "\"");
+                    if (f.gzip()) {   // a misbehaving server in the middle that compresses the file
+                        java.io.ByteArrayOutputStream z = new java.io.ByteArrayOutputStream();
+                        try (java.util.zip.GZIPOutputStream g = new java.util.zip.GZIPOutputStream(z)) { g.write(sent); }
+                        sent = z.toByteArray();
+                        response.getHeaders().put(HttpHeader.CONTENT_ENCODING, "gzip");
+                    }
                     response.write(true, java.nio.ByteBuffer.wrap(sent), callback);
                     return true;
                 }
@@ -183,6 +191,11 @@ public class StubFormusWs {
     /** Registers a file a route can send back by setting the answer's attachment storage id. */
     public void file(String storageId, String contentType, String filename, byte[] bytes) {
         files.put(storageId, new StoredFile(contentType, filename, bytes));
+    }
+
+    /** Like {@link #file} but the stub sends it gzip-compressed with Content-Encoding: gzip. */
+    public void fileGzipped(String storageId, String contentType, String filename, byte[] bytes) {
+        files.put(storageId, new StoredFile(contentType, filename, bytes, true));
     }
 
     /** Returns the JSON of the "request" part and records the file parts. */
