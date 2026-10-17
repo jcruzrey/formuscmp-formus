@@ -26,7 +26,8 @@ public final class PlatformFormMapper {
             Map.entry("telefono", "tel"), Map.entry("tel", "tel"), Map.entry("numero", "number"), Map.entry("entero", "number"),
             Map.entry("decimal", "number"), Map.entry("fecha", "date"), Map.entry("date", "date"),
             Map.entry("textoarea", "textarea"), Map.entry("textarea", "textarea"), Map.entry("area", "textarea"),
-            Map.entry("checkbox", "checkbox"), Map.entry("check", "checkbox"));
+            Map.entry("checkbox", "checkbox"), Map.entry("check", "checkbox"),
+            Map.entry("archivo", "file"), Map.entry("file", "file"), Map.entry("adjunto", "file"), Map.entry("documento", "file"));
     private static final int MAX_FIELDS = 200;
 
     private final ObjectMapper mapper;

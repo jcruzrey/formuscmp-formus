@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.formuscmp.formus.file.Attachment;
 import com.formuscmp.common.exception.ErrorMessage;
 import com.formuscmp.formus.dto.MenuDto;
 import com.formuscmp.formus.resource.Resource;
@@ -35,6 +37,10 @@ public class ResponseResource {
 	
 	//Expected view to show the model from the results
 	private String view;
+
+	/** A file to send instead of the JSON envelope (see the servlet's download path); omitted from JSON when null. */
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private Attachment attachment;
 	
 	/**
 	 * 
@@ -222,4 +228,12 @@ public class ResponseResource {
 		this.view = view;
 	}
 	
+	public Attachment getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(Attachment attachment) {
+		this.attachment = attachment;
+	}
+
 }

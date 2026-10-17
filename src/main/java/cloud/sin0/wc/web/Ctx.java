@@ -3,12 +3,17 @@ package cloud.sin0.wc.web;
 import cloud.sin0.wc.auth.Csrf;
 import cloud.sin0.wc.auth.SessionUser;
 import cloud.sin0.wc.client.FormusClient.CallContext;
+import cloud.sin0.wc.client.FileAnswer;
 import cloud.sin0.wc.client.Locales;
+import cloud.sin0.wc.client.Upload;
 import cloud.sin0.wc.config.AppConfig;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.jetty.http.HttpCookie;
 import org.eclipse.jetty.http.HttpHeader;
+import org.eclipse.jetty.http.MultiPart;
+import org.eclipse.jetty.http.MultiPartFormData;
+import org.eclipse.jetty.io.content.InputStreamContentSource;
 import org.eclipse.jetty.io.Content;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Response;
@@ -18,6 +23,9 @@ import org.eclipse.jetty.util.Callback;
 import org.eclipse.jetty.util.Fields;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.concurrent.ExecutionException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.URLDecoder;
@@ -156,6 +164,101 @@ public final class Ctx {
             }
         }
         return out;
+    }
+
+    // ------------------------------------------------------------------------------------------ file uploads
+
+    /** The fields and files of a multipart post; closing it deletes the temporary files. */
+    public record Posted(Map<String, Object> params, List<Upload> uploads) implements java.io.Closeable {
+        @Override
+        public void close() {
+            for (Upload u : uploads) {
+                try { Files.deleteIfExists(u.path()); } catch (IOException ignored) { /* left to the temp-dir cleanup */ }
+            }
+        }
+    }
+
+    public boolean isMultipart() {
+        String type = header("Content-Type");
+        return type != null && type.toLowerCase().startsWith("multipart/form-data");
+    }
+
+    /**
+     * Reads a {@code multipart/form-data} post: text parts become parameters (repeated names become lists, like a urlencoded form), file parts
+     * are written to temporary files (never held in memory) and listed as {@link Upload}s. A browser's empty file input (no file chosen) is
+     * ignored. Over {@code maxFile} for one file or {@code maxRequest} for the whole post: {@link TooLargeException}.
+     */
+    public Posted multipart(long maxFile, long maxRequest) throws IOException {
+        long declared = request.getLength();
+        if (declared > maxRequest) throw new TooLargeException(maxRequest);
+        String boundary = MultiPart.extractBoundary(header("Content-Type"));
+        if (boundary == null) throw new IOException("multipart post without boundary");
+        Path dir = Files.createDirectories(Path.of(System.getProperty("java.io.tmpdir"), "fwc-upload"));
+        MultiPartFormData.Parser parser = new MultiPartFormData.Parser(boundary);
+        parser.setMaxLength(maxRequest);
+        parser.setMaxFileSize(maxFile);
+        parser.setMaxMemoryFileSize(256 * 1024);
+        parser.setFilesDirectory(dir);
+        MultiPartFormData.Parts parts;
+        try {
+            parts = parser.parse(request).get();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IOException("interrupted while reading the upload", e);
+        } catch (ExecutionException e) {
+            throw new TooLargeException(maxFile < maxRequest ? maxFile : maxRequest);
+        }
+        Map<String, Object> out = new LinkedHashMap<>();
+        List<Upload> uploads = new ArrayList<>();
+        try {
+            for (MultiPart.Part p : parts) {
+                String file = p.getFileName();
+                if (file == null) {
+                    String v = p.getContentAsString(StandardCharsets.UTF_8);
+                    Object prev = out.get(p.getName());
+                    if (prev == null) out.put(p.getName(), v);
+                    else if (prev instanceof List<?> l) {
+                        @SuppressWarnings("unchecked") List<Object> list = (List<Object>) l;
+                        list.add(v);
+                    } else {
+                        List<Object> list = new ArrayList<>();
+                        list.add(prev);
+                        list.add(v);
+                        out.put(p.getName(), list);
+                    }
+                } else if (!file.isEmpty() && p.getLength() != 0) {
+                    Path tmp = Files.createTempFile(dir, "up-", ".tmp");
+                    p.writeTo(tmp);
+                    String type = p.getHeaders().get(HttpHeader.CONTENT_TYPE);
+                    uploads.add(new Upload(p.getName(), file, type, tmp, Files.size(tmp)));
+                }
+            }
+        } catch (RuntimeException | IOException e) {
+            new Posted(out, uploads).close();
+            throw e;
+        } finally {
+            parts.close();
+        }
+        return new Posted(out, uploads);
+    }
+
+    /** Sends a file answered by formus-ws to the browser: same type, {@code attachment} disposition, range and length, streamed. */
+    public void stream(FileAnswer f) {
+        response.setStatus(f.status());
+        response.getHeaders().put(HttpHeader.CONTENT_TYPE, f.contentType());
+        response.getHeaders().put(HttpHeader.CONTENT_DISPOSITION, f.disposition());
+        response.getHeaders().put("X-Content-Type-Options", "nosniff");
+        response.getHeaders().put(HttpHeader.CACHE_CONTROL, "private, no-store");
+        response.getHeaders().put(HttpHeader.ACCEPT_RANGES, "bytes");
+        if (f.contentRange() != null) response.getHeaders().put(HttpHeader.CONTENT_RANGE, f.contentRange());
+        if (f.length() >= 0) response.getHeaders().put(HttpHeader.CONTENT_LENGTH, f.length());
+        Content.copy(new InputStreamContentSource(f.body()), response, Callback.from(
+                () -> { closeQuietly(f); callback.succeeded(); },
+                t -> { closeQuietly(f); callback.failed(t); }));
+    }
+
+    private static void closeQuietly(FileAnswer f) {
+        try { f.close(); } catch (IOException ignored) { /* nothing to do */ }
     }
 
     // ------------------------------------------------------------------------------------------ session, csrf, language

@@ -50,13 +50,20 @@ public final class CommandPipeline {
             return;
         }
         Map<String, Object> params = new LinkedHashMap<>();
+        Ctx.Posted posted = null;
         if (get) {
             for (Fields.Field f : Request.extractQueryParameters(c.request)) {
                 params.put(f.getName(), f.getValue());
             }
         } else {
-            params = c.params(cfg.maxBodyBytes());
+            if (c.isMultipart()) {
+                posted = c.multipart(cfg.maxUploadBytes(), cfg.maxUploadRequestBytes());
+                params = posted.params();
+            } else {
+                params = c.params(cfg.maxBodyBytes());
+            }
             if (!c.csrfOk(Pages.str(params.get(Csrf.FIELD)))) {
+                if (posted != null) posted.close();
                 pages.fail(c, 403, "csrf", null);
                 return;
             }
@@ -74,7 +81,19 @@ public final class CommandPipeline {
         if (!uuid.isBlank()) call.uuid(uuid);
         if (!puuid.isBlank()) call.puuid(puuid);
         if (page != null) call.page(page);
-        ResponseResource r = call.execute();
+        if (posted != null) call.attach(posted.uploads());
+        if (get) call.range(c.header("Range"));
+        FormusClient.Answer answer;
+        try {
+            answer = call.executeAny();
+        } finally {
+            if (posted != null) posted.close();
+        }
+        if (answer.file() != null) {
+            c.stream(answer.file());
+            return;
+        }
+        ResponseResource r = answer.json();
         boolean failed = FormusClient.hasErrors(r);
 
         if (c.wantsJson()) {

@@ -3,8 +3,12 @@
  */
 package com.formuscmp.formus.request;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.formuscmp.formus.file.Attachment;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,6 +40,17 @@ public class RequestResource {
 	private String uuid;
 	private String puuid;
 	private boolean clean=true;
+	/** Files that came with the request (multipart); empty and omitted from JSON for an ordinary request. */
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private List<Attachment> attachments = new ArrayList<Attachment>();
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments == null ? new ArrayList<Attachment>() : attachments;
+	}
+
 	public String getToken() {
 		return token;
 	}
