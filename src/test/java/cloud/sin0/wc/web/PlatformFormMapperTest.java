@@ -116,4 +116,15 @@ class PlatformFormMapperTest {
         }
         assertEquals(200, mapper.toBuilderModel(json(sb.append("]}").toString())).get("fields").size());
     }
+
+    @Test
+    void aCatalogFieldIsAPickerWhenCapturingAndStaysPlainWhenEditing() throws Exception {
+        String origin = "{\\\"origin\\\":\\\"tabla\\\",\\\"resource\\\":\\\"prodserv\\\",\\\"fields\\\":[{\\\"name\\\":\\\"codigo\\\"},{\\\"name\\\":\\\"descripcion\\\"}]}";
+        JsonNode resource = OM.readTree("{\"name\":\"orden\",\"model\":[{\"fieldName\":\"productos\",\"label\":\"Productos\",\"componentType\":\"catalogo\",\"order\":1,\"required\":true,\"dbFieldType\":\"varchar\",\"origin\":\"" + origin + "\"}]}");
+        JsonNode capture = mapper.toBuilderModel(resource).get("fields").get(0);
+        assertEquals("catalog", capture.get("type").asText(), "the capture page draws a catalog picker");
+        assertTrue(capture.get("catalogOrigin").asText().contains("prodserv"), "and knows where its rows come from");
+        assertTrue(capture.get("required").asBoolean());
+        assertEquals("text", mapper.toBuilderModel(resource, true).get("fields").get(0).get("type").asText(), "the designer is not given a type it cannot draw");
+    }
 }

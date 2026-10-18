@@ -48,6 +48,17 @@
       case 'checkboxes':
         return '<fieldset><legend>' + esc(f.label) + star + '</legend>' +
           (f.options || []).map(function (o) { return '<label class="fb-opt"><input type="checkbox" name="' + esc(f.name) + '" value="' + esc(o) + '">' + esc(o) + '</label>'; }).join('') + '</fieldset>' + help + err;
+      case 'catalog': {   // several rows of a table, each with a quantity; the choice travels in one hidden field: [{codigo, descripcion, cantidad}]
+        var en = (document.documentElement.lang || '').indexOf('en') === 0;
+        var th = en ? ['Code', 'Description', 'Quantity'] : ['C\u00f3digo', 'Descripci\u00f3n', 'Cantidad'];
+        var items = f.items || [];
+        return '<fieldset class="fb-catalog"><legend>' + esc(f.label) + star + '</legend><div class="fb-cat-wrap"><table class="fb-cat"><thead><tr><th></th><th>' + th[0] + '</th><th>' + th[1] + '</th><th>' + th[2] + '</th></tr></thead><tbody>' +
+          (items.length ? items.map(function (it) {
+            return '<tr data-code="' + esc(it.code) + '" data-label="' + esc(it.label) + '"><td><input type="checkbox" class="fb-cat-sel" aria-label="' + esc(it.code) + '"></td><td>' + esc(it.code) + '</td><td>' + esc(it.label) +
+              '</td><td><input type="number" class="fb-cat-qty" min="1" max="100000" step="1" value="1" disabled aria-label="' + th[2] + ' ' + esc(it.code) + '"></td></tr>';
+          }).join('') : '<tr><td colspan="4" class="fb-help">' + (en ? 'The catalog has no items.' : 'El cat\u00e1logo no tiene elementos.') + '</td></tr>') +
+          '</tbody></table></div><p class="fb-help fb-cat-sum" aria-live="polite"></p><input type="hidden" id="' + esc(id) + '"' + nm + '></fieldset>' + help + err;
+      }
       case 'checkbox':
         return '<label class="fb-opt"><input type="checkbox"' + nm + req + '>' + esc(f.label) + star + '</label>' + help + err;
       case 'file':

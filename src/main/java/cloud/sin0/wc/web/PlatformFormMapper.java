@@ -102,7 +102,11 @@ public final class PlatformFormMapper {
             }
             String type = TYPES.getOrDefault(text(f, "componentType").toLowerCase(Locale.ROOT), null);
             List<String> options = inlineValues(text(f, "origin"));
-            if (options != null && !options.isEmpty()) {
+            if ("catalogo".equalsIgnoreCase(text(f, "componentType")) && !forEditing && !hidden) {
+                // several rows of a table, each with a quantity: the capture page asks the platform for the rows (case/form/catalogo/items) and draws them
+                o.put("type", "catalog");
+                o.put("catalogOrigin", text(f, "origin"));
+            } else if (options != null && !options.isEmpty()) {
                 o.put("type", "select");
                 ArrayNode opts = o.putArray("options");
                 options.forEach(opts::add);
