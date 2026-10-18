@@ -34,6 +34,28 @@ public class Step {
 	/** What the step does when the run enters it / leaves it: adapter or template calls, {@code {type, uuid, variables?, data?, to?, subject?}}. Written only when there are some. */
 	private List<Map<String, Object>> onEnter;
 	private List<Map<String, Object>> onLeave;
+	/** The status the run moves to INSTEAD of {@code nextStatus} when an adapter of this step answers other than 2xx or does not answer: the error path. Written only when set. */
+	private String errorStatus;
+	/** The End step: every path of a workflow merges in it and running it finishes the workflow. Written only when true. */
+	private boolean end;
+
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	public String getErrorStatus() {
+		return errorStatus;
+	}
+
+	public void setErrorStatus(String errorStatus) {
+		this.errorStatus = errorStatus;
+	}
+
+	@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+	public boolean isEnd() {
+		return end;
+	}
+
+	public void setEnd(boolean end) {
+		this.end = end;
+	}
 
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	public List<Map<String, Object>> getOnEnter() {
