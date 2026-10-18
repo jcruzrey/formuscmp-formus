@@ -41,7 +41,7 @@
         return lab + '<textarea id="' + esc(id) + '"' + nm + ' rows="' + (+f.rows || 4) + '"' + ph + ro + req + '>' + esc(f.value || '') + '</textarea>' + help + err;
       case 'select':
         return lab + '<select id="' + esc(id) + '"' + nm + req + '><option value="">' + esc(f.placeholder || '') + '</option>' +
-          (f.options || []).map(function (o) { return '<option>' + esc(o) + '</option>'; }).join('') + '</select>' + help + err;
+          (f.options || []).map(function (o) { return '<option' + (f.value && o === f.value ? ' selected' : '') + '>' + esc(o) + '</option>'; }).join('') + '</select>' + help + err;
       case 'radio':
         return '<fieldset><legend>' + esc(f.label) + star + '</legend>' +
           (f.options || []).map(function (o) { return '<label class="fb-opt"><input type="radio"' + nm + ' value="' + esc(o) + '"' + req + '>' + esc(o) + '</label>'; }).join('') + '</fieldset>' + help + err;
