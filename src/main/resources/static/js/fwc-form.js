@@ -40,6 +40,27 @@
       else el.value = v;
     });
   });
+  /* catalog pickers: ticking a row enables its quantity; the hidden field keeps the chosen rows as JSON */
+  Array.prototype.forEach.call(form.querySelectorAll('.fb-catalog'), function (box) {
+    var out = box.querySelector('input[type=hidden]'), previo = {};
+    try { JSON.parse(out.value || '[]').forEach(function (p) { previo[p.codigo] = p.cantidad; }); } catch (e) { /* first time */ }
+    function pintar() {
+      var elegidos = [];
+      Array.prototype.forEach.call(box.querySelectorAll('tbody tr[data-code]'), function (tr) {
+        var sel = tr.querySelector('.fb-cat-sel'), qty = tr.querySelector('.fb-cat-qty');
+        qty.disabled = !sel.checked;
+        if (sel.checked) elegidos.push({ codigo: tr.dataset.code, descripcion: tr.dataset.label, cantidad: Math.max(1, parseInt(qty.value, 10) || 1) });
+      });
+      out.value = elegidos.length ? JSON.stringify(elegidos) : '';
+      box.querySelector('.fb-cat-sum').textContent = elegidos.length + (en ? ' item(s) picked \u00b7 ' : ' elemento(s) elegido(s) \u00b7 ') + elegidos.reduce(function (a, p) { return a + p.cantidad; }, 0) + (en ? ' unit(s)' : ' unidad(es)');
+    }
+    Array.prototype.forEach.call(box.querySelectorAll('tbody tr[data-code]'), function (tr) {
+      var sel = tr.querySelector('.fb-cat-sel'), qty = tr.querySelector('.fb-cat-qty');
+      if (previo[tr.dataset.code]) { sel.checked = true; qty.value = previo[tr.dataset.code]; }
+      sel.addEventListener('change', pintar); qty.addEventListener('input', pintar);
+    });
+    pintar();
+  });
   /* minimal client check: required fields only (the platform validates the rest) */
   form.addEventListener('submit', function (e) {
     var bad = null;
