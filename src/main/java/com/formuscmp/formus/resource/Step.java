@@ -38,6 +38,28 @@ public class Step {
 	private String errorStatus;
 	/** The End step: every path of a workflow merges in it and running it finishes the workflow. Written only when true. */
 	private boolean end;
+	/** The loops that START at this step, outermost first: {@code {name, over, as, to, mode, exitStatus, max}}; the steps from this one to {@code to} repeat once per row of {@code over}. Written only when there are some. */
+	private List<Map<String, Object>> loops;
+	/** A step that asks the person to pick rows of an earlier list: {@code {source, as, columns, min, max}}. Written only when set. */
+	private Map<String, Object> pick;
+
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	public List<Map<String, Object>> getLoops() {
+		return loops;
+	}
+
+	public void setLoops(List<Map<String, Object>> loops) {
+		this.loops = loops;
+	}
+
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	public Map<String, Object> getPick() {
+		return pick;
+	}
+
+	public void setPick(Map<String, Object> pick) {
+		this.pick = pick;
+	}
 
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	public String getErrorStatus() {
