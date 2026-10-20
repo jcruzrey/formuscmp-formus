@@ -66,6 +66,7 @@ public class FormusClient {
         private final Map<String, Object> params = new HashMap<>();
         private String uuid, puuid, module, version;
         private Integer page;
+        private Integer timeoutMs;
         private final java.util.List<Upload> uploads = new java.util.ArrayList<>();
         private String range;
         private boolean cacheable;
@@ -88,6 +89,9 @@ public class FormusClient {
         public Call puuid(String v) { this.puuid = v; return this; }
 
         public Call page(Integer v) { this.page = v; return this; }
+
+        /** How long this call may take, instead of the configured {@code BACKEND_TIMEOUT_MS}: for a command that calls a slow service (a step that asks a language model). */
+        public Call timeoutMs(int ms) { this.timeoutMs = ms > 0 ? ms : null; return this; }
 
         /** Overrides the configured module/version (generic /{module}/.../{version}/{command}.do route). */
         public Call target(String module, String version) { this.module = module; this.version = version; return this; }
@@ -160,7 +164,7 @@ public class FormusClient {
         String operation = endpoint(url, rr);
         LOG.info("[{}] formus-ws {}", correlationId, operation);   // the exact operation of openapi.yaml this page call maps to
         HttpRequest.Builder rb = HttpRequest.newBuilder(URI.create(operation))
-                .timeout(Duration.ofMillis(config.backendTimeoutMs()))
+                .timeout(Duration.ofMillis(c.timeoutMs != null ? c.timeoutMs : config.backendTimeoutMs()))
                 .header("Accept-Encoding", "gzip")   // formus-ws compresses its JSON when asked; files and old servers are unaffected
                 .header("X-Request-Id", correlationId);
         if (c.uploads.isEmpty()) {
