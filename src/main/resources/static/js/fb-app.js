@@ -43,7 +43,10 @@
     opts = opts || {};
     var headers = Object.assign({ 'Accept': 'application/json', 'X-CSRF-Token': csrf() }, opts.headers || {});
     var init = { method: opts.method || (opts.body ? 'POST' : 'GET'), headers: headers, credentials: 'same-origin' };
-    if (opts.body !== undefined) { headers['Content-Type'] = 'application/json'; init.body = typeof opts.body === 'string' ? opts.body : JSON.stringify(opts.body); }
+    if (opts.body !== undefined) {
+      if (typeof FormData !== 'undefined' && opts.body instanceof FormData) init.body = opts.body;   // a file upload: no JSON, no Content-Type (the browser adds the multipart boundary)
+      else { headers['Content-Type'] = 'application/json'; init.body = typeof opts.body === 'string' ? opts.body : JSON.stringify(opts.body); }
+    }
     return fetch(url, init).then(function (r) {
       return r.text().then(function (txt) {
         var body = null; try { body = txt ? JSON.parse(txt) : null; } catch (e) { body = null; }
