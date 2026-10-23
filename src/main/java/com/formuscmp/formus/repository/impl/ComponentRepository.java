@@ -28,7 +28,6 @@ import com.formuscmp.formus.generator.Generador;
 import com.formuscmp.formus.generator.IGenerador;
 import com.formuscmp.formus.repository.IRepository;
 import com.formuscmp.formus.resource.Resource;
-import com.formuscmp.formus.resource.UseCase;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -265,7 +264,6 @@ public class ComponentRepository implements IRepository, Closeable{
 			return lista;   // nothing of this type in the folder: an empty list, not an error (and no folder is created for it)
 		}
 		IGenerador<Resource> generador = new Generador<Resource>(new String[] {rutaEmpresaConfig});
-		IGenerador<UseCase> generadorUseCase = new Generador<UseCase>(new String[] {rutaEmpresaConfig});
 		createIfNotPresent(rutaEmpresaConfig);
 		File folder = new File(rutaEmpresaConfig);
 		File[] listOfFiles = folder.listFiles();
@@ -297,12 +295,18 @@ public class ComponentRepository implements IRepository, Closeable{
 							lista.add(menu);
 						}
 					}else if (resourceType.equals("usecase")) {
-						UseCase useCase = generadorUseCase.get(filePath, UseCase.class);
-						String llaveCacheForma = useCase.getUuid();
-						MenuDto menu = new MenuDto(splittedFileName[splittedFileName.length - 6], useCase.getTitle(), null, useCase.getVersion(), useCase.getUuid(),
-								useCase.getModule(), resourceType, useCase.getName(), useCase.isCreateable());
-						jedisSet(llaveCacheForma, objectMapper.writeValueAsString(useCase));
-						lista.add(menu);
+						// a plain JSON document, like adapters and templates: the typed UseCase does not know every field a workflow carries (tests, upload, pick, ...),
+						// so it refused the file or dropped those fields when the workflow was stored again. The file stays the source of truth.
+						@SuppressWarnings("unchecked")
+						java.util.Map<String, Object> doc = objectMapper.readValue(filePath.toFile(), java.util.LinkedHashMap.class);
+						Object uuid = doc.get("uuid");
+						if (uuid != null && !uuid.toString().isBlank()) {
+							MenuDto menu = new MenuDto(splittedFileName[splittedFileName.length - 6], doc.get("title") == null ? null : doc.get("title").toString(), null,
+									doc.get("version") == null ? null : doc.get("version").toString(), uuid.toString(), doc.get("module") == null ? null : doc.get("module").toString(),
+									resourceType, doc.get("name") == null ? null : doc.get("name").toString(), Boolean.TRUE.equals(doc.get("createable")));
+							jedisSet(uuid.toString(), objectMapper.writeValueAsString(doc));
+							lista.add(menu);
+						}
 					}else {
 						Resource forma = generador.get(filePath, Resource.class);
 						if ((null!=forma) && (null!=forma.getUuid())) {
