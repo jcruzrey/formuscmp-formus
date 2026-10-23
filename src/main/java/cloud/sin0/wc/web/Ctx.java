@@ -396,6 +396,19 @@ public final class Ctx {
         write(200, "text/csv; charset=UTF-8", body);
     }
 
+    /**
+     * Sends {@code body} as is, to be shown inline by a frame of the same origin (a PDF the page previews): never stored, and with a policy of its own that only says who may frame it
+     * (the page-wide one has {@code object-src 'none'}, which a browser's PDF viewer does not accept).
+     */
+    public void bytes(int status, String contentType, byte[] body) {
+        response.getHeaders().put(HttpHeader.CACHE_CONTROL, "private, no-store");
+        response.getHeaders().put("X-Content-Type-Options", "nosniff");
+        response.getHeaders().put("Content-Security-Policy", "frame-ancestors 'self'");
+        response.setStatus(status);
+        response.getHeaders().put(HttpHeader.CONTENT_TYPE, contentType);
+        response.write(true, java.nio.ByteBuffer.wrap(body), callback);
+    }
+
     public void write(int status, String contentType, String body) {
         response.setStatus(status);
         response.getHeaders().put(HttpHeader.CONTENT_TYPE, contentType);
