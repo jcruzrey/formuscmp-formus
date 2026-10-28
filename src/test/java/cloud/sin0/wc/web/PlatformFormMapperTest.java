@@ -73,6 +73,29 @@ class PlatformFormMapperTest {
     }
 
     @Test
+    void theCodeOfARecordBeingEditedTravelsHiddenWithTheFormSoTheUpdateKnowsWhichRowItIs() throws Exception {
+        // editing MF-0001: without its codigo the platform ran the UPDATE with no WHERE and rewrote every product
+        JsonNode edit = mapper.toBuilderModel(json("{'name':'producto','model':["
+                + "{'fieldName':'codigo','label':'Codigo','componentType':'texto','order':1,'readOnly':true,'id':true,'value':'MF-0001'},"
+                + "{'fieldName':'descripcion','label':'Nombre','componentType':'texto','order':2,'value':'Arrachera'}]}")).get("fields");
+        assertEquals("codigo,descripcion", String.join(",", edit.findValuesAsText("name")));
+        assertEquals("MF-0001", edit.get(0).get("value").asText());
+        assertTrue(edit.get(0).get("hidden").asBoolean(), "it is kept out of sight but posted");
+        assertFalse(edit.get(0).get("required").asBoolean());
+
+        // a new record has no code yet (or a default the platform resolves): it is still left out
+        JsonNode blank = mapper.toBuilderModel(json("{'name':'producto','model':["
+                + "{'fieldName':'codigo','label':'Codigo','componentType':'texto','order':1,'id':true},"
+                + "{'fieldName':'descripcion','label':'Nombre','componentType':'texto','order':2}]}")).get("fields");
+        assertEquals("descripcion", String.join(",", blank.findValuesAsText("name")));
+        JsonNode generated = mapper.toBuilderModel(json("{'name':'x','model':[{'fieldName':'codigo','label':'C','componentType':'texto','order':1,'value':'${default::consecutivo}'}]}")).get("fields");
+        assertEquals(0, generated.size());
+
+        // the designer never gets it (it edits the structure, not a record)
+        assertEquals(0, mapper.toBuilderModel(json("{'name':'x','model':[{'fieldName':'codigo','label':'C','componentType':'texto','order':1,'value':'MF-0001'}]}"), true).get("fields").size());
+    }
+
+    @Test
     void toleratesGarbage() throws Exception {
         assertEquals(0, mapper.toBuilderModel(null).get("fields").size());
         assertEquals(0, mapper.toBuilderModel(json("{'model':'nope'}")).get("fields").size());
