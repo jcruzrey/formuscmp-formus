@@ -152,27 +152,6 @@ public class AppConfig {
     /** Shared token sent to formus-ws as {@code X-Upload-Token} (must equal its {@code formus.upload.token}); blank = none. */
     public String uploadToken() { return get("FB_UPLOAD_TOKEN", "fb.upload.token", ""); }
 
-    /** Modules a non-staff user may run through the generic pipeline (comma separated); blank = every module. */
-    public java.util.Set<String> userModules() { return csv(get(null, "fb.client.userModules", "")); }
-
-    /**
-     * How non-staff users are authorized through the generic pipeline: {@code modules} (default: {@link #userModules()}) or
-     * {@code permisos} (the user's own authorization list, see {@code cloud.sin0.wc.auth.Permisos}; an empty list refuses everything).
-     */
-    public boolean authorizationByPermisos() { return "permisos".equalsIgnoreCase(get(null, "fb.client.authorization", "modules").trim()); }
-
-    /** Resource names and command names nobody may run through the generic pipeline (identity, payments, webhooks...). */
-    public java.util.Set<String> deniedResources() { return csv(get(null, "fb.client.deniedResources", "usuario")); }
-
-    public java.util.Set<String> deniedCommands() { return csv(get(null, "fb.client.deniedCommands", "webhook,identificar")); }
-
-    private static java.util.Set<String> csv(String v) {
-        java.util.Set<String> out = new java.util.LinkedHashSet<>();
-        for (String s : v.split(",")) {
-            if (!s.isBlank()) out.add(s.trim());
-        }
-        return out;
-    }
 
     // ---- SSO
     public OAuth google() {

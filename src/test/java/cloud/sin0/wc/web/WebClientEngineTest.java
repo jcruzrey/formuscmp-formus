@@ -65,11 +65,11 @@ class WebClientEngineTest {
         }
         @Override public List<NavItem> navigation() {
             return List.of(new NavItem("stock", "Existencias", "Stock", "/inventario/basket/producto/1.0/nuevo"),
-                    new NavItem("admin", "Administración", "Admin", "/admin/basket/x/1.0/nuevo", true));
+                    new NavItem("admin", "Administración", "Admin", "/admin/basket/x/1.0/nuevo").withPermiso("admin:x:leer"));
         }
         @Override public List<NavItem> userMenu() {
             return List.of(NavItem.group("Recursos", "Resources", new NavItem("stock", "Existencias del menú", "Stock in the menu", "/inventario/basket/producto/1.0/nuevo"),
-                            new NavItem("admin", "Administración del menú", "Admin in the menu", "/admin/basket/x/1.0/nuevo", true)),
+                            new NavItem("admin", "Administración del menú", "Admin in the menu", "/admin/basket/x/1.0/nuevo").withPermiso("admin:x:leer")),
                     NavItem.heading("Cuenta", "Account"), new NavItem("profile", "Perfil", "Profile", "/perfil"));
         }
         @Override public Map<String, String[]> flashMessages() { return Map.of("ok", new String[]{"Listo", "Done"}); }
@@ -96,7 +96,6 @@ class WebClientEngineTest {
         p.setProperty("fb.port", "0");
         p.setProperty("fb.devLogin", "true");
         p.setProperty("fb.microservice.url", backend.url());
-        p.setProperty("fb.client.userModules", "inventario");
         p.setProperty("fb.brand.name", "Mi Cliente");
         server = WebClientServer.build(new AppConfig(p, Map.of()), new ViewRenderer(), new TestApp());
         server.start();
@@ -112,7 +111,8 @@ class WebClientEngineTest {
     @BeforeEach
     void defaults() {
         backend.reset();
-        backend.on("usuario/identificar", rr -> data("uuid", "u1", "rol", rr.getParameters().get("username").toString().startsWith("staff") ? "staff" : "solicitante"));
+        backend.on("usuario/identificar", rr -> data("uuid", "u1", "rol", rr.getParameters().get("username").toString().startsWith("staff") ? "staff" : "solicitante",
+                "permisos", rr.getParameters().get("username").toString().startsWith("staff") ? "*" : "inventario"));
         backend.on("form:producto/nuevo", rr -> producto(null));
     }
 
@@ -351,13 +351,13 @@ class WebClientEngineTest {
     }
 
     @Test
-    void thePolicyDeniesByConfigurationAndByModule() throws Exception {
+    void thePolicyDecidesOnlyByThePermisosAndNeverRunsProtocolCommands() throws Exception {
         TestHttp user = signIn("ana@example.com");
-        assertEquals(403, user.get("/directorio/form/usuario/1.0/nuevo").statusCode(), "denied resource");
-        assertEquals(403, user.get("/inventario/form/producto/1.0/webhook").statusCode(), "denied command");
-        assertEquals(403, user.get("/ventas/form/pedido/1.0/nuevo").statusCode(), "a module outside fb.client.userModules");
+        assertEquals(403, user.get("/directorio/form/usuario/1.0/nuevo").statusCode(), "no grant for the directory");
+        assertEquals(403, user.get("/inventario/form/producto/1.0/webhook").statusCode(), "a protocol command is never run, even with a grant");
+        assertEquals(403, user.get("/ventas/form/pedido/1.0/nuevo").statusCode(), "a module the user has no grant for");
         backend.on("form:pedido/nuevo", rr -> producto(null));
-        assertEquals(200, signIn("staff.boss@example.com").get("/ventas/form/pedido/1.0/nuevo").statusCode(), "staff run every module");
+        assertEquals(200, signIn("staff.boss@example.com").get("/ventas/form/pedido/1.0/nuevo").statusCode(), "a user whose permisos are * runs every module");
         assertEquals(1, backend.calls("form:pedido/nuevo").size());
     }
 
@@ -393,7 +393,7 @@ class WebClientEngineTest {
         assertTrue(group > 0 && es.contains("<summary>Recursos<i class=\"bi bi-chevron-down\""), "Recursos is a collapsible group");
         assertFalse(es.substring(group, group + 40).contains(" open"), "closed unless the current page is one of its children");
         String inside = es.substring(group, es.indexOf("</details>", group));
-        assertTrue(inside.contains(">Existencias del menú</a>") && !inside.contains("Administración del menú"), "children are links inside the group; staffOnly ones are hidden");
+        assertTrue(inside.contains(">Existencias del menú</a>") && !inside.contains("Administración del menú"), "children are links inside the group; the ones that need a permiso the user lacks are hidden");
         assertTrue(es.indexOf("</details>", group) < es.indexOf("Cuenta</div>") && es.indexOf("Cuenta</div>") < es.indexOf(">Perfil</a>"), "a heading and a plain link follow the group");
         assertFalse(es.contains("<a href=\"\""), "no empty links");
         assertFalse(es.substring(es.indexOf("<nav class=\"nav-pills\""), es.indexOf("</nav>")).contains("Recursos"), "groups never appear in the top bar");
@@ -401,14 +401,14 @@ class WebClientEngineTest {
         String en = signIn("ana@example.com").get("/mine?lang=en").body();
         assertTrue(en.contains("<summary>Resources<i") && en.contains("Stock in the menu") && en.contains(">Account</div>"));
         String staff = signIn("staff.boss@example.com").get("/mine?lang=en").body();
-        assertTrue(staff.contains("Admin in the menu"), "staff see the staffOnly child");
+        assertTrue(staff.contains("Admin in the menu"), "whoever has the permiso sees the child");
     }
 
     @Test
     void theApplicationsNavigationBrandAndFooterAreInTheLayout() throws Exception {
         String user = signIn("ana@example.com").get("/mine").body();
         assertTrue(user.contains("Mi Cliente") && user.contains("Existencias"));
-        assertFalse(user.contains("Administración"), "staffOnly items are hidden from regular users");
+        assertFalse(user.contains("Administración"), "items that need a permiso are hidden from whoever lacks it");
         assertTrue(user.contains("Hecho por") && user.contains("© test"));
         String staff = signIn("staff.boss@example.com").get("/mine?lang=en").body();
         assertTrue(staff.contains("Admin") && staff.contains("Stock"), "labels follow the language");

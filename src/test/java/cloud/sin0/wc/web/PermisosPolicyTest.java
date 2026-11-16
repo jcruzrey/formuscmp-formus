@@ -19,7 +19,7 @@ import java.util.Properties;
 import static cloud.sin0.wc.testing.StubFormusWs.data;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/** {@code fb.client.authorization=permisos}: the generic pipeline authorizes non-staff users by the permisos the backend answers at sign-in. */
+/** The generic pipeline authorizes non-staff users by the permisos the backend answers at sign-in. */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PermisosPolicyTest {
 
@@ -34,8 +34,6 @@ class PermisosPolicyTest {
         p.setProperty("fb.port", "0");
         p.setProperty("fb.devLogin", "true");
         p.setProperty("fb.microservice.url", backend.url());
-        p.setProperty("fb.client.authorization", "permisos");
-        p.setProperty("fb.client.userModules", "ventas");   // ignored in permisos mode
         server = WebClientServer.build(new AppConfig(p, Map.of()), new ViewRenderer(), new WebClientEngineTest.TestApp());
         server.start();
         base = "http://localhost:" + ((ServerConnector) server.getConnectors()[0]).getLocalPort();
@@ -72,7 +70,7 @@ class PermisosPolicyTest {
     void aUserWithoutPermisosIsRefusedEverywhere() throws Exception {
         TestHttp user = signIn("ana@example.com");
         assertEquals(403, user.get("/inventario/form/producto/1.0/detalle").statusCode());
-        assertEquals(403, user.get("/ventas/form/pedido/1.0/nuevo").statusCode(), "userModules does not apply in permisos mode");
+        assertEquals(403, user.get("/ventas/form/pedido/1.0/nuevo").statusCode(), "nothing is granted: nothing runs");
         assertEquals(0, backend.calls("form:producto/detalle").size());
     }
 
@@ -85,10 +83,10 @@ class PermisosPolicyTest {
     }
 
     @Test
-    void aDenialInsideAGrantedModuleAndStaffBypass() throws Exception {
+    void aDenialInsideAGrantedModuleAndStaffDoNotPassImplicitly() throws Exception {
         TestHttp gerente = signIn("gerente@example.com");
         assertEquals(200, gerente.get("/inventario/form/producto/1.0/detalle").statusCode());
         assertEquals(403, gerente.get("/inventario/form/producto/1.0/eliminar").statusCode());
-        assertEquals(200, signIn("staff.boss@example.com").get("/inventario/form/producto/1.0/eliminar").statusCode());
+        assertEquals(403, signIn("staff.boss@example.com").get("/inventario/form/producto/1.0/eliminar").statusCode(), "nobody passes implicitly: staff without grants are refused");
     }
 }

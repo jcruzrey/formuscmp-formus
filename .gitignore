@@ -1,1 +1,6 @@
 /target
+
+# local safety copies: may hold real settings, never versioned
+*.bak*
+*.before-*
+backup-*/

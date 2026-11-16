@@ -26,7 +26,7 @@ public interface WebClientApp {
     default boolean protectedPath(String path) { return false; }
 
     /** Who may run commands through the generic pipeline. */
-    default AccessPolicy policy(cloud.sin0.wc.config.AppConfig cfg) { return AccessPolicy.standard(cfg); }
+    default AccessPolicy policy(cloud.sin0.wc.config.AppConfig cfg) { return AccessPolicy.standard(); }
 
     /** Top bar links. */
     default List<NavItem> navigation() { return List.of(); }
@@ -45,6 +45,12 @@ public interface WebClientApp {
      * same origin only. The default is false: no page of the application can be framed at all.
      */
     default boolean allowSameOriginFrames() { return false; }
+
+    /**
+     * What one page needs beyond the engine's default security headers, by its path (see {@link PagePolicy}): for example a softphone page that talks to the telephone provider
+     * from the browser. Null (the default, for every path) means the default headers; ask for as little as the page needs, for the one path that needs it.
+     */
+    default PagePolicy pagePolicy(String path) { return null; }
 
     /** Extra shared variables for every template (for example {@code urls}). */
     default Map<String, Object> templateVariables() { return Map.of(); }

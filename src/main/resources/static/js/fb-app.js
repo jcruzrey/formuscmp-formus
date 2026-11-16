@@ -1,8 +1,8 @@
 /* Client helpers for the server-rendered pages. This replaces the prototype's shell.js (no fake session, no header/footer
    injection: the server renders those). Exposes the subset of the `FB` API that the page scripts use:
-     FB.lang, FB.user, FB.isStaff(), FB.csrf(), FB.add/t/apply (client-side dictionaries for strings built in JS),
+     FB.lang, FB.user, FB.can(token), FB.csrf(), FB.add/t/apply (client-side dictionaries for strings built in JS),
      FB.esc, FB.toast, FB.store, FB.$, FB.$$, FB.money, FB.dateFmt, FB.fetchJson, FB.setLang, FB.copy.
-   Reads: <html lang>, <meta name="csrf-token">, <meta name="fb-user" content="email" data-name data-role data-id>. */
+   Reads: <html lang>, <meta name="csrf-token">, <meta name="fb-user" content="email" data-name data-role data-id data-permisos>. */
 (function () {
   'use strict';
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -11,7 +11,7 @@
 
   var lang = (document.documentElement.lang || 'es').toLowerCase().indexOf('en') === 0 ? 'en' : 'es';
   var um = meta('fb-user');
-  var user = um ? { email: um.content, name: um.dataset.name || '', role: um.dataset.role || 'solicitante', id: um.dataset.id || '' } : null;
+  var user = um ? { email: um.content, name: um.dataset.name || '', role: um.dataset.role || 'solicitante', id: um.dataset.id || '', permisos: um.dataset.permisos || '' } : null;
 
   var DICT = { es: {}, en: {} };
   function add(d) { ['es', 'en'].forEach(function (l) { Object.assign(DICT[l], (d && d[l]) || {}); }); }
@@ -65,10 +65,44 @@
   var urlsMeta = meta('fb-urls'), urls = {};
   try { urls = urlsMeta ? JSON.parse(urlsMeta.content) : {}; } catch (e) { urls = {}; }
 
+  // Authorization: the user's effective permisos (the backend resolved roles + own rules at sign-in), the same grammar as the server's Permisos:
+  // "module[:resource[:action]]", a leading "-" denies, a denial always wins, a missing or "*" segment matches anything, nothing granted is refused.
+  // A token asked here is "module:resource:action" (an empty action is "leer"). The CRUD verbs stand for the commands the server maps to them.
+  var VERBS = { leer: ['detalle', 'ver', 'buscar', 'listar', 'consultar'], crear: ['nuevo', 'guardar'], actualizar: ['actualizar', 'cambiarstatus', 'cambiar'], eliminar: ['eliminar'] };
+  function parsePermisos(list) {
+    var grants = [], denials = [];
+    String(list || '').split(',').forEach(function (raw) {
+      var tk = raw.trim().toLowerCase(), deny = tk.charAt(0) === '-';
+      if (deny) tk = tk.slice(1).trim();
+      if (!tk) return;
+      var parts = tk.split(':');
+      if (parts.length > 3) return;
+      var seg = ['*', '*', '*'];
+      parts.forEach(function (p, i) { p = p.trim(); seg[i] = p === '' ? '*' : p; });
+      (deny ? denials : grants).push(seg);
+    });
+    return { grants: grants, denials: denials };
+  }
+  function verbOf(action) {
+    if (VERBS[action]) return action;
+    for (var v in VERBS) { if (VERBS[v].indexOf(action) >= 0) return v; }
+    return '';
+  }
+  function matches(seg, m, r, a, verb) {
+    return (seg[0] === '*' || seg[0] === m) && (seg[1] === '*' || seg[1] === r) && (seg[2] === '*' || seg[2] === a || (verb !== '' && seg[2] === verb));
+  }
+  function can(token) {
+    var p = String(token || '').toLowerCase().split(':'), m = p[0] || '', r = p[1] || '', a = p[2] || 'leer';
+    var perms = parsePermisos(user && user.permisos), verb = verbOf(a), i;
+    for (i = 0; i < perms.denials.length; i++) { if (matches(perms.denials[i], m, r, a, verb)) return false; }
+    for (i = 0; i < perms.grants.length; i++) { if (matches(perms.grants[i], m, r, a, verb)) return true; }
+    return false;
+  }
+
   window.FB = {
     urls: urls, lang: lang, user: user, add: add, t: t, apply: apply, store: store, toast: toast, csrf: csrf, fetchJson: fetchJson, copy: copy,
     $: $, $$: $$,
-    isStaff: function () { return !!user && user.role === 'staff'; },
+    can: can,
     setLang: function (l) { var u = new URL(location.href); u.searchParams.set('lang', l); location.href = u.toString(); },
     esc: function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); },
     money: function (n, cur) { return new Intl.NumberFormat(lang === 'es' ? 'es-MX' : 'en-US', { style: 'currency', currency: cur || 'MXN' }).format(n); },

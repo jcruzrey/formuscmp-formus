@@ -334,6 +334,29 @@ public final class Ctx {
         return uri.getScheme() == null || uri.getAuthority() == null ? "" : uri.getScheme() + "://" + uri.getAuthority();
     }
 
+    /** An e-mail for logs: its first letter and the domain only. */
+    public static String maskEmail(String email) {
+        if (email == null || email.isBlank()) {
+            return "-";
+        }
+        int at = email.indexOf('@');
+        return at <= 0 ? email.substring(0, 1) + "***" : email.substring(0, 1) + "***" + email.substring(at);
+    }
+
+    /**
+     * Whether the signed-in user may do {@code module:resource:action} (a PAGE or a button; the action is a CRUD verb or a command name; an empty action is {@code leer}). The only
+     * authorization there is: the user's effective permisos, as the backend resolved them at sign-in (roles + own rules; a denial always wins; nothing granted is refused).
+     */
+    public boolean can(String module, String resource, String action) {
+        return user != null && cloud.sin0.wc.auth.Permisos.of(user.permisos()).allows(module == null ? "" : module, resource == null ? "" : resource, action == null || action.isBlank() ? "leer" : action);
+    }
+
+    /** {@link #can(String, String, String)} with a token {@code module:resource:action}; a missing action is {@code leer}. */
+    public boolean can(String token) {
+        String[] p = (token == null ? "" : token).split(":", -1);
+        return can(p.length > 0 ? p[0] : "", p.length > 1 ? p[1] : "", p.length > 2 ? p[2] : "");
+    }
+
     public Map<String, Object> model() {
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("lang", lang);
@@ -344,7 +367,8 @@ public final class Ctx {
         m.put("embedded", embedded());
         if (user != null) {
             m.put("user", user.toModel());
-            m.put("isStaff", user.isStaff());
+            // for templates: can("case:studio:leer"); user.permisos is the effective list the page's scripts evaluate with FB.can
+            m.put("can", (freemarker.template.TemplateMethodModelEx) args -> !args.isEmpty() && can(String.valueOf(args.get(0))));
         }
         Session s = session(false);
         if (s != null && s.getAttribute("flash.text") != null) {

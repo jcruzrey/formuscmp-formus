@@ -1,29 +1,25 @@
 package cloud.sin0.wc.web;
 
-import cloud.sin0.wc.config.AppConfig;
+import cloud.sin0.wc.auth.Permisos;
 
-/** Who may run which formus-ws command through the generic pipeline. Application pages decide for themselves. */
+import java.util.Set;
+
+/**
+ * Who may run which formus-ws command through the generic pipeline. Application pages decide for themselves with {@link Ctx#can(String)}.
+ *
+ * <p>The only authorization there is: the effective permisos of the signed-in user ({@code module[:resource[:action]]}, a leading {@code -} denies, a denial always wins, what is not granted
+ * is refused; see {@link Permisos}). The roles, the user's own rules and the application they belong to were already resolved by the backend at sign-in. Nobody passes because of what they are
+ * called: staff and administrators need grants like anybody else.
+ */
 @FunctionalInterface
 public interface AccessPolicy {
 
     boolean allows(Ctx c, Coords k);
 
-    /**
-     * The default, driven by configuration: resource names ({@code fb.client.deniedResources}) and commands
-     * ({@code fb.client.deniedCommands}) nobody runs; staff run anything else; other users only the modules listed in
-     * {@code fb.client.userModules} (blank = every module). With {@code fb.client.authorization=permisos} the modules list is replaced by
-     * the user's own authorization list ({@link cloud.sin0.wc.auth.Permisos}: module / resource / CRUD action, with denials).
-     */
-    static AccessPolicy standard(AppConfig cfg) {
-        return (c, k) -> {
-            if (!java.util.Set.of("form", "basket", "api").contains(k.type())
-                    || cfg.deniedResources().contains(k.name()) || cfg.deniedCommands().contains(k.command())) {
-                return false;
-            }
-            if (cfg.authorizationByPermisos()) {
-                return c.user != null && (c.user.isStaff() || cloud.sin0.wc.auth.Permisos.of(c.user.permisos()).allows(k));
-            }
-            return c.user != null && (c.user.isStaff() || cfg.userModules().isEmpty() || cfg.userModules().contains(k.module()));
-        };
+    /** The commands of the platform's own protocol (identity, provider webhooks): no user ever runs them through the pipeline, whatever they were granted. */
+    Set<String> PROTOCOL_COMMANDS = Set.of("identificar", "webhook");
+
+    static AccessPolicy standard() {
+        return (c, k) -> Set.of("form", "basket", "api").contains(k.type()) && !PROTOCOL_COMMANDS.contains(k.command()) && c.user != null && Permisos.of(c.user.permisos()).allows(k);
     }
 }

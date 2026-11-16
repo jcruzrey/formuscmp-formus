@@ -18,15 +18,6 @@ public record SessionUser(String sub, String email, String name, String provider
 
     private static final String[] KEYS = {"sub", "email", "name", "provider", "picture", "id", "role", "library", "plan", "permisos"};
 
-    /** Staff or administrator: an administrator can do everything staff can. */
-    public boolean isStaff() {
-        return STAFF.equals(role) || ADMIN.equals(role);
-    }
-
-    public boolean isAdmin() {
-        return ADMIN.equals(role);
-    }
-
     public String initials() {
         String base = name != null && !name.isBlank() ? name : email;
         if (base == null || base.isBlank()) {
@@ -53,6 +44,7 @@ public record SessionUser(String sub, String email, String name, String provider
         m.put("id", id);
         m.put("library", library);
         m.put("plan", plan);
+        m.put("permisos", permisos);
         return m;
     }
 

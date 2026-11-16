@@ -89,8 +89,8 @@ public class WebClientHandler extends Handler.Wrapper {
         boolean en = "en".equals(c.lang);
         Map<String, Object> shared = c.shared;
         shared.put("home", app.home());
-        shared.put("navItems", items(app.navigation(), en));
-        shared.put("menuItems", items(app.userMenu(), en));
+        shared.put("navItems", items(c, app.navigation(), en));
+        shared.put("menuItems", items(c, app.userMenu(), en));
         Map<String, Object> flash = new LinkedHashMap<>();
         app.flashMessages().forEach((code, text) -> flash.put(code, en ? text[1] : text[0]));
         shared.put("flashMessages", flash);
@@ -98,17 +98,25 @@ public class WebClientHandler extends Handler.Wrapper {
         footer.forEach((k, v) -> shared.put("footer" + Character.toUpperCase(k.charAt(0)) + k.substring(1), v));
     }
 
-    private static List<Map<String, Object>> items(List<NavItem> in, boolean en) {
+    private List<Map<String, Object>> items(Ctx c, List<NavItem> in, boolean en) {
         List<Map<String, Object>> out = new java.util.ArrayList<>();
         for (NavItem n : in) {
             Map<String, Object> m = new LinkedHashMap<>();
             m.put("key", n.key());
             m.put("label", en ? n.en() : n.es());
             m.put("href", n.href());
-            m.put("staffOnly", n.staffOnly());
-            if (!n.children().isEmpty()) {
-                m.put("children", items(n.children(), en));
+            List<Map<String, Object>> kids = n.children().isEmpty() ? List.of() : items(c, n.children(), en);
+            if (!kids.isEmpty()) {
+                m.put("children", kids);
             }
+            // per request: an item with a permiso is shown to whoever can it; a group, when one of its items is; anything else is public
+            boolean visible;
+            if (!n.children().isEmpty()) {
+                visible = kids.stream().anyMatch(k -> Boolean.TRUE.equals(k.get("visible")));
+            } else {
+                visible = n.permiso() == null || n.permiso().isBlank() || c.can(n.permiso());
+            }
+            m.put("visible", visible);
             out.add(m);
         }
         return out;

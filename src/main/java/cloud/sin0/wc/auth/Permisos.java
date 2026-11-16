@@ -147,6 +147,43 @@ public final class Permisos {
         return false;
     }
 
+    /** True when a denial covers this operation. */
+    public boolean denies(Coords k) {
+        String module = k.module().toLowerCase(Locale.ROOT), name = k.name().toLowerCase(Locale.ROOT);
+        String command = k.command().toLowerCase(Locale.ROOT);
+        String verb = verbOf(k.type(), command);
+        for (String[] d : denials) {
+            if (matches(d, module, name, command, verb)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * A PAGE token ({@code module:resource:action}, the action being a CRUD verb or any command name): the same grammar and the same rule as {@link #allows(Coords)}. A page is never a basket here:
+     * the verb of {@code action} is the one of a form command ({@code detalle} = {@code leer}).
+     */
+    public boolean allows(String module, String resource, String action) {
+        String m = norm(module), r = norm(resource), a = norm(action);
+        String verb = VOCABULARY.containsKey(a) ? a : verbOf("form", a);
+        for (String[] d : denials) {
+            if (matches(d, m, r, a, verb)) {
+                return false;
+            }
+        }
+        for (String[] g : grants) {
+            if (matches(g, m, r, a, verb)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static String norm(String s) {
+        return s == null || s.isBlank() ? "*" : s.trim().toLowerCase(Locale.ROOT);
+    }
+
     /** The CRUD verb of a command, or null when the command has none (only its own name or {@code *} then matches). */
     static String verbOf(String type, String command) {
         if ("basket".equals(type)) {

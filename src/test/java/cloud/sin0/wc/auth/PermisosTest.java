@@ -19,6 +19,30 @@ class PermisosTest {
     }
 
     @Test
+    void pageTokensUseTheSameGrammarAsTheCommands() {
+        Permisos p = Permisos.of("case:studio:leer,inventario,-inventario:producto:eliminar,voz:agente:token");
+        assertTrue(p.allows("case", "studio", "leer"));
+        assertTrue(p.allows("case", "studio", "detalle"), "a command is read through its verb");
+        assertFalse(p.allows("case", "studio", "actualizar"));
+        assertFalse(p.allows("case", "block", "leer"));
+        assertTrue(p.allows("inventario", "producto", "actualizar"));
+        assertFalse(p.allows("inventario", "producto", "eliminar"), "a denial wins");
+        assertTrue(p.allows("voz", "agente", "token"));
+        assertFalse(p.allows("voz", "agente", "estado"));
+        assertTrue(p.allows(" INVENTARIO ", "Producto", "leer"), "case and spaces do not matter");
+        assertFalse(Permisos.of("").allows("case", "studio", "leer"), "nothing granted is refused");
+    }
+
+    @Test
+    void deniesReportsOnlyTheDenials() {
+        Permisos p = Permisos.of("*,-case:secret,-inventario:producto:eliminar");
+        assertTrue(p.denies(form("case", "secret", "guardar")));
+        assertTrue(p.denies(form("inventario", "producto", "eliminar")));
+        assertFalse(p.denies(form("inventario", "producto", "guardar")));
+        assertFalse(Permisos.of("case").denies(form("case", "secret", "guardar")));
+    }
+
+    @Test
     void emptyOrMissingListRefusesEverything() {
         assertFalse(Permisos.of(null).allows(form("inventario", "producto", "nuevo")));
         assertFalse(Permisos.of("  , ,").allows(basket("inventario", "producto", "nuevo")));

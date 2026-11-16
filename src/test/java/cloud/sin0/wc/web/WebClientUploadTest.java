@@ -51,7 +51,6 @@ class WebClientUploadTest {
         p.setProperty("fb.port", "0");
         p.setProperty("fb.devLogin", "true");
         p.setProperty("fb.microservice.url", backend.url());
-        p.setProperty("fb.client.userModules", "inventario");
         p.setProperty("fb.limit.uploadBytes", "1000");
         p.setProperty("fb.limit.uploadRequestBytes", "5000");
         p.setProperty("fb.upload.token", "s3cret");
@@ -69,7 +68,7 @@ class WebClientUploadTest {
     @BeforeEach
     void defaults() {
         backend.reset();
-        backend.on("usuario/identificar", rr -> data("uuid", "u1", "rol", "solicitante"));
+        backend.on("usuario/identificar", rr -> data("uuid", "u1", "rol", "solicitante", "permisos", "inventario"));
         backend.on("form:documento/nuevo", rr -> documento());
         backend.on("form:documento/guardar", rr -> documento());
     }

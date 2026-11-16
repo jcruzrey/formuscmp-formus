@@ -116,13 +116,4 @@ class ClientAppIdentityTest {
         backend.on("usuario/identificar", rr -> data("uuid", "u-1", "rol", "root"));
         assertEquals("solicitante", identifier(Map.of(), Map.of()).identify(ANA, FormusClient.CallContext.none()).role(), "an unknown role is the least privileged");
     }
-
-    @Test
-    void anAdministratorIsStaffForTheEngine() {
-        SessionUser admin = new SessionUser("s", "a@x.com", "A", "Google", "", "1", "admin", "lib", "", "");
-        assertTrue(admin.isStaff() && admin.isAdmin());
-        SessionUser staff = new SessionUser("s", "a@x.com", "A", "Google", "", "1", "staff", "lib", "", "");
-        assertTrue(staff.isStaff() && !staff.isAdmin());
-        assertTrue(!new SessionUser("s", "a@x.com", "A", "Google", "", "1", "solicitante", "lib", "", "").isStaff());
-    }
 }
